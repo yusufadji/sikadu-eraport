@@ -20,7 +20,7 @@ CREATE TABLE `kelas` (
   `nama_kelas` VARCHAR(30) NOT NULL,
   `nip` INT(11) NOT NULL,
   PRIMARY KEY(id_kelas),
-  FOREIGN KEY(nip) REFERENCES guru(nip)
+  FOREIGN KEY(nip) REFERENCES guru(nip) ON UPDATE CASCADE ON DELETE CASCADE
 ); 
 CREATE TABLE `orang_tua` (
   `id_ortu` INT(11) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `siswa` (
   `id_kelas` INT(11) NOT NULL,
   `password` VARCHAR(20) NOT NULL,
   PRIMARY KEY(nis),
-  FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas)
+  FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `mata_pelajaran` (
@@ -55,7 +55,7 @@ CREATE TABLE `mata_pelajaran` (
   `nama_mapel` VARCHAR(20) NOT NULL,
   `keterangan` TEXT NOT NULL,
   PRIMARY KEY (id_mapel),
-  FOREIGN KEY (nip) REFERENCES guru(nip) 
+  FOREIGN KEY (nip) REFERENCES guru(nip) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `raport` (
@@ -67,7 +67,9 @@ CREATE TABLE `raport` (
   `nilai_rata-rata` DOUBLE,
   `rapor_semester` INT NOT NULL,
   `keterangan` TEXT,
-  PRIMARY KEY(id_raport)
+  PRIMARY KEY(id_raport),
+  FOREIGN KEY (nis) REFERENCES siswa(nis) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (nip) REFERENCES guru(nip) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE nilai(
@@ -84,9 +86,9 @@ cp4 INT,
 nilai_akhir VARCHAR(1),
 keterangan TEXT,
 PRIMARY KEY (id_nilai),
-FOREIGN KEY (id_mapel) REFERENCES mata_pelajaran(id_mapel),
-FOREIGN KEY (nis) REFERENCES siswa(nis),
-FOREIGN KEY (id_raport) REFERENCES raport(id_raport)
+FOREIGN KEY (id_mapel) REFERENCES mata_pelajaran(id_mapel) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (nis) REFERENCES siswa(nis) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (id_raport) REFERENCES raport(id_raport) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS chats (
@@ -97,8 +99,8 @@ timestamps TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 message VARCHAR(255) NOT NULL,
 is_read BOOL,
 is_from_murid BOOL,
-PRIMARY KEY (id),
-FOREIGN KEY (guru_id) REFERENCES guru(nip),
-FOREIGN KEY (murid_id) REFERENCES siswa(nis)
-);
+PRIMARY KEY (id_chat),
+FOREIGN KEY (guru_id) REFERENCES guru(nip) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (murid_id) REFERENCES siswa(nis) ON UPDATE CASCADE ON DELETE CASCADE
+); 
 
