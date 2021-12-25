@@ -29,6 +29,8 @@ ul {
     --pad-xxl: 64px;
 }
 
+/* Reset */
+
 body {
     min-height: 100vh;
     overflow-x: hidden;
@@ -299,6 +301,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border: none;
+    overflow: hidden;
 }
 
 .konten .konten_profil_foto {
@@ -321,40 +324,39 @@ body {
     margin-top: var(--pad-lg);
 }
 
-.konten .konten_prestasi .konten_prestasi_pengaturan,
-.konten .konten_daftar_siswa .konten_daftar_siswa_pengaturan,
-.konten .konten_daftar_kelas .konten_daftar_kelas_pengaturan,
-.konten .konten_daftar_nilai .konten_daftar_nilai_pengaturan {
-    display: flex;
-    margin: var(--pad-lg) 0;
+.konten .konten_isi {
+    overflow: hidden;
 }
 
-.konten .konten_prestasi .konten_prestasi_pengaturan .dropdown {
+.konten .konten_title,
+.konten .konten_isi .konten_pengaturan,
+.konten .konten_isi .konten_table,
+.konten .konten_isi .konten_nav {
+
+    margin-bottom: var(--pad-lg);
+}
+
+.konten .konten_isi .konten_pengaturan {
+    display: flex;
+}
+
+.konten .konten_isi .dropdown,
+.konten .konten_isi .konten_table table .aksi a {
     margin-right: var(--pad-sm);
 }
 
-.konten .konten_daftar_siswa .konten_daftar_siswa_nav,
-.konten .konten_daftar_kelas .konten_daftar_kelas_nav,
-.konten .konten_daftar_mapel .konten_daftar_mapel_nav,
-.konten .konten_daftar_nilai .konten_daftar_nilai_nav {
+.konten .konten_nav {
     width: 100%;
     display: flex;
     justify-content: end;
 }
 
-.konten .konten_daftar_siswa table,
-.konten .konten_daftar_kelas table,
-.konten .konten_daftar_mapel table,
-.konten .konten_daftar_nilai table {
-    margin: var(--pad-xl) 0;
-}
-
-.konten .konten_daftar_nilai table .aksi {
+.konten .konten_isi .konten_table table .aksi {
     display: flex;
     justify-content: center;
 }
 
-.konten .konten_daftar_nilai table tbody td button {
+.konten .konten_isi .konten_table table tbody td button {
     text-align: center;
 }
 

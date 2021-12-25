@@ -85,54 +85,34 @@
             <h2 class="konten_title">
                 Ubah Nilai
             </h2>
-
-            <form class="konten_ubah_nilai">
-                <div class="mb-3">
-                    <label for="namaSiswa" class="form-label">Nama siswa</label>
-                    <input type="text" class="form-control" id="namaSiswa" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="nomorIndukSiswa" class="form-label">Nomor induk siswa</label>
-                    <input type="text" class="form-control" id="nomorIndukSiswa" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="kelasSiswa" class="form-label">Kelas</label>
-                    <input type="text" class="form-control" id="kelasSiswa" disabled>
-                </div>
-                <div class="mb-3">
-                    <label for="nilaiSiswa" class="form-label">Nilai</label>
-                    <input type="number" class="form-control" id="nilaiSiswa">
-                </div>
-                <div class="konten_ubah_nilai_opsi">
-                    <a href="daftar-nilai.html"><button class="btn btn-danger">Batalkan</button></a>
-                    <a href="daftar-nilai.html"><button type="submit" class="btn btn-primary">Simpan</button></a>
-                </div>
-            </form>
+            <div class="konten_isi">
+                <form class="konten_ubah_nilai">
+                    <div class="mb-3">
+                        <label for="namaSiswa" class="form-label">Nama siswa</label>
+                        <input type="text" class="form-control" id="namaSiswa" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nomorIndukSiswa" class="form-label">Nomor induk siswa</label>
+                        <input type="text" class="form-control" id="nomorIndukSiswa" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="kelasSiswa" class="form-label">Kelas</label>
+                        <input type="text" class="form-control" id="kelasSiswa" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nilaiSiswa" class="form-label">Nilai</label>
+                        <input type="number" min="0" max="100" class="form-control" id="nilaiSiswa">
+                    </div>
+                    <div class="konten_ubah_nilai_opsi">
+                        <a href="daftar-nilai.html"><button class="btn btn-danger">Batalkan</button></a>
+                        <a href="daftar-nilai.html"><button type="submit" class="btn btn-primary">Simpan</button></a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        //Menu toggle
-        let toggle = document.querySelector('.toggle');
-        let navigation = document.querySelector('.navigation');
-        let main = document.querySelector('.main');
-
-        toggle.onclick = function () {
-            navigation.classList.toggle('active');
-            main.classList.toggle('active');
-        }
-
-        //add hovered class in selected list item
-        let list = document.querySelectorAll('.navigation li');
-
-        function activeLink() {
-            list.forEach((item) =>
-                item.classList.remove('hovered'));
-            this.classList.add('hovered');
-        }
-        list.forEach((item) =>
-            item.addEventListener('mouseover', activeLink));
-    </script>
+    <script src="../assets/js/main.js"></script>
 </body>
 
 </html>

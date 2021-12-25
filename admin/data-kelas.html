@@ -21,7 +21,7 @@
                         <h1 class="title">E-Raport</h1>
                     </a>
                 </li>
-                <li class="hovered">
+                <li>
                     <a href="index.html">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
@@ -45,7 +45,7 @@
                         <span class="title">Data Siswa</span>
                     </a>
                 </li>
-                <li>
+                <li class="hovered">
                     <a href="data-kelas.html">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Data Kelas</span>
@@ -97,39 +97,62 @@
         <div class="cardBox">
             <div class="card">
                 <div>
-                    <div class="numbers">4</div>
-                    <div class="cardName">Admin</div>
-                </div>
-                <div class="iconBx">
-                    <i class='bx bx-user'></i>
-                </div>
-            </div>
-            <div class="card">
-                <div>
-                    <div class="numbers">40</div>
-                    <div class="cardName">Guru</div>
-                </div>
-                <div class="iconBx">
-                    <i class='bx bx-user'></i>
-                </div>
-            </div>
-            <div class="card">
-                <div>
-                    <div class="numbers">504</div>
-                    <div class="cardName">Siswa</div>
-                </div>
-                <div class="iconBx">
-                    <i class='bx bx-user'></i>
-                </div>
-            </div>
-            <div class="card">
-                <div>
                     <div class="numbers">15</div>
                     <div class="cardName">Kelas</div>
                 </div>
                 <div class="iconBx">
                     <i class='bx bx-door-open'></i>
                 </div>
+            </div>
+        </div>
+
+        <div class="konten">
+            <h2 class="konten_title">
+                Data Kelas
+            </h2>
+            <div class="konten_isi">
+                <div class="konten_pengaturan">
+                    <a href="tambah-kelas.html"><button type="button" class="btn btn-success">Tambah
+                            kelas</button></a>
+                </div>
+                <div class="konten_table table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kelas</th>
+                                <th>Jumlah Siswa</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                                <td class="aksi">
+                                    <a href="ubah.html"><button type="button" data-bs-toggle="tooltip"
+                                            class="btn btn-primary btn-sm" title="Ubah"><i
+                                                class='bx bx-pencil'></i></button></a>
+                                    <a href="hapus.html"><button type="button" data-bs-toggle="tooltip"
+                                            class="btn btn-danger btn-sm" title="Hapus"><i
+                                                class='bx bx-trash'></i></button></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="konten_nav">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
