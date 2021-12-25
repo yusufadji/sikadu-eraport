@@ -22,6 +22,11 @@ ul {
     --black1: #222;
     --black2: #999;
 
+    --pad-sm: 8px;
+    --pad-md: 16px;
+    --pad-lg: 24px;
+    --pad-xl: 32px;
+    --pad-xxl: 64px;
 }
 
 body {
@@ -117,6 +122,8 @@ body {
 
 .navigation ul li h1 {
     text-transform: uppercase;
+    font-weight: 600;
+    font-size: 24px !important;
 }
 
 /* curve outside */
@@ -226,14 +233,14 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 
 .cardBox {
     position: relative;
     width: 100%;
-    padding: 20px;
+    padding: var(--pad-lg);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
@@ -284,15 +291,45 @@ body {
 /* Konten */
 
 .konten {
-    width: 100%;
     display: block;
-    padding: 20px;
+    padding: var(--pad-lg);
+    margin: var(--pad-lg);
     position: relative;
     background: var(--white);
     border-radius: 20px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border: none;
 }
+
+.konten .konten_profil_foto {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: var(--pad-xxl) auto;
+    height: 200px;
+    width: 200px;
+}
+
+.konten .konten_profil_foto img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.konten .konten_profil_biodata {
+    margin-top: var(--pad-lg);
+}
+
+.konten .konten_prestasi .konten_prestasi_pengaturan {
+    display: flex;
+    margin: var(--pad-lg) 0;
+}
+
+.konten .konten_prestasi .konten_prestasi_pengaturan .dropdown {
+    margin-right: var(--pad-sm);
+}
+
 
 /* Responsive */
 @media (max-width: 991px) {
