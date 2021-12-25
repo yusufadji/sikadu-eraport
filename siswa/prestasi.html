@@ -73,8 +73,8 @@
             <h2 class="konten_title">
                 Prestasi
             </h2>
-            <div class="konten_prestasi">
-                <div class="konten_prestasi_pengaturan">
+            <div class="konten_isi">
+                <div class="konten_pengaturan">
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,88 +99,67 @@
                         </ul>
                     </div>
                 </div>
-                <table class="table table-bordered table-responsive">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Mata pelajaran</th>
-                            <th>KKM</th>
-                            <th>Nilai</th>
-                            <th>Predikat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Data</td>
-                            <td>75</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Data</td>
-                            <td>75</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Data</td>
-                            <td>75</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Data</td>
-                            <td>75</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Data</td>
-                            <td>75</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Data</td>
-                            <td>75</td>
-                            <td>Data</td>
-                            <td>Data</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="konten_table table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Mata pelajaran</th>
+                                <th>KKM</th>
+                                <th>Nilai</th>
+                                <th>Predikat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Data</td>
+                                <td>75</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Data</td>
+                                <td>75</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Data</td>
+                                <td>75</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Data</td>
+                                <td>75</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Data</td>
+                                <td>75</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Data</td>
+                                <td>75</td>
+                                <td>Data</td>
+                                <td>Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        </script>
-
-        <script>
-            //Menu toggle
-            let toggle = document.querySelector('.toggle');
-            let navigation = document.querySelector('.navigation');
-            let main = document.querySelector('.main');
-
-            toggle.onclick = function () {
-                navigation.classList.toggle('active');
-                main.classList.toggle('active');
-            }
-
-            //add hovered class in selected list item
-            let list = document.querySelectorAll('.navigation li');
-
-            function activeLink() {
-                list.forEach((item) =>
-                    item.classList.remove('hovered'));
-                this.classList.add('hovered');
-            }
-            list.forEach((item) =>
-                item.addEventListener('mouseover', activeLink));
-        </script>
+        <script src="../assets/js/main.js"></script>
 </body>
 
 </html>
