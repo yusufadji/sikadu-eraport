@@ -49,8 +49,6 @@ CREATE TABLE `siswa` (
   FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas)
 );
 
-
-
 CREATE TABLE `mata_pelajaran` (
   `id_mapel` INT(11) NOT NULL,
   `nip` INT(11) NOT NULL,
@@ -60,10 +58,24 @@ CREATE TABLE `mata_pelajaran` (
   FOREIGN KEY (nip) REFERENCES guru(nip) 
 );
 
+CREATE TABLE `raport` (
+  `id_raport` INT(11) NOT NULL AUTO_INCREMENT,
+  `tanggal` DATE NOT NULL,
+  `nis` INT(11) NOT NULL,
+  `nip` INT(11) NOT NULL,
+  `nilai_huruf` VARCHAR(10),
+  `nilai_rata-rata` DOUBLE,
+  `rapor_semester` INT NOT NULL,
+  `keterangan` TEXT,
+  PRIMARY KEY(id_raport)
+);
+
 CREATE TABLE nilai(
 id_nilai INT AUTO_INCREMENT,
 nis INT(11) NOT NULL,
 id_mapel INT(11) NOT NULL,
+id_raport INT(11) NOT NULL,
+semester INT NOT NULL,
 cp1 INT,
 cp2 INT,
 uts INT,
@@ -74,10 +86,11 @@ keterangan TEXT,
 PRIMARY KEY (id_nilai),
 FOREIGN KEY (id_mapel) REFERENCES mata_pelajaran(id_mapel),
 FOREIGN KEY (nis) REFERENCES siswa(nis),
+FOREIGN KEY (id_raport) REFERENCES raport(id_raport)
 );
 
 CREATE TABLE IF NOT EXISTS chats (
-id INT NOT NULL AUTO_INCREMENT,
+id_chat INT NOT NULL AUTO_INCREMENT,
 murid_id INT NOT NULL,
 guru_id INT NOT NULL,
 timestamps TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -89,17 +102,3 @@ FOREIGN KEY (guru_id) REFERENCES guru(nip),
 FOREIGN KEY (murid_id) REFERENCES siswa(nis)
 );
 
-# Belum tau ini gimana
-CREATE TABLE `rapot` (
-  `id_rapot` INT(11) NOT NULL,
-  `tanggal` DATE NOT NULL,
-  `nik` INT(11) NOT NULL,
-  `nip` INT(11) NOT NULL,
-  `nilai_rapor` INT(10) NOT NULL,
-  `nilai_huruf` VARCHAR(10) NOT NULL,
-  `nilai_angka` INT(10) NOT NULL,
-  `nilai_rata-rata` INT(10) NOT NULL,
-  `mata_pelajaran` VARCHAR(50) NOT NULL,
-  `rapor_semester` INT(10) NOT NULL,
-  `keterangan` TEXT NOT NULL
-)
