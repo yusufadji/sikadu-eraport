@@ -321,7 +321,10 @@ body {
     margin-top: var(--pad-lg);
 }
 
-.konten .konten_prestasi .konten_prestasi_pengaturan {
+.konten .konten_prestasi .konten_prestasi_pengaturan,
+.konten .konten_daftar_siswa .konten_daftar_siswa_pengaturan,
+.konten .konten_daftar_kelas .konten_daftar_kelas_pengaturan,
+.konten .konten_daftar_nilai .konten_daftar_nilai_pengaturan {
     display: flex;
     margin: var(--pad-lg) 0;
 }
@@ -330,6 +333,43 @@ body {
     margin-right: var(--pad-sm);
 }
 
+.konten .konten_daftar_siswa .konten_daftar_siswa_nav,
+.konten .konten_daftar_kelas .konten_daftar_kelas_nav,
+.konten .konten_daftar_mapel .konten_daftar_mapel_nav,
+.konten .konten_daftar_nilai .konten_daftar_nilai_nav {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.konten .konten_daftar_siswa table,
+.konten .konten_daftar_kelas table,
+.konten .konten_daftar_mapel table,
+.konten .konten_daftar_nilai table {
+    margin: var(--pad-xl) 0;
+}
+
+.konten .konten_daftar_nilai table .aksi {
+    display: flex;
+    justify-content: center;
+}
+
+.konten .konten_daftar_nilai table tbody td button {
+    text-align: center;
+}
+
+.konten .konten_ubah_nilai {
+    margin: var(--pad-lg) 0;
+}
+
+.konten .konten_ubah_nilai .konten_ubah_nilai_opsi {
+    display: flex;
+    margin-top: var(--pad-lg);
+}
+
+.konten .konten_ubah_nilai button {
+    margin-right: var(--pad-md);
+}
 
 /* Responsive */
 @media (max-width: 991px) {
