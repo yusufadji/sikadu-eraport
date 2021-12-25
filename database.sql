@@ -61,6 +61,7 @@ CREATE TABLE `mata_pelajaran` (
 CREATE TABLE `raport` (
   `id_raport` INT(11) NOT NULL AUTO_INCREMENT,
   `tanggal` DATE NOT NULL,
+  `tahun_ajaran` VARCHAR(11) NOT NULL,
   `nis` INT(11) NOT NULL,
   `nip` INT(11) NOT NULL,
   `nilai_huruf` VARCHAR(10),
