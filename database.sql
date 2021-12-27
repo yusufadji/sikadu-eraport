@@ -16,6 +16,20 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`eraport` /*!40100 DEFAULT CHARACTER SET
 
 USE `eraport`;
 
+/*Table structure for table `admin` */
+
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE `admin` (
+  `id_admin` varchar(11) NOT NULL,
+  `nama_admin` varchar(255) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `admin` */
+
 /*Table structure for table `chats` */
 
 DROP TABLE IF EXISTS `chats`;
@@ -51,7 +65,7 @@ CREATE TABLE `guru` (
   `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
   `status` varchar(20) NOT NULL,
   `tanggal_lahir` date NOT NULL,
-  `password` text NOT NULL,
+  `password` varchar(20) NOT NULL,
   PRIMARY KEY (`nip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -108,9 +122,10 @@ CREATE TABLE `nilai` (
   `semester` int(11) NOT NULL,
   `cp1` int(11) DEFAULT NULL,
   `cp2` int(11) DEFAULT NULL,
-  `uts` int(11) DEFAULT NULL,
   `cp3` int(11) DEFAULT NULL,
   `cp4` int(11) DEFAULT NULL,
+  `uts` int(11) DEFAULT NULL,
+  `uas` int(11) DEFAULT NULL,
   `nilai_akhir` varchar(1) DEFAULT NULL,
   `keterangan` text DEFAULT NULL,
   PRIMARY KEY (`id_nilai`),
@@ -124,26 +139,8 @@ CREATE TABLE `nilai` (
 
 /*Data for the table `nilai` */
 
-insert  into `nilai`(`id_nilai`,`nis`,`id_mapel`,`id_raport`,`semester`,`cp1`,`cp2`,`uts`,`cp3`,`cp4`,`nilai_akhir`,`keterangan`) values 
-(1,'51904100001',1,3,1,90,80,90,70,85,'A','Sangat memuaskan');
-
-/*Table structure for table `orang_tua` */
-
-DROP TABLE IF EXISTS `orang_tua`;
-
-CREATE TABLE `orang_tua` (
-  `id_ortu` int(11) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `alamat` text NOT NULL,
-  `no_tlp` int(14) NOT NULL,
-  `pekerjaan` varchar(30) NOT NULL,
-  `status` text NOT NULL,
-  `agama` enum('islam','kristen','katolik','hindu','budha') NOT NULL,
-  `password` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_ortu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-/*Data for the table `orang_tua` */
+insert  into `nilai`(`id_nilai`,`nis`,`id_mapel`,`id_raport`,`semester`,`cp1`,`cp2`,`cp3`,`cp4`,`uts`,`uas`,`nilai_akhir`,`keterangan`) values 
+(1,'51904100001',1,3,1,90,80,70,85,90,NULL,'A','Sangat memuaskan');
 
 /*Table structure for table `raport` */
 
@@ -180,10 +177,10 @@ CREATE TABLE `siswa` (
   `jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
   `alamat` text NOT NULL,
   `email` varchar(50) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
-  `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
   `no_telp` varchar(14) NOT NULL,
+  `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
   `id_kelas` int(11) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`nis`),
   KEY `siswa_ibfk_1` (`id_kelas`),
@@ -192,8 +189,8 @@ CREATE TABLE `siswa` (
 
 /*Data for the table `siswa` */
 
-insert  into `siswa`(`nis`,`nama_siswa`,`jenis_kelamin`,`alamat`,`email`,`tanggal_lahir`,`agama`,`no_telp`,`id_kelas`,`password`) values 
-('51904100001','John Doe','Laki-laki','Wonogiri','johndoe@example.com','2021-12-26','Kristen','08123456789',1,'123');
+insert  into `siswa`(`nis`,`nama_siswa`,`jenis_kelamin`,`alamat`,`email`,`no_telp`,`agama`,`id_kelas`,`tanggal_lahir`,`password`) values 
+('51904100001','John Doe','Laki-laki','Wonogiri','johndoe@example.com','08123456789','Kristen',1,'2021-12-26','123');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

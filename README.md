@@ -1,14 +1,17 @@
 Tugas Besar Rekayasa Web
 
 Catatan:
-1. Kurang Admin
-bagian input dan ubah
+LAYOUT
+1. Kurang LOGIN
 
-2. Kurang fungsi database
+DATABASE
 - Fungsi hitung rata-rata nilai
-- Fungsi hitung nilai huruf dari nilai rata-rata
+- Fungsi hitung nilai akhir
+- Scheduled Backup data
 
 Changelog:
 1. Ubah tabel guru -> nip, no_telp menjadi varchar
 2. Ubah tabel siswa -> nip, no_telp menjadi varchar
 3. Ubah tabel raport -> kolom nilai_rata-rata menjadi nilai_avg
+4. Ubah tabel nilai -> tambahin kolom untuk nilai uas
+5. Tambah tabel admin (id_admin,nama_admin,email,password)
