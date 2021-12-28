@@ -9,16 +9,19 @@ toggle.onclick = function () {
 }
 
 //add hovered class in selected list item
-let list = document.querySelectorAll('.navigation li');
+let list = document.querySelectorAll('.navigation li:not(.hovered)');
 
-function activeLink() {
-    list.forEach((item) =>
-        item.classList.remove('hovered'));
+function activeLinkAdd() {
     this.classList.add('hovered');
 }
-list.forEach((item) =>
-    item.addEventListener('mouseover', activeLink));
-
+function activeLinkRemove() {
+    this.classList.remove('hovered');
+}
+list.forEach((item) => {
+    item.addEventListener('mouseenter', activeLinkAdd);
+    item.addEventListener('mouseleave', activeLinkRemove);
+});
+    
 
 //enable tooltip
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
