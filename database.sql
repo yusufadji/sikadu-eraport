@@ -151,9 +151,10 @@ CREATE TABLE `raport` (
   `tanggal` date NOT NULL,
   `nis` varchar(11) NOT NULL,
   `nip` varchar(11) NOT NULL,
-  `nilai_huruf` varchar(10) DEFAULT NULL,
-  `nilai_avg` double DEFAULT NULL,
+  `tahun_ajaran` int(11) NOT NULL,
   `rapor_semester` int(11) NOT NULL,
+  `nilai_avg` double DEFAULT NULL,
+  `nilai_huruf` varchar(10) DEFAULT NULL,
   `keterangan` text DEFAULT NULL,
   PRIMARY KEY (`id_raport`),
   KEY `raport_ibfk_2` (`nip`),
@@ -164,8 +165,8 @@ CREATE TABLE `raport` (
 
 /*Data for the table `raport` */
 
-insert  into `raport`(`id_raport`,`tanggal`,`nis`,`nip`,`nilai_huruf`,`nilai_avg`,`rapor_semester`,`keterangan`) values 
-(3,'2021-12-26','51904100001','20000000001','A',90.5,1,'Sangat memuaskan');
+insert  into `raport`(`id_raport`,`tanggal`,`nis`,`nip`,`tahun_ajaran`,`rapor_semester`,`nilai_avg`,`nilai_huruf`,`keterangan`) values 
+(3,'2021-12-26','51904100001','20000000001',0,1,90.5,'A','Sangat memuaskan');
 
 /*Table structure for table `siswa` */
 
