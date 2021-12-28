@@ -1,3 +1,24 @@
+<?php
+session_start();
+require('../connection.php');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// ambil userid dari session atau cookie
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $userid = $_COOKIE['id'];
+    $kodenuklir = $_COOKIE['kodenuklir'];
+} else {
+    $userid = $_SESSION['id'];
+    $login_as = $_SESSION['login_as'];
+}
+
+
+$login_as = "guru";
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -27,24 +48,72 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
+                <?php 
+                // tampilkan menu guru jika login sebagai guru
+                if ($login_as == "siswa") {
+                ?>
+                    <li>
+                        <a href="profil.html">
+                            <span class="icon"><i class='bx bx-user'></i></span>
+                            <span class="title">Profil</span>
+                        </a>
+                    </li>
+                <?php
+                }
+
+                if ($login_as == "guru") {
+                    
+                
+                ?>
                 <li>
-                    <a href="profil.html">
+                    <a href="daftar-siswa.html">
                         <span class="icon"><i class='bx bx-user'></i></span>
-                        <span class="title">Profil</span>
+                        <span class="title">Daftar Siswa</span>
                     </a>
                 </li>
+                <li>
+                    <a href="daftar-kelas.html">
+                        <span class="icon"><i class='bx bx-door-open'></i></span>
+                        <span class="title">Daftar Kelas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="daftar-mapel.html">
+                        <span class="icon"><i class='bx bx-book-alt'></i></span>
+                        <span class="title">Daftar Mapel</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="daftar-nilai.html">
+                        <span class="icon"><i class='bx bx-book-add'></i></span>
+                        <span class="title">Daftar Nilai</span>
+                    </a>
+                </li>
+                <?php 
+                }
+                 ?>
+                
                 <li>
                     <a href="pesan.html">
                         <span class="icon"><i class='bx bx-chat'></i></span>
                         <span class="title">Pesan</span>
                     </a>
                 </li>
+
+                <?php 
+                // tampilkan prestasi jika login sebagai siswa
+                if ($login_as == "siswa") {
+                
+                ?>
                 <li>
                     <a href="prestasi.html">
                         <span class="icon"><i class='bx bxs-graduation'></i></span>
                         <span class="title">Prestasi</span>
                     </a>
                 </li>
+                <?php 
+                }
+                ?>
                 <li>
                     <a href="#">
                         <span class="icon"><i class='bx bx-exit'></i></span>
@@ -111,6 +180,10 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/js/main.js"></script>
+        <script>
+
+            alert("Anda login sebagai <?php echo $login_as ?>")
+        </script>
 </body>
 
 </html>
