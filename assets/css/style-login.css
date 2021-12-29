@@ -97,11 +97,6 @@ img {
     transition: transform .2s;
 }
 
-.login_register:hover,
-.login_create:hover {
-    transform: scale(1.2);
-}
-
 .login_title {
     font-size: var(--h1-font-size);
     margin-bottom: 1rem;
