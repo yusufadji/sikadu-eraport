@@ -1,3 +1,48 @@
+<?php 
+
+require_once '../connection.php';
+session_start();
+
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $userid = $_COOKIE['id'];
+    $_SESSION['login_as'] = $login_as;
+} else {
+    $userid = $_SESSION['id'];
+    $login_as = $_SESSION['login_as'];
+}
+
+if (!isset($_SESSION['login_as'])) {
+    header('location: ../index.php');
+} else{
+    if ($_SESSION['login_as'] != "guru") {
+        header('location: ../index.php');
+    }
+}
+
+if (!isset($_GET['p'])) {
+    $page_no = 1;
+} else {
+    $page_no = $_GET['p'];
+}
+if (!isset($_GET['kls'])) {
+    $kelas_id = 1;
+} else {
+    $kelas_id = $_GET['kls'];
+}
+$records_per_page = 30;
+$offset = ($page_no-1) * $records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+
+$result = $conn->query("SELECT COUNT(*) As total_records FROM siswa WHERE id_kelas = $kelas_id");
+$total_records = $result->fetch_assoc();
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $records_per_page);
+$second_last = $total_no_of_pages - 1;
+$adjacents = "2";
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -88,15 +133,22 @@
             <div class="konten_isi">
                 <div class="konten_pengaturan">
                     <div class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuKelas"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Kelas
                         </a>
+                        <ul class="dropdown-menu" id="dropdown-kelas" aria-labelledby="dropdownMenuKelas">
+                            <?php 
+                            $result_kelas = $conn->query("SELECT * FROM kelas WHERE nip = '$userid'");
+                            if ($result_kelas && $result_kelas->num_rows > 0) {
+                                while($row = $result_kelas->fetch_assoc()){
+                            ?>
+                            <li><a class="dropdown-item" data-kelas="<?php echo $row['id_kelas'] ?>" href="#"><?php echo $row['nama_kelas'] ?></a></li>
+                            <?php
+                                }
+                            }
+                            ?>
 
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Kelas X</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XI</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XII</a></li>
                         </ul>
                     </div>
                 </div>
@@ -107,61 +159,33 @@
                                 <th>No</th>
                                 <th>Nomor Induk Siswa</th>
                                 <th>Nama Siswa</th>
-                                <th>Nilai</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php 
+                            $result_siswa = $conn->query("SELECT * FROM siswa WHERE id_kelas = $kelas_id LIMIT $records_per_page OFFSET $offset");
+                            $no = 1;
+                            if ($result_siswa && $result_siswa->num_rows > 0) {
+                                while($row = $result_siswa->fetch_assoc()){
+                            
+                            
+                            ?>
                             <tr>
-                                <td>1</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td><?php echo $no; ?></td>
+                                <td><?php echo $row['nis']; ?></td>
+                                <td><?php echo $row['nama_siswa']; ?></td>
+                                
                                 <td class="aksi"><a href="ubah-nilai.html"><button type="button"
                                             class="btn btn-primary btn-sm">Ubah nilai <i
                                                 class='bx bx-pencil'></i></button></a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td class="aksi"><a href="ubah-nilai.html"><button type="button"
-                                            class="btn btn-primary btn-sm">Ubah nilai <i
-                                                class='bx bx-pencil'></i></button></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td class="aksi"><a href="ubah-nilai.html"><button type="button"
-                                            class="btn btn-primary btn-sm">Ubah nilai <i
-                                                class='bx bx-pencil'></i></button></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td class="aksi"><a href="ubah-nilai.html"><button type="button"
-                                            class="btn btn-primary btn-sm">Ubah nilai <i
-                                                class='bx bx-pencil'></i></button></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                                <td class="aksi"><a href="ubah-nilai.html"><button type="button"
-                                            class="btn btn-primary btn-sm">Ubah nilai <i
-                                                class='bx bx-pencil'></i></button></a>
-                                </td>
-                            </tr>
+                            <?php 
+                                } //end while
+                            } //endif
+                            ?>
+                            
                         </tbody>
                     </table>
                 </div>

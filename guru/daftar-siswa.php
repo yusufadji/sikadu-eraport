@@ -6,12 +6,36 @@ if (isset($_COOKIE['login_as'])) {
     $login_as = $_COOKIE['login_as'];
     $_SESSION['login_as'] = $login_as;
 } 
-var_dump($_SESSION['login_as']);
 if (!isset($_SESSION['login_as'])) {
-    header('location: index.php');
-} elseif ($_SESSION['login_as'] != "guru"){
-    header('location: index.php');
+    header('location: ../index.php');
+} else{
+    if ($_SESSION['login_as'] != "guru") {
+        header('location: ../index.php');
+    }
 }
+
+if (!isset($_GET['p'])) {
+    $page_no = 1;
+} else {
+    $page_no = $_GET['p'];
+}
+if (!isset($_GET['kls'])) {
+    $kelas_id = 1;
+} else {
+    $kelas_id = $_GET['kls'];
+}
+$records_per_page = 30;
+$offset = ($page_no-1) * $records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+
+$result = $conn->query("SELECT COUNT(*) As total_records FROM siswa WHERE id_kelas = $kelas_id");
+$total_records = $result->fetch_assoc();
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $records_per_page);
+$second_last = $total_no_of_pages - 1;
+$adjacents = "2";
+
 ?>
 
 <!DOCTYPE html>
@@ -104,14 +128,23 @@ if (!isset($_SESSION['login_as'])) {
             <div class="konten_isi">
                 <div class="konten_pengaturan">
                     <div class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuKelas"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Kelas
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Kelas X</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XI</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XII</a></li>
+                        <ul class="dropdown-menu" id="dropdown-kelas" aria-labelledby="dropdownMenuKelas">
+                            <?php 
+                            $result_kelas = $conn->query("SELECT * FROM kelas");
+                            if ($result_kelas && $result_kelas->num_rows > 0) {
+                                while($row = $result_kelas->fetch_assoc()){
+                            ?>
+                            <li><a class="dropdown-item" data-kelas="<?php echo $row['id_kelas'] ?>" href="#"><?php echo $row['nama_kelas'] ?></a></li>
+                            <?php
+                                }
+                            }
+                            ?>
+                            
+
                         </ul>
                     </div>
                 </div>
@@ -122,53 +155,67 @@ if (!isset($_SESSION['login_as'])) {
                                 <th>No</th>
                                 <th>Nomor Induk Siswa</th>
                                 <th>Nama Siswa</th>
+                                <th>Jenis Kelamin</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php 
+                            $result_siswa = $conn->query("SELECT * FROM siswa WHERE id_kelas = $kelas_id LIMIT $records_per_page OFFSET $offset");
+                            $no = 1;
+                            if ($result_siswa && $result_siswa->num_rows > 0) {
+                                while($row = $result_siswa->fetch_assoc()){
+                            
+                            ?>
                             <tr>
-                                <td>1</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td><?php echo $no ?></td>
+                                <td><?php echo $row['nis'] ?></td>
+                                <td><?php echo $row['nama_siswa'] ?></td>
+                                <td><?php echo $row['jenis_kelamin'] ?></td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
+                            <?php 
+                                $no++;
+                                } //end while
+                            } // endif
+                            ?>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="konten_nav">
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page Navigation">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <?php 
+                        if ($total_no_of_pages > 1) {
+                         ?>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$previous_page"; ?>">Previous</a></li>
+                        <?php 
+                        
+                            for ($i=1; $i <= $total_no_of_pages; $i++) { 
+                        ?>
+                        <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?kls=$kelas_id&p=$i"; ?>'><?php echo $i; ?></a></li>
+                        <?php
+                            
+                            }
+                        
+                        ?>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$next_page" ?>">Next</a></li>
+                        <?php 
+                        }
+                        ?>
                     </ul>
                 </nav>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/main.js"></script>
+        <script>
+$('#dropdown-kelas a').on('click', function () {
+    var txt= ($(this).data('kelas'));
+    window.open("./daftar-siswa?kls="+txt,"_self")
+});
+        </script>
 </body>
 
 </html>

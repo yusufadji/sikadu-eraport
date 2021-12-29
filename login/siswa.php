@@ -6,21 +6,18 @@ session_start();
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// ke index.php jika sudah login
+// ke index jika sudah login
 if (isset($_COOKIE['id'])) {
     $_SESSION['login'] = true;
 }
 
 if(isset($_SESSION['login'])){
-    header("location: index.php");
+    header("location: ../index");
 }
 
 if(isset($_POST["login"])){
     $nis = $_POST["nis"];
     $password = $_POST["password"];
-
-    var_dump($nis);
-    var_dump($password);
         
     $result = $conn->query("SELECT * FROM siswa WHERE nis = '$nis' LIMIT 1"); // TODO: nanti diganti dg stored procedure
     // $conn->next_result();
@@ -37,7 +34,7 @@ if(isset($_POST["login"])){
                 echo "oke";
                 // simpan cookie untuk 30 menit (30 mnt * 60 dtk)
                 if (isset($_POST["remember"])) {
-                    setcookie("id", $siswa, time()+(30*60));
+                    setcookie("id", $siswa['nis'], time()+(30*60));
                     setcookie("kodenuklir", hash('sha256', $email), time()+(30*60));
                     setcookie("login_as", 'siswa');
                 }
@@ -45,7 +42,7 @@ if(isset($_POST["login"])){
                 $_SESSION['login'] = true;
                 $_SESSION['id'] = $siswaid;
                 $_SESSION['login_as'] = 'siswa';
-                header("location: index.php");
+                header("location: ../index");
             } else {
                 $status = "invalidlogin";
             }
@@ -77,10 +74,10 @@ if(isset($_POST["login"])){
     <div class="login">
         <div class="login_content">
             <div class="login_img">
-                <img src="../assets/img/knowledge-book-education-learning-books-svgrepo-com.svg" alt="">
+                <img src="assets/img/knowledge-book-education-learning-books-svgrepo-com.svg" alt="">
             </div>
             <div class="login_forms">
-                <form action="./login.php" class="login_register" id="login-in" method="POST">
+                <form action="./siswa" class="login_register" id="login-in" method="POST">
                     <h1 class="login_title">SISWA</h1>
 
                     <div class="login_box">
@@ -95,8 +92,6 @@ if(isset($_POST["login"])){
                     <div class="login_box">
                         <button type="submit" href="#" class="login_button" id="login" name="login">Login</button>
                     </div>
-
-                    
 
                 </form>
             </div>

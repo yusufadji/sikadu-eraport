@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../connection.php');
+require('connection.php');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -16,7 +16,9 @@ if (isset($_COOKIE['login_as'])) {
     $login_as = $_SESSION['login_as'];
 }
 
-$get_user = $conn->query("SELECT * FROM $login_as WHERE ".(($login_as == "admin" ? "id_admin" : $login_as == "guru") ? "id_guru" : "nis")." = $userid");
+$query = "SELECT * FROM $login_as WHERE ".(($login_as == "admin" ? "id_admin" : $login_as == "guru") ? "nip" : "nis")." = $userid";
+$get_user = $conn->query($query);
+
 
 // $conn->next_result();
 if ($get_user->num_rows === 1) {
@@ -24,16 +26,15 @@ if ($get_user->num_rows === 1) {
     
     if (isset($_COOKIE['id']) ){
         if($kodenuklir !== hash('sha256', $row['email'])){
-            header("location: logout.php");
+            header("location: logout");
         }
     }
     $logged_email = $row["email"];
 } else {
-    header("location: logout.php");
+    header("location: logout");
 }
 
 // coba2
-$login_as = "siswa";
 $is_walikelas = false;
 ?>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@ $is_walikelas = false;
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -70,7 +71,7 @@ $is_walikelas = false;
                 if ($login_as == "siswa") {
                 ?>
                     <li>
-                        <a href="profil.html">
+                        <a href="profil">
                             <span class="icon"><i class='bx bx-user'></i></span>
                             <span class="title">Profil</span>
                         </a>
@@ -82,25 +83,25 @@ $is_walikelas = false;
 
                 ?>
                 <li>
-                    <a href="daftar-siswa.html">
+                    <a href="guru/daftar-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Daftar Siswa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-kelas.html">
+                    <a href="guru/daftar-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Daftar Kelas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-mapel.html">
+                    <a href="guru/daftar-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Daftar Mapel</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-nilai.html">
+                    <a href="guru/daftar-nilai">
                         <span class="icon"><i class='bx bx-book-add'></i></span>
                         <span class="title">Daftar Nilai</span>
                     </a>
@@ -111,31 +112,31 @@ $is_walikelas = false;
                 if ($login_as == "admin") {
                 ?>
                 <li>
-                    <a href="data-guru.html">
+                    <a href="data-guru">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Guru</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-siswa.html">
+                    <a href="data-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Siswa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-kelas.html">
+                    <a href="data-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Data Kelas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-mapel.html">
+                    <a href="data-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Data Mapel</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-nilai.html">
+                    <a href="data-nilai">
                         <span class="icon"><i class='bx bx-book-add'></i></span>
                         <span class="title">Data Nilai</span>
                     </a>
@@ -148,7 +149,7 @@ $is_walikelas = false;
                 ?>
                 
                 <li>
-                    <a href="pesan.html">
+                    <a href="./pesan">
                         <span class="icon"><i class='bx bx-chat'></i></span>
                         <span class="title">Pesan</span>
                     </a>
@@ -161,7 +162,7 @@ $is_walikelas = false;
                 
                 ?>
                 <li>
-                    <a href="prestasi.html">
+                    <a href="./prestasi">
                         <span class="icon"><i class='bx bxs-graduation'></i></span>
                         <span class="title">Prestasi</span>
                     </a>
@@ -234,7 +235,7 @@ $is_walikelas = false;
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <script src="assets/js/main.js"></script>
         <script>
 
             alert("Anda login sebagai <?php echo $login_as ?>")

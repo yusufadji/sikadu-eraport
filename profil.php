@@ -1,7 +1,7 @@
 <?php 
 
 session_start();
-require('../connection.php');
+require('connection.php');
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -36,7 +36,7 @@ if ($result) {
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -51,7 +51,7 @@ if ($result) {
                     </a>
                 </li>
                 <li>
-                    <a href="index.php">
+                    <a href="index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -63,13 +63,13 @@ if ($result) {
                     </a>
                 </li>
                 <li>
-                    <a href="pesan.php">
+                    <a href="pesan">
                         <span class="icon"><i class='bx bx-chat'></i></span>
                         <span class="title">Pesan</span>
                     </a>
                 </li>
                 <li>
-                    <a href="prestasi.php">
+                    <a href="prestasi">
                         <span class="icon"><i class='bx bxs-graduation'></i></span>
                         <span class="title">Prestasi</span>
                     </a>
@@ -153,7 +153,7 @@ if ($result) {
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <script src="assets/js/main.js"></script>
 </body>
 
 </html>
