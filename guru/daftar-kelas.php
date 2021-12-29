@@ -1,3 +1,39 @@
+<?php 
+require_once '../connection.php';
+session_start();
+
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $_SESSION['login_as'] = $login_as;
+} 
+if (!isset($_SESSION['login_as'])) {
+    header('location: ../index.php');
+} else{
+    if ($_SESSION['login_as'] != "guru") {
+        header('location: ../index.php');
+    }
+}
+
+if (!isset($_GET['p'])) {
+    $page_no = 1;
+} else {
+    $page_no = $_GET['p'];
+}
+
+$records_per_page = 30;
+$offset = ($page_no-1) * $records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+
+$result = $conn->query("SELECT COUNT(*) As total_records FROM kelas");
+$total_records = $result->fetch_assoc();
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $records_per_page);
+$second_last = $total_no_of_pages - 1;
+$adjacents = "2";
+
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -27,13 +63,13 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                <li class="hovered">
+                <li>
                     <a href="daftar-siswa.html">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Daftar Siswa</span>
                     </a>
                 </li>
-                <li>
+                <li class="hovered">
                     <a href="daftar-kelas.html">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Daftar Kelas</span>
@@ -83,69 +119,62 @@
 
         <div class="konten">
             <h2 class="konten_title">
-                Daftar Siswa
+                Daftar Kelas
             </h2>
-            <div class="konten_isi">
-                <div class="konten_pengaturan">
-                    <div class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Kelas
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Kelas X</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XI</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XII</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="konten_table table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nomor Induk Siswa</th>
-                                <th>Nama Siswa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Data</td>
-                                <td>Data</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="konten_isi table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kelas</th>
+                            <th>Jumlah Siswa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        $result_kelas = $conn->query("SELECT * FROM kelas");
+                        if ($result_kelas && $result_kelas->num_rows > 0) {
+                            $no = 1;
+                            while($row = $result_kelas->fetch_assoc()){
+                                $id_kls = $row['id_kelas'];
+                                $result_jml = $conn->query("SELECT COUNT(*) AS total_siswa FROM siswa WHERE id_kelas = $id_kls");
+                                $jml = $result_jml->fetch_assoc();
+                                echo "
+                                <tr>
+                                    <td>$no</td>
+                                    <td>${row['nama_kelas']}</td>
+                                    <td>${jml['total_siswa']} siswa</td>
+                                </tr>
+                                ";
+                                $no++;
+                            }
+                        }
+                        
+                        ?>
+                    </tbody>
+                </table>
             </div>
             <div class="konten_nav">
-                <nav aria-label="Page navigation example">
+            <nav aria-label="Page Navigation">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <?php 
+                        if ($total_no_of_pages > 1) {
+                         ?>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$previous_page"; ?>">Previous</a></li>
+                        <?php 
+                        
+                            for ($i=1; $i <= $total_no_of_pages; $i++) { 
+                        ?>
+                        <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?kls=$kelas_id&p=$i"; ?>'><?php echo $i; ?></a></li>
+                        <?php
+                            
+                            }
+                        
+                        ?>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$next_page" ?>">Next</a></li>
+                        <?php 
+                        }
+                        ?>
                     </ul>
                 </nav>
             </div>

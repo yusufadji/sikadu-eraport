@@ -338,6 +338,8 @@ body {
 
 .konten .konten_isi .konten_pengaturan {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .konten .konten_isi .dropdown,
@@ -371,6 +373,9 @@ body {
 
 .konten .konten_ubah_nilai button {
     margin-right: var(--pad-md);
+}
+#loading-status {
+    display: none;
 }
 
 /* Responsive */

@@ -1,3 +1,26 @@
+<?php 
+
+require_once '../connection.php';
+session_start();
+
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $userid = $_COOKIE['id'];
+    $_SESSION['login_as'] = $login_as;
+} else {
+    $userid = $_SESSION['id'];
+    $login_as = $_SESSION['login_as'];
+}
+
+if (!isset($_SESSION['login_as'])) {
+    header('location: ../index.php');
+} else{
+    if ($_SESSION['login_as'] != "guru") {
+        header('location: ../index.php');
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -98,6 +121,27 @@
                     <div class="mb-3">
                         <label for="kelasSiswa" class="form-label">Kelas</label>
                         <input type="text" class="form-control" id="kelasSiswa" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <div class="dropdown">
+                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuMapel"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Mata Pelajaran
+                            </a>
+                            <ul class="dropdown-menu" id="dropdown-mapel" aria-labelledby="dropdownMenuMapel">
+                                <?php 
+                                $result_mapel = $conn->query("SELECT * FROM mata_pelajaran");
+                                if ($result_mapel && $result_mapel->num_rows > 0) {
+                                    while ($row = $result_mapel->fetch_assoc()) {
+                                ?>
+                                <li><a class="dropdown-item" data-mapel="<?php echo $row['id_mapel'] ?>" href="#"><?php echo $row['nama_mapel'] ?></a></li>
+                                <?php 
+                                    }
+                                }
+                                ?>
+    
+                            </ul>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="nilaiSiswa" class="form-label">Nilai</label>
