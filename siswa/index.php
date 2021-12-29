@@ -16,8 +16,25 @@ if (isset($_COOKIE['login_as'])) {
     $login_as = $_SESSION['login_as'];
 }
 
+$get_user = $conn->query("SELECT * FROM $login_as WHERE ".(($login_as == "admin" ? "id_admin" : $login_as == "guru") ? "id_guru" : "nis")." = $userid");
 
-$login_as = "guru";
+// $conn->next_result();
+if ($get_user->num_rows === 1) {
+    $row = $get_user->fetch_assoc();
+    
+    if (isset($_COOKIE['id']) ){
+        if($kodenuklir !== hash('sha256', $row['email'])){
+            header("location: logout.php");
+        }
+    }
+    $logged_email = $row["email"];
+} else {
+    header("location: logout.php");
+}
+
+// coba2
+$login_as = "siswa";
+$is_walikelas = false;
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -59,11 +76,10 @@ $login_as = "guru";
                         </a>
                     </li>
                 <?php
-                }
+                } // endif $login_as == 'siswa'
 
                 if ($login_as == "guru") {
-                    
-                
+
                 ?>
                 <li>
                     <a href="daftar-siswa.html">
@@ -90,8 +106,46 @@ $login_as = "guru";
                     </a>
                 </li>
                 <?php 
-                }
-                 ?>
+                } // endif $login_as == 'guru'
+                
+                if ($login_as == "admin") {
+                ?>
+                <li>
+                    <a href="data-guru.html">
+                        <span class="icon"><i class='bx bx-user'></i></span>
+                        <span class="title">Data Guru</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="data-siswa.html">
+                        <span class="icon"><i class='bx bx-user'></i></span>
+                        <span class="title">Data Siswa</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="data-kelas.html">
+                        <span class="icon"><i class='bx bx-door-open'></i></span>
+                        <span class="title">Data Kelas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="data-mapel.html">
+                        <span class="icon"><i class='bx bx-book-alt'></i></span>
+                        <span class="title">Data Mapel</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="data-nilai.html">
+                        <span class="icon"><i class='bx bx-book-add'></i></span>
+                        <span class="title">Data Nilai</span>
+                    </a>
+                </li>
+                <?php 
+                } //endif $login_as == 'admin'
+
+                if ($login_as == "siswa" || ($login_as == "guru" && $is_walikelas)) {
+                    # code...
+                ?>
                 
                 <li>
                     <a href="pesan.html">
@@ -99,8 +153,9 @@ $login_as = "guru";
                         <span class="title">Pesan</span>
                     </a>
                 </li>
+                <?php
+                } //endif $login_as == "siswa" || ($login_as == "guru" && $is_walikelas
 
-                <?php 
                 // tampilkan prestasi jika login sebagai siswa
                 if ($login_as == "siswa") {
                 

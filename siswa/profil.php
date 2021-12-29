@@ -1,3 +1,32 @@
+<?php 
+
+session_start();
+require('../connection.php');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// ambil userid dari session atau cookie
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $userid = $_COOKIE['id'];
+    $kodenuklir = $_COOKIE['kodenuklir'];
+} else {
+    $userid = $_SESSION['id'];
+    $login_as = $_SESSION['login_as'];
+}
+
+$result = $conn->query("SELECT * FROM siswa WHERE nis = '$userid'");
+
+if ($result) {
+    if ($result->num_rows === 1) {
+        $siswa = $result->fetch_assoc();
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -22,25 +51,25 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="index.php">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="profil.html">
+                <li class="hovered">
+                    <a href="#">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Profil</span>
                     </a>
                 </li>
                 <li>
-                    <a href="pesan.html">
+                    <a href="pesan.php">
                         <span class="icon"><i class='bx bx-chat'></i></span>
                         <span class="title">Pesan</span>
                     </a>
                 </li>
-                <li class="hovered">
-                    <a href="#">
+                <li>
+                    <a href="prestasi.php">
                         <span class="icon"><i class='bx bxs-graduation'></i></span>
                         <span class="title">Prestasi</span>
                     </a>
@@ -71,87 +100,52 @@
 
         <div class="konten">
             <h2 class="konten_title">
-                Prestasi
+                Profil Siswa
             </h2>
-            <div class="konten_isi">
-                <div class="konten_pengaturan">
-                    <div class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Kelas
-                        </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Kelas X</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XI</a></li>
-                            <li><a class="dropdown-item" href="#">Kelas XII</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Semester
-                        </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Semester Ganjil</a></li>
-                            <li><a class="dropdown-item" href="#">Semester Genap</a></li>
-                        </ul>
+            <div class="konten_isi" id="data-pribadi">
+                <div class="konten_profil">
+                    <div class="konten_profil_foto">
+                        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
+                            alt="user" title="Foto profil siswa" />
                     </div>
                 </div>
+                <!-- <div class="konten_pengaturan">
+                    <button type="button" class="btn btn-primary">Ubah Profil</button>
+                </div> -->
                 <div class="konten_table table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Mata pelajaran</th>
-                                <th>KKM</th>
-                                <th>Nilai</th>
-                                <th>Predikat</th>
-                            </tr>
-                        </thead>
+                    <table class="table table-bordered konten_profil_biodata">
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>Data</td>
-                                <td>75</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td>Nama</td>
+                                <td><?php echo $siswa['nama_siswa'] ?></td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>Data</td>
-                                <td>75</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td>Nomor Induk Siswa</td>
+                                <td><?php echo $siswa['nis'] ?></td>
                             </tr>
                             <tr>
-                                <td>3</td>
-                                <td>Data</td>
-                                <td>75</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td>Alamat</td>
+                                <td><?php echo $siswa['alamat'] ?></td>
                             </tr>
                             <tr>
-                                <td>4</td>
-                                <td>Data</td>
-                                <td>75</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td>Nomor Telepon</td>
+                                <td><?php echo $siswa['no_telp'] ?></td>
                             </tr>
                             <tr>
-                                <td>5</td>
-                                <td>Data</td>
-                                <td>75</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td>Email</td>
+                                <td><?php echo $siswa['email'] ?></td>
                             </tr>
                             <tr>
-                                <td>6</td>
-                                <td>Data</td>
-                                <td>75</td>
-                                <td>Data</td>
-                                <td>Data</td>
+                                <td>Tanggal Lahir</td>
+                                <td><?php echo $siswa['tanggal_lahir'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Jenis Kelamin</td>
+                                <td><?php echo $siswa['jenis_kelamin'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Agama</td>
+                                <td><?php echo $siswa['agama'] ?></td>
                             </tr>
                         </tbody>
                     </table>

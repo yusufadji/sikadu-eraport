@@ -10,12 +10,11 @@ if ($conn->connect_error) {
 if (isset($_COOKIE['id'])) {
     $_SESSION['login'] = true;
 }
-    
+
 if(isset($_SESSION['login'])){
     header("location: index.php");
 }
-    
-    
+
 if(isset($_POST["login"])){
     $nis = $_POST["nis"];
     $password = $_POST["password"];
@@ -31,6 +30,7 @@ if(isset($_POST["login"])){
             $siswa = $result->fetch_assoc();
             $db_password = $siswa['password'];
             $siswaid = $siswa['nis'];
+            $email = $siswa['email'];
             // $verif = password_verify($password, $db_password); nanti pake bcrypt
 
             if ($password == $db_password){
@@ -38,8 +38,8 @@ if(isset($_POST["login"])){
                 // simpan cookie untuk 30 menit (30 mnt * 60 dtk)
                 if (isset($_POST["remember"])) {
                     setcookie("id", $siswa, time()+(30*60));
-                    setcookie("kodenuklir", hash('sha256', $username), time()+(30*60));
-                    setcookie("login_as", 3);
+                    setcookie("kodenuklir", hash('sha256', $email), time()+(30*60));
+                    setcookie("login_as", 'siswa');
                 }
                 // set session
                 $_SESSION['login'] = true;

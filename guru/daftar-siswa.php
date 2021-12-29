@@ -1,3 +1,19 @@
+<?php 
+require_once '../connection.php';
+session_start();
+
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $_SESSION['login_as'] = $login_as;
+} 
+var_dump($_SESSION['login_as']);
+if (!isset($_SESSION['login_as'])) {
+    header('location: index.php');
+} elseif ($_SESSION['login_as'] != "guru"){
+    header('location: index.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
