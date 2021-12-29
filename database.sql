@@ -211,7 +211,7 @@ SELECT * FROM guru WHERE nip = 20000000001
 
 # lihat daftar kelas yang diampu oleh guru
 SELECT * FROM kelas;
-SELECT COUNT(*) AS total_records FROM siswa WHERE id_kelas = 1
+SELECT COUNT(*) AS total_records FROM siswa WHERE id_kelas = 1;
 
 SELECT COUNT(*) AS total_siswa FROM siswa WHERE id_kelas = 1;
 

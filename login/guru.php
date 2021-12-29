@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once "../connection.php";
 
@@ -11,42 +11,41 @@ if (isset($_COOKIE['id'])) {
     $_SESSION['login'] = true;
 }
 
-if(isset($_SESSION['login'])){
+if (isset($_SESSION['login'])) {
     header("location: ../index");
 }
 
-if(isset($_POST["login"])){
+if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
     var_dump($email);
     var_dump($password);
-        
+
     $result = $conn->query("SELECT * FROM guru WHERE email = '$email' LIMIT 1"); // TODO: nanti diganti dg stored procedure
     // $conn->next_result();
     var_dump($result);
-        
+
     if ($result) {
-        if($result->num_rows === 1){
+        if ($result->num_rows === 1) {
             $guru = $result->fetch_assoc();
             $db_password = $guru['password'];
             $guruid = $guru['nip'];
             $email = $guru['email'];
             // $verif = password_verify($password, $db_password); nanti pake bcrypt
 
-            if ($password == $db_password){
+            if ($password == $db_password) {
 
                 // simpan cookie untuk 30 menit (30 mnt * 60 dtk)
                 if (isset($_POST["remember"])) {
-                    setcookie("id", $guruid, time()+(30*60));
-                    setcookie("kodenuklir", hash('sha256', $email), time()+(30*60));
+                    setcookie("id", $guruid, time() + (30 * 60));
+                    setcookie("kodenuklir", hash('sha256', $email), time() + (30 * 60));
                     setcookie("login_as", 'guru');
                 }
                 // set session
                 $_SESSION['login'] = true;
                 $_SESSION['id'] = $guruid;
                 $_SESSION['login_as'] = 'guru';
-                exit();
                 header("location: ../index");
             } else {
                 $status = "invalidlogin";
@@ -57,12 +56,12 @@ if(isset($_POST["login"])){
     } else {
         $status = "invalidlogin";
     }
-    
 }
 
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,6 +72,7 @@ if(isset($_POST["login"])){
 
     <title>Login Guru</title>
 </head>
+
 <body>
     <div class="login">
         <div class="login_content">
@@ -103,4 +103,5 @@ if(isset($_POST["login"])){
 
     <script src="../assets/js/main.js"></script>
 </body>
+
 </html>

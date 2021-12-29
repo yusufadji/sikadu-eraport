@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once '../connection.php';
 session_start();
@@ -14,7 +14,7 @@ if (isset($_COOKIE['login_as'])) {
 
 if (!isset($_SESSION['login_as'])) {
     header('location: ../index.php');
-} else{
+} else {
     if ($_SESSION['login_as'] != "guru") {
         header('location: ../index.php');
     }
@@ -31,7 +31,7 @@ if (!isset($_GET['kls'])) {
     $kelas_id = $_GET['kls'];
 }
 $records_per_page = 30;
-$offset = ($page_no-1) * $records_per_page;
+$offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 
@@ -121,8 +121,7 @@ $adjacents = "2";
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -133,17 +132,16 @@ $adjacents = "2";
             <div class="konten_isi">
                 <div class="konten_pengaturan">
                     <div class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuKelas"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuKelas" data-bs-toggle="dropdown" aria-expanded="false">
                             Kelas
                         </a>
                         <ul class="dropdown-menu" id="dropdown-kelas" aria-labelledby="dropdownMenuKelas">
-                            <?php 
+                            <?php
                             $result_kelas = $conn->query("SELECT * FROM kelas WHERE nip = '$userid'");
                             if ($result_kelas && $result_kelas->num_rows > 0) {
-                                while($row = $result_kelas->fetch_assoc()){
+                                while ($row = $result_kelas->fetch_assoc()) {
                             ?>
-                            <li><a class="dropdown-item" data-kelas="<?php echo $row['id_kelas'] ?>" href="#"><?php echo $row['nama_kelas'] ?></a></li>
+                                    <li><a class="dropdown-item" data-kelas="<?php echo $row['id_kelas'] ?>" href="#"><?php echo $row['nama_kelas'] ?></a></li>
                             <?php
                                 }
                             }
@@ -163,29 +161,26 @@ $adjacents = "2";
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
+                            <?php
                             $result_siswa = $conn->query("SELECT * FROM siswa WHERE id_kelas = $kelas_id LIMIT $records_per_page OFFSET $offset");
                             $no = 1;
                             if ($result_siswa && $result_siswa->num_rows > 0) {
-                                while($row = $result_siswa->fetch_assoc()){
-                            
-                            
+                                while ($row = $result_siswa->fetch_assoc()) {
                             ?>
-                            <tr>
-                                <td><?php echo $no; ?></td>
-                                <td><?php echo $row['nis']; ?></td>
-                                <td><?php echo $row['nama_siswa']; ?></td>
-                                
-                                <td class="aksi"><a href="ubah-nilai.html"><button type="button"
-                                            class="btn btn-primary btn-sm">Ubah nilai <i
-                                                class='bx bx-pencil'></i></button></a>
-                                </td>
-                            </tr>
-                            <?php 
+                                    <tr>
+                                        <td><?php echo $no; ?></td>
+                                        <td><?php echo $row['nis']; ?></td>
+                                        <td><?php echo $row['nama_siswa']; ?></td>
+
+                                        <td class="aksi"><a href="ubah-nilai?nis=<?php echo $row['nis']; ?>"><button type="button" class="btn btn-primary btn-sm">Ubah nilai <i class='bx bx-pencil'></i></button></a>
+                                        </td>
+                                    </tr>
+                            <?php
+                                    $no++;
                                 } //end while
                             } //endif
                             ?>
-                            
+
                         </tbody>
                     </table>
                 </div>
