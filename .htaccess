@@ -1,8 +1,10 @@
-RewriteEngine On # Turn on the rewriting engine
+RewriteEngine On # aktifkan rewrite engine
+
+# sembunyikan extensi file .php
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.*)$ $1.php
 
-# Return 404 if original request is .php
+# block ke file .php asli
 RewriteCond %{THE_REQUEST} "^[^ ]* .*?\.php[? ].*$"
 RewriteRule .* - [L,R=404]

@@ -1,3 +1,43 @@
+<?php
+require_once dirname(__FILE__) . '/../connection.php';
+session_start();
+
+// if (isset($_COOKIE['login_as'])) {
+//     $login_as = $_COOKIE['login_as'];
+//     $_SESSION['login_as'] = $login_as;
+// }
+// if (!isset($_SESSION['login_as'])) {
+//     header('location: ../index');
+// } else {
+//     if ($_SESSION['login_as'] != "admin") {
+//         header('location: ../index');
+//     }
+// }
+
+if (!isset($_GET['p'])) {
+    $page_no = 1;
+} else {
+    $page_no = $_GET['p'];
+}
+if (!isset($_GET['kls'])) {
+    $kelas_id = 1;
+} else {
+    $kelas_id = $_GET['kls'];
+}
+$records_per_page = 30;
+$offset = ($page_no - 1) * $records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+
+$result = $conn->query("SELECT COUNT(*) As total_records FROM guru");
+$total_records = $result->fetch_assoc();
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $records_per_page);
+$second_last = $total_no_of_pages - 1;
+$adjacents = "2";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -76,8 +116,7 @@
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -112,13 +151,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="emailGuru" class="form-label">Alamat Email</label>
-                        <input type="email" name="email" class="form-control" id="emailGuru"
-                            placeholder="name@example.com">
+                        <input type="email" name="email" class="form-control" id="emailGuru" placeholder="name@example.com">
                     </div>
                     <div class="mb-3">
                         <label for="noTelpGuru" class="form-label">Nomor Telepon</label>
-                        <input type="number" name="telepon" class="form-control" id="noTelpGuru"
-                            placeholder="08123456789">
+                        <input type="number" name="telepon" class="form-control" id="noTelpGuru" placeholder="08123456789">
                     </div>
                     <div class="mb-3">
                         <label for="agamaGuru" class="form-label">Agama</label>

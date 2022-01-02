@@ -1,6 +1,7 @@
 <?php
 
-require_once '../connection.php';
+require_once dirname(__FILE__) . '/../connection.php';
+require_once dirname(__FILE__) . '/../model/nilai.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -13,17 +14,26 @@ if (isset($_COOKIE['login_as'])) {
 }
 
 if (!isset($_SESSION['login_as'])) {
-    header('location: ../index.php');
+    header('location: ../index');
 } else {
     if ($_SESSION['login_as'] != "guru") {
-        header('location: ../index.php');
+        header('location: ../index');
     }
 }
 
 if (isset($_GET['nis'])) {
     $siswaid = $_GET['nis'];
+} else {
+    header('location: daftar-nilai');
 }
 
+if (isset($_GET['mapel'])) {
+    $mapelid = $_GET['mapel'];
+} else {
+    $mapelid = 0;
+}
+
+$nilai = new Nilai($siswaid);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -48,7 +58,7 @@ if (isset($_GET['nis'])) {
                         <h1 class="title">E-Raport</h1>
                     </a>
                 </li>
-                <li class="hovered">
+                <li>
                     <a href="#">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
@@ -117,14 +127,14 @@ if (isset($_GET['nis'])) {
                 if ($result_siswa && $result_siswa->num_rows > 0) {
                     while ($row = $result_siswa->fetch_assoc()) {
                 ?>
-                        <form class="konten_ubah_nilai" id="form_ubah_nilai" action="proses_ubah_nilai.php" method="post">
+                        <form class="konten_ubah_nilai" id="form_ubah_nilai" name="form_nilai" action="../controller/action_nilai" method="post">
                             <div class="mb-3">
                                 <label for="namaSiswa" class="form-label">Nama siswa</label>
-                                <input type="text" class="form-control" id="namaSiswa" disabled placeholder="<?php echo $row['nama_siswa']; ?>">
+                                <input type="text" class="form-control" id="namaSiswa" disabled value="<?php echo $row['nama_siswa']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="nomorIndukSiswa" class="form-label">Nomor induk siswa</label>
-                                <input type="text" class="form-control" id="nomorIndukSiswa" disabled placeholder="<?php echo $row['nis']; ?>">
+                                <input type="text" name="nis-disabled" class="form-control" id="nomorIndukSiswa" disabled value="<?php echo $row['nis']; ?>" placeholder="<?php echo $row['nis']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="kelasSiswa" class="form-label">Kelas</label>
@@ -133,7 +143,7 @@ if (isset($_GET['nis'])) {
                                 if ($nama_kelas && $nama_kelas->num_rows > 0) {
                                     while ($row = $nama_kelas->fetch_assoc()) {
                                 ?>
-                                        <input type="text" class="form-control" id="kelasSiswa" disabled placeholder="<?php echo $row['nama_kelas']; ?>">
+                                        <input type="text" class="form-control" id="kelasSiswa" disabled value="<?php echo $row['nama_kelas']; ?>">
                                 <?php
                                     }
                                 }
@@ -146,11 +156,11 @@ if (isset($_GET['nis'])) {
                                     </a>
                                     <ul class="dropdown-menu" id="dropdown-mapel" aria-labelledby="dropdownMenuMapel">
                                         <?php
-                                        $result_mapel = $conn->query("SELECT * FROM mata_pelajaran");
+                                        $result_mapel = $conn->query("SELECT * FROM mata_pelajaran WHERE nip = '$userid'");
                                         if ($result_mapel && $result_mapel->num_rows > 0) {
                                             while ($row = $result_mapel->fetch_assoc()) {
                                         ?>
-                                                <li><a class="dropdown-item" data-mapel="<?php echo $row['id_mapel'] ?>" href="#"><?php echo $row['nama_mapel'] ?></a></li>
+                                                <li><a class="dropdown-item <?php echo $mapelid == $row['id_mapel'] ? "bg-primary text-white" : ""; ?>" data-mapel="<?php echo $row['id_mapel'] ?>" href="#"><?php echo $row['nama_mapel'] ?></a></li>
                                         <?php
                                             }
                                         }
@@ -159,48 +169,73 @@ if (isset($_GET['nis'])) {
                                 </div>
                             </div>
                             <?php
-                            $nilai_siswa = $conn->query("SELECT * FROM siswa,nilai WHERE nilai.nis = $siswaid");
-
-                            $row = $nilai_siswa->fetch_assoc();
+                            if ($mapelid > 0) {
+                                $nilai_siswa = $nilai->get_nilai($mapelid);
+                                if ($nilai_siswa) {
+                                    $row = $nilai_siswa->fetch_assoc();
+                                    if ($nilai_siswa->num_rows === 0) {
+                                        echo "Belum Ada Nilai";
+                                        $aksi = "tambah";
+                                    } else {
+                                        $id_nilai = $row['id_nilai'];
+                                        $aksi = "ubah";
+                                    }
                             ?>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP1" class="form-label">CP1</label>
-                                <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP2" class="form-label">CP2</label>
-                                <input type="number" name="nilaicp2" min="0" max="100" class="form-control" id="nilaiSiswaCP2" value="<?php echo $row['cp2']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP3" class="form-label">CP3</label>
-                                <input type="number" name="nilaicp3" min="0" max="100" class="form-control" id="nilaiSiswaCP3" value="<?php echo $row['cp3']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP4" class="form-label">CP4</label>
-                                <input type="number" name="nilaicp4" min="0" max="100" class="form-control" id="nilaiSiswaCP4" value="<?php echo $row['cp4']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaUTS" class="form-label">UTS</label>
-                                <input type="number" name="nilaiuts" min="0" max="100" class="form-control" id="nilaiSiswaUTS" value="<?php echo $row['uts']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaUAS" class="form-label">UAS</label>
-                                <input type="number" name="nilaiuas" min="0" max="100" class="form-control" id="nilaiSiswaUAS" value="<?php echo $row['uas']; ?>">
-                            </div>
+                                    <div class="mb-3">
+                                        <label for="nilaiSiswaCP1" class="form-label">CP1</label>
+                                        <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nilaiSiswaCP2" class="form-label">CP2</label>
+                                        <input type="number" name="nilaicp2" min="0" max="100" class="form-control" id="nilaiSiswaCP2" value="<?php echo $row['cp2']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nilaiSiswaCP3" class="form-label">CP3</label>
+                                        <input type="number" name="nilaicp3" min="0" max="100" class="form-control" id="nilaiSiswaCP3" value="<?php echo $row['cp3']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nilaiSiswaCP4" class="form-label">CP4</label>
+                                        <input type="number" name="nilaicp4" min="0" max="100" class="form-control" id="nilaiSiswaCP4" value="<?php echo $row['cp4']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nilaiSiswaUTS" class="form-label">UTS</label>
+                                        <input type="number" name="nilaiuts" min="0" max="100" class="form-control" id="nilaiSiswaUTS" value="<?php echo $row['uts']; ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nilaiSiswaUAS" class="form-label">UAS</label>
+                                        <input type="number" name="nilaiuas" min="0" max="100" class="form-control" id="nilaiSiswaUAS" value="<?php echo $row['uas']; ?>">
+                                    </div>
+                                    <input type="hidden" name="aksi" id="aksinilai" value="<?php echo $aksi; ?>">
+                                    <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $mapelid; ?>">
+                                    <input type="hidden" name="nis" id="nis" value="<?php echo $siswaid; ?>">
+                                    <div class="konten_ubah_nilai_opsi">
+                                        <a href="daftar-nilai"><button class="btn btn-danger">Batalkan</button></a>
+                                        <button type="submit" name="simpan-nilai" class="btn btn-primary">Simpan</button>
+                                    </div>
                         </form>
-                        <div class="konten_ubah_nilai_opsi">
-                            <a href="daftar-nilai"><button class="btn btn-danger">Batalkan</button></a>
-                            <a href="daftar-nilai"><button type="submit" class="btn btn-primary">Simpan</button></a>
-                        </div>
-                <?php
+
+        <?php
+                                }
+                            }
+                        }
                     }
-                }
-                ?>
+        ?>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var current_nis = '<?php echo $siswaid ?>';
+
+        $('#dropdown-mapel a').on('click', function() {
+            var txt = ($(this).data('mapel'));
+            var link = "./ubah-nilai?&nis=" + current_nis + "&mapel=" + txt;
+            console.log(link)
+            window.open(link, "_self");
+        });
+    </script>
 </body>
 
 </html>

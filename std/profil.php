@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 session_start();
-require('connection.php');
+require_once '../connection.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -36,7 +36,7 @@ if ($result) {
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -51,7 +51,7 @@ if ($result) {
                     </a>
                 </li>
                 <li>
-                    <a href="index">
+                    <a href="../index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -75,7 +75,7 @@ if ($result) {
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -93,8 +93,7 @@ if ($result) {
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -105,8 +104,7 @@ if ($result) {
             <div class="konten_isi" id="data-pribadi">
                 <div class="konten_profil">
                     <div class="konten_profil_foto">
-                        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                            alt="user" title="Foto profil siswa" />
+                        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user" title="Foto profil siswa" />
                     </div>
                 </div>
                 <!-- <div class="konten_pengaturan">

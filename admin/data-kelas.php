@@ -1,3 +1,43 @@
+<?php
+require_once dirname(__FILE__) . '/../connection.php';
+session_start();
+
+// if (isset($_COOKIE['login_as'])) {
+//     $login_as = $_COOKIE['login_as'];
+//     $_SESSION['login_as'] = $login_as;
+// }
+// if (!isset($_SESSION['login_as'])) {
+//     header('location: ../index');
+// } else {
+//     if ($_SESSION['login_as'] != "admin") {
+//         header('location: ../index');
+//     }
+// }
+
+if (!isset($_GET['p'])) {
+    $page_no = 1;
+} else {
+    $page_no = $_GET['p'];
+}
+if (!isset($_GET['kls'])) {
+    $kelas_id = 1;
+} else {
+    $kelas_id = $_GET['kls'];
+}
+$records_per_page = 30;
+$offset = ($page_no - 1) * $records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+
+$result = $conn->query("SELECT COUNT(*) As total_records FROM guru");
+$total_records = $result->fetch_assoc();
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $records_per_page);
+$second_last = $total_no_of_pages - 1;
+$adjacents = "2";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -22,43 +62,43 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="../index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-guru.html">
+                    <a href="data-guru">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Guru</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-siswa.html">
+                    <a href="data-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Siswa</span>
                     </a>
                 </li>
-                <li>
-                    <a href="data-kelas.html">
+                <li class="hovered">
+                    <a href="data-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Data Kelas</span>
                     </a>
                 </li>
-                <li class="hovered">
-                    <a href="data-mapel.html">
+                <li>
+                    <a href="data-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Data Mapel</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-nilai.html">
+                    <a href="data-nilai">
                         <span class="icon"><i class='bx bx-book-add'></i></span>
                         <span class="title">Data Nilai</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -82,8 +122,7 @@
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -91,46 +130,65 @@
         <div class="cardBox">
             <div class="card">
                 <div>
-                    <div class="numbers">20</div>
-                    <div class="cardName">Mata pelajaran</div>
+                    <?php
+                    $result_kelas = $conn->query("SELECT * FROM kelas LIMIT $records_per_page OFFSET $offset");
+                    if ($result_kelas && $result_kelas->num_rows > 0) {
+                        $result_jml = $conn->query("SELECT COUNT(*) AS total_kelas FROM kelas");
+                        $jml = $result_jml->fetch_assoc();
+                        echo "<div class='numbers'>${jml['total_kelas']}</div>";
+                    }
+                    ?>
+                    <div class="cardName">Kelas</div>
                 </div>
                 <div class="iconBx">
-                    <i class='bx bx-book-alt'></i>
+                    <i class='bx bx-door-open'></i>
                 </div>
             </div>
         </div>
 
         <div class="konten">
             <h2 class="konten_title">
-                Data Mapel
+                Data Kelas
             </h2>
             <div class="konten_isi">
                 <div class="konten_pengaturan">
-                    <a href="tambah-data-mapel.html"><button type="button" class="btn btn-success">Tambah
-                            mapel</button></a>
+                    <a href="tambah-data-kelas"><button type="button" class="btn btn-success">Tambah
+                            kelas</button></a>
                 </div>
                 <div class="konten_table table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Mata pelajaran</th>
+                                <th>Kelas</th>
+                                <th>Jumlah Siswa</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Data</td>
-                                <td class="aksi">
-                                    <a href="ubah-data-mapel.html"><button type="button" data-bs-toggle="tooltip"
-                                            class="btn btn-primary btn-sm" title="Ubah"><i
-                                                class='bx bx-pencil'></i></button></a>
-                                    <a href="hapus-data-mapel.html"><button type="button" data-bs-toggle="tooltip"
-                                            class="btn btn-danger btn-sm" title="Hapus"><i
-                                                class='bx bx-trash'></i></button></a>
-                                </td>
-                            </tr>
+                            <?php
+                            $result_kelas = $conn->query("SELECT * FROM kelas LIMIT $records_per_page OFFSET $offset");
+                            if ($result_kelas && $result_kelas->num_rows > 0) {
+                                $no = 1;
+                                while ($row = $result_kelas->fetch_assoc()) {
+                                    $id_kls = $row['id_kelas'];
+                                    $result_jml = $conn->query("SELECT COUNT(*) AS total_siswa FROM siswa WHERE id_kelas = $id_kls");
+                                    $jml = $result_jml->fetch_assoc();
+                                    echo "
+                                <tr>
+                                    <td>$no</td>
+                                    <td>${row['nama_kelas']}</td>
+                                    <td>${jml['total_siswa']}</td>
+                                    <td class='aksi'>
+                                        <a href='ubah-data-kelas?id-kelas=${row['id_kelas']}'><button type='button' data-bs-toggle='tooltip' class='btn btn-primary btn-sm' title='Ubah'><i class='bx bx-pencil'></i></button></a>
+                                        <a href='hapus-data-kelas?id-kelas=${row['id_kelas']}'><button type='button' data-bs-toggle='tooltip' class='btn btn-danger btn-sm' title='Hapus'><i class='bx bx-trash'></i></button></a>
+                                    </td>
+                                </tr>
+                                ";
+                                    $no++;
+                                } // TODO : Gak reti query nggo nampilke jumlah siswa per kelas e
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>

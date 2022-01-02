@@ -1,14 +1,5 @@
 Tugas Besar Rekayasa Web
 
-Catatan:
-LAYOUT
-1. Kurang LOGIN
-
-DATABASE
-- Fungsi hitung rata-rata nilai
-- Fungsi hitung nilai akhir
-- Scheduled Backup data
-
 Changelog:
 1. Ubah tabel guru -> nip, no_telp menjadi varchar
 2. Ubah tabel siswa -> nip, no_telp menjadi varchar
@@ -20,3 +11,4 @@ Todo List :
 1. (+)Fungsi hitung rata2 nilai
 2. (+)Fungsi hitung nilai akhir
 3. (+)Scheduled backup
+4. (+)Admin Page

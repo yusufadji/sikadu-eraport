@@ -1,22 +1,22 @@
 <?php
 
-require_once '../connection.php';
+require_once dirname(__FILE__) . '/../connection.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
     $login_as = $_COOKIE['login_as'];
-    $userid = $_COOKIE['id'];
+    $nip = $_COOKIE['id'];
     $_SESSION['login_as'] = $login_as;
 } else {
-    $userid = $_SESSION['id'];
+    $nip = $_SESSION['id'];
     $login_as = $_SESSION['login_as'];
 }
 
 if (!isset($_SESSION['login_as'])) {
-    header('location: ../index.php');
+    header('location: ../index');
 } else {
     if ($_SESSION['login_as'] != "guru") {
-        header('location: ../index.php');
+        header('location: ../index');
     }
 }
 
@@ -30,7 +30,7 @@ if (!isset($_GET['kls'])) {
 } else {
     $kelas_id = $_GET['kls'];
 }
-$records_per_page = 30;
+$records_per_page = 10;
 $offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -67,43 +67,43 @@ $adjacents = "2";
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-siswa.html">
+                    <a href="daftar-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Daftar Siswa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-kelas.html">
+                    <a href="daftar-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Daftar Kelas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-mapel.html">
+                    <a href="daftar-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Daftar Mapel</span>
                     </a>
                 </li>
                 <li class="hovered">
-                    <a href="daftar-nilai.html">
+                    <a href="daftar-nilai">
                         <span class="icon"><i class='bx bx-book-add'></i></span>
                         <span class="title">Daftar Nilai</span>
                     </a>
                 </li>
                 <li>
-                    <a href="pesan.html">
+                    <a href="pesan">
                         <span class="icon"><i class='bx bx-chat'></i></span>
                         <span class="title">Pesan</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -137,11 +137,11 @@ $adjacents = "2";
                         </a>
                         <ul class="dropdown-menu" id="dropdown-kelas" aria-labelledby="dropdownMenuKelas">
                             <?php
-                            $result_kelas = $conn->query("SELECT * FROM kelas WHERE nip = '$userid'");
+                            $result_kelas = $conn->query("SELECT * FROM kelas WHERE nip = '$nip'");
                             if ($result_kelas && $result_kelas->num_rows > 0) {
                                 while ($row = $result_kelas->fetch_assoc()) {
                             ?>
-                                    <li><a class="dropdown-item" data-kelas="<?php echo $row['id_kelas'] ?>" href="#"><?php echo $row['nama_kelas'] ?></a></li>
+                                    <li><a class="dropdown-item <?php echo $kelas_id == $row['id_kelas'] ? "bg-primary text-white" : ""; ?>" data-kelas="<?php echo $row['id_kelas'] ?>" href="#"><?php echo $row['nama_kelas'] ?></a></li>
                             <?php
                                 }
                             }
@@ -188,11 +188,24 @@ $adjacents = "2";
             <div class="konten_nav">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <?php
+                        if ($total_no_of_pages > 1) {
+                        ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$previous_page"; ?>">Previous</a></li>
+                            <?php
+
+                            for ($i = 1; $i <= $total_no_of_pages; $i++) {
+                            ?>
+                                <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?kls=$kelas_id&p=$i"; ?>'><?php echo $i; ?></a></li>
+                            <?php
+
+                            }
+
+                            ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$next_page" ?>">Next</a></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </nav>
             </div>
@@ -200,6 +213,13 @@ $adjacents = "2";
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         </script>
         <script src="../assets/js/main.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $('#dropdown-kelas a').on('click', function() {
+                var txt = ($(this).data('kelas'));
+                window.open("./daftar-nilai?kls=" + txt, "_self")
+            });
+        </script>
 </body>
 
 </html>

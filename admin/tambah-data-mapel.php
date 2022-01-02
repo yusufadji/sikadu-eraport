@@ -1,3 +1,43 @@
+<?php
+require_once dirname(__FILE__) . '/../connection.php';
+session_start();
+
+// if (isset($_COOKIE['login_as'])) {
+//     $login_as = $_COOKIE['login_as'];
+//     $_SESSION['login_as'] = $login_as;
+// }
+// if (!isset($_SESSION['login_as'])) {
+//     header('location: ../index');
+// } else {
+//     if ($_SESSION['login_as'] != "admin") {
+//         header('location: ../index');
+//     }
+// }
+
+if (!isset($_GET['p'])) {
+    $page_no = 1;
+} else {
+    $page_no = $_GET['p'];
+}
+if (!isset($_GET['kls'])) {
+    $kelas_id = 1;
+} else {
+    $kelas_id = $_GET['kls'];
+}
+$records_per_page = 30;
+$offset = ($page_no - 1) * $records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+
+$result = $conn->query("SELECT COUNT(*) As total_records FROM guru");
+$total_records = $result->fetch_assoc();
+$total_records = $total_records['total_records'];
+$total_no_of_pages = ceil($total_records / $records_per_page);
+$second_last = $total_no_of_pages - 1;
+$adjacents = "2";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -22,43 +62,43 @@
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="../index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-guru.html">
+                    <a href="data-guru">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Guru</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-siswa.html">
+                    <a href="data-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Siswa</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-kelas.html">
+                    <a href="data-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Data Kelas</span>
                     </a>
                 </li>
                 <li class="hovered">
-                    <a href="data-mapel.html">
+                    <a href="data-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Data Mapel</span>
                     </a>
                 </li>
                 <li>
-                    <a href="data-nilai.html">
+                    <a href="data-nilai">
                         <span class="icon"><i class='bx bx-book-add'></i></span>
                         <span class="title">Data Nilai</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -76,8 +116,7 @@
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -86,7 +125,7 @@
                 Tambah Data Mapel
             </h2>
             <div class="konten_isi">
-                <form class="konten_ubah_nilai">
+                <form action="../controller/action_mapel" method="post" class="konten_ubah_nilai">
                     <div class="mb-3">
                         <label for="namaMapel" class="form-label">Nama Mata Pelajaran</label>
                         <input type="text" name="namaMapel" class="form-control" id="namaMapel">
@@ -96,8 +135,8 @@
                         <input type="number" name="guruPengampu" class="form-control" id="guruPengampu">
                     </div>
                     <div class="konten_ubah_nilai_opsi">
-                        <a href="data-mapel.html"><button class="btn btn-danger">Batalkan</button></a>
-                        <a href="data-mapel.html"><button type="submit" class="btn btn-success">Tambahkan</button></a>
+                        <a href="data-mapel"><button class="btn btn-danger">Batalkan</button></a>
+                        <button type="submit" name="tambah-mapel" class="btn btn-success">Tambahkan</button>
                     </div>
                 </form>
             </div>

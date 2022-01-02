@@ -7,10 +7,10 @@ if (isset($_COOKIE['login_as'])) {
     $_SESSION['login_as'] = $login_as;
 } 
 if (!isset($_SESSION['login_as'])) {
-    header('location: ../index.php');
+    header('location: ../index');
 } else{
     if ($_SESSION['login_as'] != "guru") {
-        header('location: ../index.php');
+        header('location: ../index');
     }
 }
 
@@ -20,7 +20,7 @@ if (!isset($_GET['p'])) {
     $page_no = $_GET['p'];
 }
 
-$records_per_page = 30;
+$records_per_page = 10;
 $offset = ($page_no-1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
@@ -58,43 +58,43 @@ $adjacents = "2";
                     </a>
                 </li>
                 <li>
-                    <a href="index.html">
+                    <a href="index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-siswa.html">
+                    <a href="daftar-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Daftar Siswa</span>
                     </a>
                 </li>
                 <li class="hovered">
-                    <a href="daftar-kelas.html">
+                    <a href="daftar-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Daftar Kelas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-mapel.html">
+                    <a href="daftar-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Daftar Mapel</span>
                     </a>
                 </li>
                 <li>
-                    <a href="daftar-nilai.html">
+                    <a href="daftar-nilai">
                         <span class="icon"><i class='bx bx-book-add'></i></span>
                         <span class="title">Daftar Nilai</span>
                     </a>
                 </li>
                 <li>
-                    <a href="pesan.html">
+                    <a href="pesan">
                         <span class="icon"><i class='bx bx-chat'></i></span>
                         <span class="title">Pesan</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -132,7 +132,7 @@ $adjacents = "2";
                     </thead>
                     <tbody>
                         <?php 
-                        $result_kelas = $conn->query("SELECT * FROM kelas");
+                        $result_kelas = $conn->query("SELECT * FROM kelas LIMIT $records_per_page OFFSET $offset");
                         if ($result_kelas && $result_kelas->num_rows > 0) {
                             $no = 1;
                             while($row = $result_kelas->fetch_assoc()){
@@ -160,18 +160,18 @@ $adjacents = "2";
                         <?php 
                         if ($total_no_of_pages > 1) {
                          ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$previous_page"; ?>">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?p=$previous_page"; ?>">Previous</a></li>
                         <?php 
                         
                             for ($i=1; $i <= $total_no_of_pages; $i++) { 
                         ?>
-                        <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?kls=$kelas_id&p=$i"; ?>'><?php echo $i; ?></a></li>
+                        <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?p=$i"; ?>'><?php echo $i; ?></a></li>
                         <?php
                             
                             }
                         
                         ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$next_page" ?>">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="<?php echo "?p=$next_page" ?>">Next</a></li>
                         <?php 
                         }
                         ?>

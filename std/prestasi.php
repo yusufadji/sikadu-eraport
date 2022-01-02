@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once 'connection.php';
+require_once '../connection.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -13,16 +13,15 @@ if (isset($_COOKIE['login_as'])) {
 }
 
 if ($login_as == "siswa") {
-     
 }
 if (isset($_POST['tahun_ajaran'])) {
     $smt = $_POST['semester'];
     $ta = $_POST['tahun_ajaran'];
     $data = array();
-    
+
     $result = $conn->query("SELECT * FROM raport INNER JOIN nilai ON raport.id_raport = nilai.id_raport INNER JOIN mata_pelajaran ON nilai.id_mapel = mata_pelajaran.id_mapel WHERE raport.nis = '51904100001' AND tahun_ajaran = $ta AND rapor_semester = $smt;");
     while ($row = $result->fetch_object()) {
-        $data[]=$row;
+        $data[] = $row;
     }
     $response = array(
         'status' => 200,
@@ -35,7 +34,7 @@ if (isset($_POST['tahun_ajaran'])) {
     exit();
 }
 
-$result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
+$result_ta = $conn->query("SELECT DISTINCT (tahun_ajaran) FROM raport WHERE nis = '$userid'");
 
 
 ?>
@@ -48,7 +47,7 @@ $result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -63,7 +62,7 @@ $result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
                     </a>
                 </li>
                 <li>
-                    <a href="index">
+                    <a href="../index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -87,7 +86,7 @@ $result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -105,8 +104,7 @@ $result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -116,26 +114,24 @@ $result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
             </h2>
             <div class="konten_isi">
                 <div class="konten_pengaturan">
-                
+
                     <div class="dropdown m-1">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuTA"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuTA" data-bs-toggle="dropdown" aria-expanded="false">
                             Tahun Ajaran
                         </a>
                         <ul id="dropdown-tahunajaran" class="dropdown-menu" aria-labelledby="dropdownMenuTA">
-                            <?php 
-                            while ($row = $result->fetch_assoc()){
+                            <?php
+                            while ($row = $result_ta->fetch_assoc()) {
                             ?>
-                            <li><a class="dropdown-item" data-tahunajaran="<?php echo $row['tahun_ajaran']; ?>" href="#"><?php echo substr_replace($row['tahun_ajaran'], '/', 4, 0); ?></a></li>
-                            <?php 
+                                <li><a class="dropdown-item" data-tahunajaran="<?php echo $row['tahun_ajaran']; ?>" href="#"><?php echo substr_replace($row['tahun_ajaran'], '/', 4, 0); ?></a></li>
+                            <?php
                             }
                             ?>
-                            
+
                         </ul>
                     </div>
                     <div class="dropdown m-1">
-                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuSmt"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuSmt" data-bs-toggle="dropdown" aria-expanded="false">
                             Semester
                         </a>
 
@@ -183,40 +179,40 @@ $result = $conn->query("SELECT * FROM raport WHERE nis = '$userid'");
         <script src="assets/js/main.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-var selected_TA = 0;
+            var selected_TA = 0;
 
-$('#dropdown-tahunajaran a').on('click', function () {
-    var txt= ($(this).data('tahunajaran'));
-    selected_TA = txt;
-    $('#dropdownMenuTA').text($(this)[0].text);
-});
+            $('#dropdown-tahunajaran a').on('click', function() {
+                var txt = ($(this).data('tahunajaran'));
+                selected_TA = txt;
+                $('#dropdownMenuTA').text($(this)[0].text);
+            });
 
-var selected_semester = 1;
-$('#dropdown-semester a').on('click', function () {
-    var txt= ($(this).data('semester'));
-    selected_semester = txt;
-    $('#dropdownMenuSmt').text($(this)[0].text);
-    console.log($(this)[0].text)
-});
+            var selected_semester = 1;
+            $('#dropdown-semester a').on('click', function() {
+                var txt = ($(this).data('semester'));
+                selected_semester = txt;
+                $('#dropdownMenuSmt').text($(this)[0].text);
+                console.log($(this)[0].text)
+            });
 
-function lihat_data() {
-    $.ajax({
-        type: "POST",
-        url: "./prestasi",
-        data: {
-            tahun_ajaran: selected_TA,
-            semester: selected_semester
-        },
-        beforeSend: function () {
-            $("#loading-status").show()
-        },
-        success: function (response) {
-            $("#loading-status").hide()
-            $("#tabel-body-prestasi").html("");
-            resp_data = response.data;
-            resp_data.forEach(element => {
-                $("#tabel-body-prestasi").append(
-                    `<tr>
+            function lihat_data() {
+                $.ajax({
+                    type: "POST",
+                    url: "./prestasi",
+                    data: {
+                        tahun_ajaran: selected_TA,
+                        semester: selected_semester
+                    },
+                    beforeSend: function() {
+                        $("#loading-status").show()
+                    },
+                    success: function(response) {
+                        $("#loading-status").hide()
+                        $("#tabel-body-prestasi").html("");
+                        resp_data = response.data;
+                        resp_data.forEach(element => {
+                            $("#tabel-body-prestasi").append(
+                                `<tr>
                         <td>${element.nama_mapel}</td>
                         <td>${element.cp1}</td>
                         <td>${element.cp2}</td>
@@ -226,15 +222,14 @@ function lihat_data() {
                         <td>${element.uas}</td>
                         <td>${element.nilai_akhir}</td>
                     </tr>`
-                )
-            });
-        },
-        error: function (response) {
-            console.log(response)
-        },
-    });
-}
-
+                            )
+                        });
+                    },
+                    error: function(response) {
+                        console.log(response)
+                    },
+                });
+            }
         </script>
 </body>
 

@@ -1,6 +1,8 @@
 <?php
 session_start();
-require('connection.php');
+require_once 'connection.php';
+require_once 'utils.php';
+require_once 'model/guru.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -34,8 +36,16 @@ if ($get_user->num_rows === 1) {
     header("location: logout");
 }
 
-// coba2
-$is_walikelas = true;
+if ($login_as == "guru") {
+    $guru = new Guru($userid);
+    $wali_kelas = $guru->cek_wali_kelas();
+
+    if ($wali_kelas) {
+        $is_walikelas = true;
+    } else {
+        $is_walikelas = false;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -71,7 +81,7 @@ $is_walikelas = true;
                 if ($login_as == "siswa") {
                 ?>
                     <li>
-                        <a href="profil">
+                        <a href="std/profil">
                             <span class="icon"><i class='bx bx-user'></i></span>
                             <span class="title">Profil</span>
                         </a>
@@ -112,31 +122,31 @@ $is_walikelas = true;
                 if ($login_as == "admin") {
                 ?>
                     <li>
-                        <a href="data-guru">
+                        <a href="admin/data-guru">
                             <span class="icon"><i class='bx bx-user'></i></span>
                             <span class="title">Data Guru</span>
                         </a>
                     </li>
                     <li>
-                        <a href="data-siswa">
+                        <a href="admin/data-siswa">
                             <span class="icon"><i class='bx bx-user'></i></span>
                             <span class="title">Data Siswa</span>
                         </a>
                     </li>
                     <li>
-                        <a href="data-kelas">
+                        <a href="admin/data-kelas">
                             <span class="icon"><i class='bx bx-door-open'></i></span>
                             <span class="title">Data Kelas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="data-mapel">
+                        <a href="admin/data-mapel">
                             <span class="icon"><i class='bx bx-book-alt'></i></span>
                             <span class="title">Data Mapel</span>
                         </a>
                     </li>
                     <li>
-                        <a href="data-nilai">
+                        <a href="admin/data-nilai">
                             <span class="icon"><i class='bx bx-book-add'></i></span>
                             <span class="title">Data Nilai</span>
                         </a>
@@ -145,11 +155,11 @@ $is_walikelas = true;
                 } //endif $login_as == 'admin'
 
                 if ($login_as == "siswa" || ($login_as == "guru" && $is_walikelas)) {
-                    # code...
+
                 ?>
 
                     <li>
-                        <a href="./pesan">
+                        <a href="<?php echo $logis_as == "guru" ? "guru" : "std"; ?>/pesan">
                             <span class="icon"><i class='bx bx-chat'></i></span>
                             <span class="title">Pesan</span>
                         </a>
@@ -162,7 +172,7 @@ $is_walikelas = true;
 
                 ?>
                     <li>
-                        <a href="./prestasi">
+                        <a href="std/prestasi">
                             <span class="icon"><i class='bx bxs-graduation'></i></span>
                             <span class="title">Prestasi</span>
                         </a>
@@ -171,7 +181,7 @@ $is_walikelas = true;
                 }
                 ?>
                 <li>
-                    <a href="#">
+                    <a href="logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -195,11 +205,68 @@ $is_walikelas = true;
 
         <div class="konten">
             <h2 class="konten_title">
-                Pengumuman
+                <?php
+                if ($login_as == "guru") {
+                    $nama_guru = $guru->get_nama_guru();
+                    echo "Selamat datang, $nama_guru";
+                }
+                ?>
             </h2>
             <div class="konten_isi">
+                <?php
+
+                if ($login_as == "guru") {
+
+                ?>
+                    <!-- Dashboard Guru -->
+                    <div class="dashboard-container">
+                        <div class="row">
+                            <div class="col-md-4 col-xl-3">
+                                <div class="card bg-c-blue guru-card">
+                                    <div class="card-block">
+                                        <h6 class="m-b-20">Tahun Ajaran</h6>
+                                        <h2 class="text-left"><i class="fa fa-cart-plus f-left"></i><span>2020/2021</span></h2>
+                                        <p class="m-b-0"><?php echo hari_ini(); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-xl-3">
+                                <div class="card bg-c-green guru-card">
+                                    <div class="card-block">
+                                        <h6 class="m-b-20">Semester</h6>
+                                        <h2 class="text-end"><i class="fa fa-rocket f-left"></i><span>2</span></h2>
+                                        <p class="m-b-0">Semester Genap</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-xl-3">
+                                <div class="card bg-c-yellow guru-card">
+                                    <div class="card-block">
+                                        <h6 class="m-b-20">Anda Wali Kelas</h6>
+                                        <h2 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h2>
+                                        <p class="m-b-0">Kelas</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xl-3">
+                                <div class="card bg-c-pink guru-card">
+                                    <div class="card-block">
+                                        <h6 class="m-b-20">Anda Mengajar</h6>
+                                        <h2 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h2>
+                                        <p class="m-b-0">Mapel</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
                 <div class="konten_table table-responsive">
-                    <table class="table table-bordered caption-top">
+                    <table class="table table-bordered caption-top" id="kalender">
                         <caption>Kalender Akademik 2021</caption>
                         <thead>
                             <tr>
@@ -209,24 +276,44 @@ $is_walikelas = true;
                         </thead>
                         <tbody>
                             <tr>
-                                <td>26 Agustus - 03 September 2021</td>
-                                <td>UTS</td>
+                                <td>{{ tgl1 }}</td>
+                                <td>{{ agd1 }}</td>
                             </tr>
                             <tr>
-                                <td>26 Agustus - 03 September 2021</td>
-                                <td>UTS</td>
+                                <td>{{ tgl2 }}</td>
+                                <td>{{ agd2 }}</td>
                             </tr>
                             <tr>
-                                <td>26 Agustus - 03 September 2021</td>
-                                <td>UTS</td>
+                                <td>{{ tgl3 }}</td>
+                                <td>{{ agd3 }}</td>
                             </tr>
                             <tr>
-                                <td>26 Agustus - 03 September 2021</td>
-                                <td>UTS</td>
+                                <td>{{ tgl4 }}</td>
+                                <td>{{ agd4 }}</td>
                             </tr>
                             <tr>
-                                <td>26 Agustus - 03 September 2021</td>
-                                <td>UTS</td>
+                                <td>{{ tgl5 }}</td>
+                                <td>{{ agd5 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tgl6 }}</td>
+                                <td>{{ agd6 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tgl7 }}</td>
+                                <td>{{ agd7 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tgl8 }}</td>
+                                <td>{{ agd8 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tgl9 }}</td>
+                                <td>{{ agd9 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ tgl10 }}</td>
+                                <td>{{ agd10 }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -234,10 +321,44 @@ $is_walikelas = true;
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/main.js"></script>
-        <script>
-            alert("Anda login sebagai <?php echo $login_as ?>")
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+        <script type="text/javascript">
+            function ready(f) {
+                /in/.test(document.readyState) ? setTimeout('ready(' + f + ')', 9) : f();
+            }
+            const u7936882821 = {
+                tgl1: '26 Agustus - 03 September 2021',
+                tgl2: '20 - 25 September 2021',
+                tgl3: '27 September - 13 November 2021',
+                tgl4: '23 Oktober 2021',
+                tgl5: '23 Oktober 2021',
+                tgl6: '15 - 24 November 2021 (9 hari)',
+                tgl7: '18 Desember 2021',
+                tgl8: '25 November 2021 - 12 Januari 2022',
+                tgl9: '13 - 22 Januari 2022 (9 hari)',
+                tgl10: '27 Januari 2022',
+                agd1: 'Registrasi & Pengisian KRS Mahasiswa Lama Ganjil 2021/2022',
+                agd2: 'Pengarahan Akademik dan Pengisian KRS Mahasiswa Baru',
+                agd3: 'Perkuliahan Tahap 1 (7 Minggu)',
+                agd4: 'Dies Natalies Universitas',
+                agd5: 'Upacara Wisuda',
+                agd6: 'Ujian Tengah Semester 1 (UTS)',
+                agd7: 'Upacara Wisuda',
+                agd8: 'Perkuliahan Tahap 2 (7 Minggu)',
+                agd9: 'Ujian Akhir Semester 1 (UAS)',
+                agd10: 'Yudisium Semester Ganjil'
+            }
+            ready(function() {
+                var appinfo = new Vue({
+                    el: '#kalender',
+                    data: u7936882821
+                })
+            });
         </script>
+        <script src="assets/js/main.js"></script>
+        <!-- <script>
+            alert("Anda login sebagai <?php echo $login_as ?>")
+        </script> -->
 </body>
 
 </html>
