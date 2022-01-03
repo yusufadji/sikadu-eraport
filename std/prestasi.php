@@ -1,6 +1,7 @@
 <?php
 
 require_once '../connection.php';
+require_once '../model/nilai.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -14,27 +15,9 @@ if (isset($_COOKIE['login_as'])) {
 
 if ($login_as == "siswa") {
 }
-if (isset($_POST['tahun_ajaran'])) {
-    $smt = $_POST['semester'];
-    $ta = $_POST['tahun_ajaran'];
-    $data = array();
 
-    $result = $conn->query("SELECT * FROM raport INNER JOIN nilai ON raport.id_raport = nilai.id_raport INNER JOIN mata_pelajaran ON nilai.id_mapel = mata_pelajaran.id_mapel WHERE raport.nis = '51904100001' AND tahun_ajaran = $ta AND rapor_semester = $smt;");
-    while ($row = $result->fetch_object()) {
-        $data[] = $row;
-    }
-    $response = array(
-        'status' => 200,
-        'message' => "Success",
-        'data' => $data
-    );
-    http_response_code(200);
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit();
-}
-
-$result_ta = $conn->query("SELECT DISTINCT (tahun_ajaran) FROM raport WHERE nis = '$userid'");
+$nilai = new Nilai($userid);
+$result_ta = $nilai->get_tahun_ajaran();
 
 
 ?>
@@ -178,6 +161,9 @@ $result_ta = $conn->query("SELECT DISTINCT (tahun_ajaran) FROM raport WHERE nis 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/js/main.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <?php 
+        echo "<script>var user_id = '$userid';</script>";
+        ?>
         <script>
             var selected_TA = 0;
 
@@ -198,8 +184,10 @@ $result_ta = $conn->query("SELECT DISTINCT (tahun_ajaran) FROM raport WHERE nis 
             function lihat_data() {
                 $.ajax({
                     type: "POST",
-                    url: "./prestasi",
+                    url: "../controller/action_nilai",
                     data: {
+                        lihat_nilai: "",
+                        nis: user_id,
                         tahun_ajaran: selected_TA,
                         semester: selected_semester
                     },

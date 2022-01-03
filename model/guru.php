@@ -55,4 +55,16 @@ class Guru
             return false;
         }
     }
+
+    public function get_mapel_by_guru($nip)
+    {
+        global $conn;
+        $query = "SELECT * FROM mata_pelajaran WHERE nip = '$nip'";
+        $result = $conn->query($query);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
 }

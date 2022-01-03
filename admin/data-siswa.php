@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../connection.php';
+require_once dirname(__FILE__) . '/../model/siswa.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -40,6 +41,8 @@ $total_records = $total_records['total_records'];
 $total_no_of_pages = ceil($total_records / $records_per_page);
 $second_last = $total_no_of_pages - 1;
 $adjacents = "2";
+
+$siswa = new Siswa();
 
 ?>
 

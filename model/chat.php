@@ -28,6 +28,18 @@ class Chat
         return $name;
     }
 
+    public function get_jumlah_chat_masuk($nip)
+    {
+        global $conn;
+        $query = "SELECT COUNT(*) As total_records FROM chats INNER JOIN siswa ON siswa.nis = chats.murid_id WHERE guru_id = $nip GROUP BY murid_id";
+        $result = $conn->query($query);
+        if ($result && $result->num_rows > 0) {
+            return $result['total_records'];
+        } else {
+            return 0;
+        }
+    }
+
     public function get_chat_json($id_murid, $id_wali)
     {
         $result = $this->get_chat_murid($id_murid, $id_wali);

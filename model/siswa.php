@@ -57,5 +57,29 @@ class Siswa {
             return $row;
         }
     }
+    public function get_kelas_siswa($nis)
+    {
+        global $conn;
+        $query = "SELECT nama_kelas FROM siswa,kelas WHERE siswa.id_kelas=kelas.id_kelas AND nis=$nis";
+        $result = $conn->query($query);
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['nama_kelas'];
+        } else {
+            return false;
+        }
+    }
+
+    public function get_daftar_siswa_by_kelas($id_kelas, $limit, $offset)
+    {
+        global $conn;
+        $query = "SELECT * FROM siswa WHERE id_kelas = $id_kelas LIMIT $limit OFFSET $offset";
+        $result = $conn->query($query);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
 }
 ?>

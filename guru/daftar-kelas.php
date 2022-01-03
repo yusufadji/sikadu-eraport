@@ -1,5 +1,6 @@
 <?php 
-require_once '../connection.php';
+require_once dirname(__FILE__) . '/../connection.php';
+require_once dirname(__FILE__) . '/../model/kelas.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -24,6 +25,8 @@ if (!isset($_GET['p'])) {
 } else {
     $page_no = $_GET['p'];
 }
+
+$kelas = new Kelas();
 
 $records_per_page = 10;
 $offset = ($page_no-1) * $records_per_page;
@@ -137,7 +140,7 @@ $adjacents = "2";
                     </thead>
                     <tbody>
                         <?php 
-                        $result_kelas = $conn->query("SELECT * FROM kelas LIMIT $records_per_page OFFSET $offset");
+                        $result_kelas = $kelas->get_daftar_kelas($records_per_page, $offset);
                         if ($result_kelas && $result_kelas->num_rows > 0) {
                             $no = 1;
                             while($row = $result_kelas->fetch_assoc()){

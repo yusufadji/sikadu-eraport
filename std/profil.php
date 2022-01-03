@@ -2,6 +2,7 @@
 
 session_start();
 require_once '../connection.php';
+require_once '../model/siswa.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -17,13 +18,10 @@ if (isset($_COOKIE['login_as'])) {
     $login_as = $_SESSION['login_as'];
 }
 
-$result = $conn->query("SELECT * FROM siswa WHERE nis = '$userid'");
+$siswa = new Siswa();
 
-if ($result) {
-    if ($result->num_rows === 1) {
-        $siswa = $result->fetch_assoc();
-    }
-}
+$result = $siswa->get_detail_siswa($userid);
+
 
 ?>
 
@@ -115,35 +113,35 @@ if ($result) {
                         <tbody>
                             <tr>
                                 <td>Nama</td>
-                                <td><?php echo $siswa['nama_siswa'] ?></td>
+                                <td><?php echo $result['nama_siswa'] ?></td>
                             </tr>
                             <tr>
                                 <td>Nomor Induk Siswa</td>
-                                <td><?php echo $siswa['nis'] ?></td>
+                                <td><?php echo $result['nis'] ?></td>
                             </tr>
                             <tr>
                                 <td>Alamat</td>
-                                <td><?php echo $siswa['alamat'] ?></td>
+                                <td><?php echo $result['alamat'] ?></td>
                             </tr>
                             <tr>
                                 <td>Nomor Telepon</td>
-                                <td><?php echo $siswa['no_telp'] ?></td>
+                                <td><?php echo $result['no_telp'] ?></td>
                             </tr>
                             <tr>
                                 <td>Email</td>
-                                <td><?php echo $siswa['email'] ?></td>
+                                <td><?php echo $result['email'] ?></td>
                             </tr>
                             <tr>
                                 <td>Tanggal Lahir</td>
-                                <td><?php echo $siswa['tanggal_lahir'] ?></td>
+                                <td><?php echo $result['tanggal_lahir'] ?></td>
                             </tr>
                             <tr>
                                 <td>Jenis Kelamin</td>
-                                <td><?php echo $siswa['jenis_kelamin'] ?></td>
+                                <td><?php echo $result['jenis_kelamin'] ?></td>
                             </tr>
                             <tr>
                                 <td>Agama</td>
-                                <td><?php echo $siswa['agama'] ?></td>
+                                <td><?php echo $result['agama'] ?></td>
                             </tr>
                         </tbody>
                     </table>

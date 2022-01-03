@@ -34,5 +34,26 @@ if (isset($_POST['simpan-nilai'])) {
             header("location: ../guru/ubah-nilai?nis=$nis&mapel=$id_mapel&status=$status");
             break;
     }
+} elseif (isset($_POST['lihat_nilai'])) {
+    $nis = $_POST['nis'];
+    $nilai = new Nilai($nis);
+    if (isset($_POST['tahun_ajaran'])) {
+        $smt = $_POST['semester'];
+        $ta = $_POST['tahun_ajaran'];
+        $data = array();
+    
+        $result = $nilai->get_nilai_raport($nis, $ta, $smt);
+        while ($row = $result->fetch_object()) {
+            $data[] = $row;
+        }
+        $response = array(
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
+        );
+        http_response_code(200);
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }
 ?>

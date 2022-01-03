@@ -1,6 +1,8 @@
 <?php
 
 require_once dirname(__FILE__) . '/../connection.php';
+require_once dirname(__FILE__) . '/../model/kelas.php';
+require_once dirname(__FILE__) . '/../model/siswa.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -30,17 +32,19 @@ if (!isset($_GET['kls'])) {
 } else {
     $kelas_id = $_GET['kls'];
 }
+
+$kelas = new Kelas();
 $records_per_page = 10;
 $offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 
-$result = $conn->query("SELECT COUNT(*) As total_records FROM siswa WHERE id_kelas = $kelas_id");
-$total_records = $result->fetch_assoc();
-$total_records = $total_records['total_records'];
+$total_records = $kelas->get_jumlah_siswa_kelas($kelas_id);
 $total_no_of_pages = ceil($total_records / $records_per_page);
 $second_last = $total_no_of_pages - 1;
 $adjacents = "2";
+
+$siswa = new Siswa();
 
 ?>
 <!DOCTYPE html>
@@ -137,7 +141,7 @@ $adjacents = "2";
                         </a>
                         <ul class="dropdown-menu" id="dropdown-kelas" aria-labelledby="dropdownMenuKelas">
                             <?php
-                            $result_kelas = $conn->query("SELECT * FROM kelas WHERE nip = '$nip'");
+                            $result_kelas = $kelas->cek_wali_kelas($nip);
                             if ($result_kelas && $result_kelas->num_rows > 0) {
                                 while ($row = $result_kelas->fetch_assoc()) {
                             ?>
@@ -162,7 +166,7 @@ $adjacents = "2";
                         </thead>
                         <tbody>
                             <?php
-                            $result_siswa = $conn->query("SELECT * FROM siswa WHERE id_kelas = $kelas_id LIMIT $records_per_page OFFSET $offset");
+                            $result_siswa = $siswa->get_daftar_siswa_by_kelas($kelas_id, $records_per_page, $offset);
                             $no = 1;
                             if ($result_siswa && $result_siswa->num_rows > 0) {
                                 while ($row = $result_siswa->fetch_assoc()) {

@@ -24,17 +24,13 @@ if (!isset($_GET['p'])) {
 } else {
     $page_no = $_GET['p'];
 }
-if (!isset($_GET['kls'])) {
-    $kelas_id = 1;
-} else {
-    $kelas_id = $_GET['kls'];
-}
+
 $records_per_page = 30;
 $offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 
-$result = $conn->query("SELECT COUNT(*) As total_records FROM guru");
+$result = $conn->query("SELECT COUNT(*) As total_records FROM kelas");
 $total_records = $result->fetch_assoc();
 $total_records = $total_records['total_records'];
 $total_no_of_pages = ceil($total_records / $records_per_page);

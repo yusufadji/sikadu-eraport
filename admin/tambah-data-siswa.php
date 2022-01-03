@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../connection.php';
+require_once dirname(__FILE__) . '/../model/kelas.php';
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -18,6 +19,8 @@ if (!isset($_SESSION['login_as'])) {
         header('location: ../index');
     }
 }
+
+$kelas = new Kelas();
 
 ?>
 
@@ -173,7 +176,7 @@ if (!isset($_SESSION['login_as'])) {
                         <label for="kelasSiswa" class="form-label">Kelas</label>
                         <select name="kelas" class="form-select" id="kelasSiswa" required>
                             <?php
-                            $result_kelas = $conn->query("SELECT * FROM kelas");
+                            $result_kelas = $kelas->get_daftar_kelas();
                             if ($result_kelas && $result_kelas->num_rows > 0) {
                                 $no = 1;
                                 while ($row = $result_kelas->fetch_assoc()) {

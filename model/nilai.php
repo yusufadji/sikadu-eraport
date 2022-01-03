@@ -90,6 +90,30 @@ class Nilai {
         }
     }
 
+    public function get_nilai_raport($nis, $ta, $smt)
+    {
+        global $conn;
+        $query = "SELECT * FROM raport INNER JOIN nilai ON raport.id_raport = nilai.id_raport INNER JOIN mata_pelajaran ON nilai.id_mapel = mata_pelajaran.id_mapel WHERE raport.nis = '$nis' AND tahun_ajaran = $ta AND rapor_semester = $smt";
+        $result = $conn->query($query);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_tahun_ajaran()
+    {
+        global $conn;
+        $query = "SELECT DISTINCT (tahun_ajaran) FROM raport WHERE nis = '$this->nis_siswa'";
+        $result = $conn->query($query);
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 

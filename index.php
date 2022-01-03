@@ -5,11 +5,15 @@ require_once 'utils.php';
 require_once 'model/guru.php';
 require_once 'model/siswa.php';
 require_once 'model/admin.php';
+require_once 'model/kelas.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
+    header('location: login/siswa');
+}
 // ambil userid dari session atau cookie
 if (isset($_COOKIE['login_as'])) {
     $login_as = $_COOKIE['login_as'];
@@ -25,8 +29,9 @@ if ($login_as == "admin") {
     $get_user = $admin->get_detail_admin_by_id($userid);
 } elseif ($login_as == "guru") {
     $guru = new Guru();
+    $kelas = new Kelas();
     $get_user = $guru->get_detail_guru($userid);
-    $wali_kelas = $guru->cek_wali_kelas($userid);
+    $wali_kelas = $kelas->cek_wali_kelas($userid);
 
     if ($wali_kelas) {
         $is_walikelas = true;

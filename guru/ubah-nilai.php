@@ -2,6 +2,9 @@
 
 require_once dirname(__FILE__) . '/../connection.php';
 require_once dirname(__FILE__) . '/../model/nilai.php';
+require_once dirname(__FILE__) . '/../model/guru.php';
+require_once dirname(__FILE__) . '/../model/siswa.php';
+
 session_start();
 
 if (isset($_COOKIE['login_as'])) {
@@ -34,6 +37,8 @@ if (isset($_GET['mapel'])) {
 }
 
 $nilai = new Nilai($siswaid);
+$guru = new Guru();
+$siswa = new Siswa();
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -124,29 +129,29 @@ $nilai = new Nilai($siswaid);
             </h2>
             <div class="konten_isi">
                 <?php
-                $result_siswa = $conn->query("SELECT * FROM siswa WHERE nis = $siswaid LIMIT 1");
-                if ($result_siswa && $result_siswa->num_rows > 0) {
-                    while ($row = $result_siswa->fetch_assoc()) {
+                $result_siswa = $siswa->get_detail_siswa($siswaid);
+                if ($result_siswa) {
+                    
                 ?>
                         <form class="konten_ubah_nilai" id="form_ubah_nilai" name="form_nilai" action="../controller/action_nilai" method="post">
                             <div class="mb-3">
                                 <label for="namaSiswa" class="form-label">Nama siswa</label>
-                                <input type="text" class="form-control" id="namaSiswa" disabled value="<?php echo $row['nama_siswa']; ?>">
+                                <input type="text" class="form-control" id="namaSiswa" disabled value="<?php echo $result_siswa['nama_siswa']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="nomorIndukSiswa" class="form-label">Nomor induk siswa</label>
-                                <input type="text" name="nis-disabled" class="form-control" id="nomorIndukSiswa" disabled value="<?php echo $row['nis']; ?>" placeholder="<?php echo $row['nis']; ?>">
+                                <input type="text" name="nis-disabled" class="form-control" id="nomorIndukSiswa" disabled value="<?php echo $result_siswa['nis']; ?>" placeholder="<?php echo $result_siswa['nis']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="kelasSiswa" class="form-label">Kelas</label>
                                 <?php
-                                $nama_kelas = $conn->query("SELECT nama_kelas FROM siswa,kelas WHERE siswa.id_kelas=kelas.id_kelas AND nis=$siswaid");
-                                if ($nama_kelas && $nama_kelas->num_rows > 0) {
-                                    while ($row = $nama_kelas->fetch_assoc()) {
+                                $nama_kelas = $siswa->get_kelas_siswa($siswaid);
+                                if ($nama_kelas) {
+                                    
                                 ?>
-                                        <input type="text" class="form-control" id="kelasSiswa" disabled value="<?php echo $row['nama_kelas']; ?>">
+                                        <input type="text" class="form-control" id="kelasSiswa" disabled value="<?php echo $nama_kelas; ?>">
                                 <?php
-                                    }
+                                    
                                 }
                                 ?>
                             </div>
@@ -157,7 +162,7 @@ $nilai = new Nilai($siswaid);
                                     </a>
                                     <ul class="dropdown-menu" id="dropdown-mapel" aria-labelledby="dropdownMenuMapel">
                                         <?php
-                                        $result_mapel = $conn->query("SELECT * FROM mata_pelajaran WHERE nip = '$userid'");
+                                        $result_mapel = $guru->get_mapel_by_guru($userid);
                                         if ($result_mapel && $result_mapel->num_rows > 0) {
                                             while ($row = $result_mapel->fetch_assoc()) {
                                         ?>
@@ -219,7 +224,7 @@ $nilai = new Nilai($siswaid);
                                 }
                             }
                         }
-                    }
+                    
         ?>
             </div>
         </div>
