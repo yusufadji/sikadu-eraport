@@ -8,9 +8,9 @@ Changelog:
 5. Tambah tabel admin (id_admin,nama_admin,email,password)
 6. Update tabel siswa -> password jadi 255 (untuk hash)
 7. Update tabel guru -> password jadi 255 (untuk hash)
+8. Perbarui database (stored pocedure fitur chat)
 
 Todo List :
 1. (+)Fungsi hitung rata2 nilai
 2. (+)Fungsi hitung nilai akhir
 3. (+)Scheduled backup
-4. (+)Admin Page
