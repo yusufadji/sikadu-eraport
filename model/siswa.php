@@ -7,9 +7,8 @@ class Siswa {
     public function get_detail_siswa($nis)
     {
         global $conn;
-        $query = "SELECT * FROM siswa WHERE nis = '$nis' LIMIT 1";
+        $query = "SELECT * FROM siswa WHERE nis = '$nis'";
         $result = $conn->query($query);
-
         if ($result) {
             if ($result->num_rows === 1) {
                 $siswa = $result->fetch_assoc();
@@ -27,8 +26,6 @@ class Siswa {
             return false;
         }
         $db_password = $siswa['password'];
-        $id_siswa = $siswa['nis'];
-        $email = $siswa['email'];
         $verify = password_verify($password, $db_password);
         if ($verify) {
             return true;

@@ -4,8 +4,13 @@ session_start();
 
 if (isset($_COOKIE['login_as'])) {
     $login_as = $_COOKIE['login_as'];
+    $id_admin = $_COOKIE['id'];
     $_SESSION['login_as'] = $login_as;
+} else {
+    $id_admin = $_SESSION['id'];
+    $login_as = $_SESSION['login_as'];
 }
+
 if (!isset($_SESSION['login_as'])) {
     header('location: ../index');
 } else {
@@ -13,7 +18,6 @@ if (!isset($_SESSION['login_as'])) {
         header('location: ../index');
     }
 }
-
 
 ?>
 

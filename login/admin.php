@@ -1,6 +1,7 @@
 <?php
 
 require_once "../connection.php";
+require_once "../model/admin.php";
 
 session_start();
 if ($conn->connect_error) {
@@ -19,38 +20,28 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $result = $conn->query("SELECT * FROM admin WHERE email = '$email' LIMIT 1"); // TODO: nanti diganti dg stored procedure
-    // $conn->next_result();
+    $admin = new Admin();
 
-    if ($result) {
-        if ($result->num_rows === 1) {
-            $admin = $result->fetch_assoc();
-            $db_password = $admin['password'];
-            $adminid = $admin['id_admin'];
-            $email = $admin['email'];
-            // $verif = password_verify($password, $db_password); nanti pake bcrypt
+    $verify = $admin->cek_login_admin($email, $password);
 
-            if ($password == $db_password) {
+    if ($verify) {
+        $info_admin = $admin->get_detail_admin_by_email($email);
+        $adminid = $info_admin['id_admin'];
+        $email = $info_admin['email'];
 
-                // simpan cookie untuk 30 menit (30 mnt * 60 dtk)
-                if (isset($_POST["remember"])) {
-                    setcookie("id", $adminid, time() + (30 * 60));
-                    setcookie("kodenuklir", hash('sha256', $email), time() + (30 * 60));
-                    setcookie("login_as", 'guru');
-                }
-                // set session
-                $_SESSION['login'] = true;
-                $_SESSION['id'] = $adminid;
-                $_SESSION['login_as'] = 'admin';
-                header("location: ../index");
-            } else {
-                $status = "invalidlogin";
-            }
-        } else {
-            $status = "invalidlogin";
+        // simpan cookie untuk 30 menit (30 mnt * 60 dtk)
+        if (isset($_POST["remember"])) {
+            setcookie("id", $adminid, time() + (30 * 60));
+            setcookie("kodenuklir", hash('sha256', $email), time() + (30 * 60));
+            setcookie("login_as", 'admin');
         }
+        // set session
+        $_SESSION['login'] = true;
+        $_SESSION['id'] = $adminid;
+        $_SESSION['login_as'] = 'admin';
+        header("location: ../index");
     } else {
-        $status = "invalidlogin";
+        $status = "gagal";
     }
 }
 
@@ -79,7 +70,13 @@ if (isset($_POST["login"])) {
             <div class="login_forms">
                 <form action="./admin" class="login_register" id="login-in" method="POST">
                     <h1 class="login_title">ADMIN</h1>
-
+                    <?php 
+                    if (isset($status) && $status == "gagal") {
+                       echo "
+                        <div class='alert alert-danger' role='alert'>Login gagal. Silahkan ulangi!</div>
+                       ";
+                    }
+                    ?>
                     <div class="login_box">
                         <i class="fas fa-user"></i>
                         <input type="text" placeholder="Email" class="login_input" name="email">

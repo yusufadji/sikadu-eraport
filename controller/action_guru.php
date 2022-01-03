@@ -12,18 +12,16 @@ if (isset($_POST['tambah-guru'])) {
     $agama = $_POST['agama'];
     $status = $_POST['status'];
     $passguru = $_POST['passguru'];
-    // $walikelas = $_POST['walikelas'];
+    $hashed_password = password_hash($passguru, PASSWORD_BCRYPT);
     $guru = new Data();
-    $result = $guru->tambah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $passguru);
+    $result = $guru->tambah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $stats = "sukses";
+        $statuss = "sukses";
     } else {
-        $stats = "gagal";
+        $statuss = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-guru");
+    header("location: ../admin/data-guru?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-guru");
 }
@@ -39,18 +37,17 @@ if (isset($_POST['ubah-guru'])) {
     $agama = $_POST['agama'];
     $status = $_POST['status'];
     $passguru = $_POST['passguru'];
-    // $walikelas = $_POST['walikelas'];
+    $hashed_password = password_hash($passguru, PASSWORD_BCRYPT);
     $guru = new Data();
-    $result = $guru->ubah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $passguru);
+    $result = $guru->ubah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $stats = "sukses";
+        $status = "sukses";
     } else {
-        $stats = "gagal";
+        $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-guru");
+
+    header("location: ../admin/data-guru?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-guru");
 }

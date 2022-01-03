@@ -35,7 +35,7 @@ $next_page = $page_no + 1;
 
 $result = $conn->query("SELECT COUNT(*) As total_records FROM chats INNER JOIN siswa ON siswa.nis = chats.murid_id WHERE guru_id = $nip GROUP BY murid_id");
 $total_records = $result->fetch_assoc();
-$total_records = $total_records['total_records'];
+$total_records = $result->num_rows > 0 ? $total_records['total_records'] : 0;
 $total_no_of_pages = ceil($total_records / $records_per_page);
 $second_last = $total_no_of_pages - 1;
 $adjacents = "2";
@@ -131,7 +131,11 @@ $adjacents = "2";
             </h2>
             <div class="konten_isi">
                 <div class="konten_pengaturan">
-                    
+                    <?php 
+                    if ($total_records == 0) {
+                        echo "Tidak ada pesan!";
+                    }
+                    ?>
                 </div>
                 <div class="konten_table table-responsive">
                     <table class="daftar_chat table table-bordered">

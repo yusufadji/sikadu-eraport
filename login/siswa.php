@@ -32,7 +32,7 @@ if(isset($_POST["login"])){
         }
         // set session
         $_SESSION['login'] = true;
-        $_SESSION['id'] = $siswaid;
+        $_SESSION['id'] = $info_siswa['nis'];
         $_SESSION['login_as'] = 'siswa';
         header("location: ../index");
         exit();

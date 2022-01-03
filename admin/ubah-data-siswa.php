@@ -2,39 +2,23 @@
 require_once dirname(__FILE__) . '/../connection.php';
 session_start();
 
-// if (isset($_COOKIE['login_as'])) {
-//     $login_as = $_COOKIE['login_as'];
-//     $_SESSION['login_as'] = $login_as;
-// }
-// if (!isset($_SESSION['login_as'])) {
-//     header('location: ../index');
-// } else {
-//     if ($_SESSION['login_as'] != "admin") {
-//         header('location: ../index');
-//     }
-// }
-
-if (!isset($_GET['p'])) {
-    $page_no = 1;
+if (isset($_COOKIE['login_as'])) {
+    $login_as = $_COOKIE['login_as'];
+    $id_admin = $_COOKIE['id'];
+    $_SESSION['login_as'] = $login_as;
 } else {
-    $page_no = $_GET['p'];
+    $id_admin = $_SESSION['id'];
+    $login_as = $_SESSION['login_as'];
 }
-if (!isset($_GET['kls'])) {
-    $kelas_id = 1;
-} else {
-    $kelas_id = $_GET['kls'];
-}
-$records_per_page = 30;
-$offset = ($page_no - 1) * $records_per_page;
-$previous_page = $page_no - 1;
-$next_page = $page_no + 1;
 
-$result = $conn->query("SELECT COUNT(*) As total_records FROM guru");
-$total_records = $result->fetch_assoc();
-$total_records = $total_records['total_records'];
-$total_no_of_pages = ceil($total_records / $records_per_page);
-$second_last = $total_no_of_pages - 1;
-$adjacents = "2";
+if (!isset($_SESSION['login_as'])) {
+    header('location: ../index');
+} else {
+    if ($_SESSION['login_as'] != "admin") {
+        header('location: ../index');
+    }
+}
+
 
 if (isset($_GET['nis'])) {
     $siswaid = $_GET['nis'];

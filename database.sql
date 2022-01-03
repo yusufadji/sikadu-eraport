@@ -68,7 +68,7 @@ CREATE TABLE `guru` (
   `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
   `status` varchar(20) NOT NULL,
   `tanggal_lahir` date NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`nip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -180,7 +180,7 @@ CREATE TABLE `siswa` (
   `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
   `id_kelas` int(11) NOT NULL,
   `tanggal_lahir` date NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`nis`),
   KEY `siswa_ibfk_1` (`id_kelas`),
   CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`) ON DELETE CASCADE ON UPDATE CASCADE

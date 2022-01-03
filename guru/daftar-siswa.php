@@ -29,6 +29,8 @@ if (!isset($_GET['kls'])) {
 } else {
     $kelas_id = $_GET['kls'];
 }
+
+// pagination
 $records_per_page = 30;
 $offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
@@ -146,8 +148,6 @@ $adjacents = "2";
                                 }
                             }
                             ?>
-
-
                         </ul>
                     </div>
                 </div>

@@ -3,6 +3,8 @@ session_start();
 require_once 'connection.php';
 require_once 'utils.php';
 require_once 'model/guru.php';
+require_once 'model/siswa.php';
+require_once 'model/admin.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -19,40 +21,31 @@ if (isset($_COOKIE['login_as'])) {
 }
 
 if ($login_as == "admin") {
-    $where = "id_admin";
+    $admin = new Admin();
+    $get_user = $admin->get_detail_admin_by_id($userid);
 } elseif ($login_as == "guru") {
-    $where = "nip";
-} else {
-    $where = "nis";
-}
-
-$query = "SELECT * FROM $login_as WHERE " . $where .  " = $userid";
-$get_user = $conn->query($query);
-
-// $conn->next_result();
-if ($get_user->num_rows === 1) {
-    $row = $get_user->fetch_assoc();
-
-    if (isset($_COOKIE['id'])) {
-        if ($kodenuklir !== hash('sha256', $row['email'])) {
-            header("location: logout");
-        }
-    }
-    $logged_email = $row["email"];
-} else {
-    header("location: logout");
-}
-
-if ($login_as == "guru") {
-    $guru = new Guru($userid);
-    $wali_kelas = $guru->cek_wali_kelas();
+    $guru = new Guru();
+    $get_user = $guru->get_detail_guru($userid);
+    $wali_kelas = $guru->cek_wali_kelas($userid);
 
     if ($wali_kelas) {
         $is_walikelas = true;
     } else {
         $is_walikelas = false;
     }
+} elseif ($login_as == "siswa") {
+    $siswa = new Siswa();
+    $get_user = $siswa->get_detail_siswa($userid);
+} 
+
+
+if (isset($_COOKIE['id'])) {
+    if ($kodenuklir !== hash('sha256', $get_user['email'])) {
+        header("location: logout");
+    }
 }
+$logged_email = $get_user["email"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -214,7 +207,7 @@ if ($login_as == "guru") {
             <h2 class="konten_title">
                 <?php
                 if ($login_as == "guru") {
-                    $nama_guru = $guru->get_nama_guru();
+                    $nama_guru = $guru->get_nama_guru($userid);
                     echo "Selamat datang, $nama_guru";
                 }
                 ?>
@@ -252,7 +245,7 @@ if ($login_as == "guru") {
                             <div class="card bg-c-yellow guru-card">
                                 <div class="card-block">
                                     <h6 class="m-b-20">Anda Wali Kelas</h6>
-                                    <h3 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h3>
+                                    <h3 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $is_walikelas ? $wali_kelas->num_rows : 0; ?></span></h3>
                                     <p class="m-b-0">Kelas</p>
                                 </div>
                             </div>
@@ -261,7 +254,7 @@ if ($login_as == "guru") {
                             <div class="card bg-c-pink guru-card">
                                 <div class="card-block">
                                     <h6 class="m-b-20">Anda Mengajar</h6>
-                                    <h3 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h3>
+                                    <h3 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $is_walikelas ? $wali_kelas->num_rows : 0; ?></span></h3>
                                     <p class="m-b-0">Mapel</p>
                                 </div>
                             </div>
