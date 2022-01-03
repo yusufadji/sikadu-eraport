@@ -159,7 +159,7 @@ if ($login_as == "guru") {
                 ?>
 
                     <li>
-                        <a href="<?php echo $logis_as == "guru" ? "guru" : "std"; ?>/pesan">
+                        <a href="<?php echo $login_as == "guru" ? "guru" : "std"; ?>/pesan">
                             <span class="icon"><i class='bx bx-chat'></i></span>
                             <span class="title">Pesan</span>
                         </a>
@@ -218,45 +218,44 @@ if ($login_as == "guru") {
                 if ($login_as == "guru") {
 
                 ?>
-                    <!-- Dashboard Guru -->
-                    <div class="dashboard-container">
-                        <div class="row">
-                            <div class="col-md-4 col-xl-3">
-                                <div class="card bg-c-blue guru-card">
-                                    <div class="card-block">
-                                        <h6 class="m-b-20">Tahun Ajaran</h6>
-                                        <h2 class="text-left"><i class="fa fa-cart-plus f-left"></i><span>2020/2021</span></h2>
-                                        <p class="m-b-0"><?php echo hari_ini(); ?></p>
-                                    </div>
+                <!-- Dashboard Guru -->
+                <div class="dashboard-container">
+                    <div class="row">
+                        <div class="col-md-4 col-xl-3">
+                            <div class="card bg-c-blue guru-card">
+                                <div class="card-block">
+                                    <h6 class="m-b-20">Tahun Ajaran</h6>
+                                    <h3 class="text-left"><i class="fa fa-cart-plus f-left"></i><span>2020/2021</span></h3>
+                                    <p class="m-b-0"><?php echo hari_ini(); ?></p>
                                 </div>
                             </div>
-
-                            <div class="col-md-4 col-xl-3">
-                                <div class="card bg-c-green guru-card">
-                                    <div class="card-block">
-                                        <h6 class="m-b-20">Semester</h6>
-                                        <h2 class="text-end"><i class="fa fa-rocket f-left"></i><span>2</span></h2>
-                                        <p class="m-b-0">Semester Genap</p>
-                                    </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-xl-3">
+                            <div class="card bg-c-green guru-card">
+                                <div class="card-block">
+                                    <h6 class="m-b-20">Semester</h6>
+                                    <h3 class="text-end"><i class="fa fa-rocket f-left"></i><span>2</span></h3>
+                                    <p class="m-b-0">Semester Genap</p>
                                 </div>
                             </div>
-
-                            <div class="col-md-4 col-xl-3">
-                                <div class="card bg-c-yellow guru-card">
-                                    <div class="card-block">
-                                        <h6 class="m-b-20">Anda Wali Kelas</h6>
-                                        <h2 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h2>
-                                        <p class="m-b-0">Kelas</p>
-                                    </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-xl-3">
+                            <div class="card bg-c-yellow guru-card">
+                                <div class="card-block">
+                                    <h6 class="m-b-20">Anda Wali Kelas</h6>
+                                    <h3 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h3>
+                                    <p class="m-b-0">Kelas</p>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-xl-3">
-                                <div class="card bg-c-pink guru-card">
-                                    <div class="card-block">
-                                        <h6 class="m-b-20">Anda Mengajar</h6>
-                                        <h2 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h2>
-                                        <p class="m-b-0">Mapel</p>
-                                    </div>
+                        </div>
+                        <div class="col-md-4 col-xl-3">
+                            <div class="card bg-c-pink guru-card">
+                                <div class="card-block">
+                                    <h6 class="m-b-20">Anda Mengajar</h6>
+                                    <h3 class="text-end"><i class="fa fa-refresh f-left"></i><span><?php echo $wali_kelas->num_rows ?></span></h3>
+                                    <p class="m-b-0">Mapel</p>
                                 </div>
                             </div>
 

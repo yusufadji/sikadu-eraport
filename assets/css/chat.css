@@ -1,0 +1,53 @@
+body {
+    font-family: 'Open Sans', Arial, sans-serif!important;
+    height: 100vh;
+}
+.chat {
+    padding: 5px;
+    border: 1px solid #e2e2e2d3;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 90%;
+
+}
+.chat .card-header {
+    background: #ffffff;
+    color: #000000;
+    font-weight: 700;
+}
+.chat .chat-messages {
+    overflow: auto;
+    height: 100%;
+}
+.chat .chat-messages .card {
+    width: fit-content;
+    max-width: 80%;
+}
+.chat .card.dari-wali {
+    border-radius: 15px 3px 15px 15px;
+}
+.chat .card.dari-siswa {
+    border-radius: 3px 15px 15px 15px;
+}
+.chat .card.dari-siswa .msg-datetime {
+    margin-left: auto;
+}
+.chat .dari-siswa {
+    background: #1d8cff;
+    color: white;
+}
+.chat .msg-datetime {
+    font-size: 14px;
+}
+.chat .dari-siswa .msg-datetime{
+    color: #dbdbdbda;
+}
+.chat .dari-wali .msg-datetime{
+    color: #00000082;
+}
+.bi {
+    font-size: 20px;
+}
+.bi-send::before {
+    /* transform: rotate(45deg); */
+}

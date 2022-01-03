@@ -119,6 +119,7 @@ $nilai = new Nilai($siswaid);
 
         <div class="konten">
             <h2 class="konten_title">
+            <a href="./daftar-nilai" class="back-btn"><i class='bx bx-arrow-back'></i></a>
                 Ubah Nilai
             </h2>
             <div class="konten_isi">
@@ -181,37 +182,37 @@ $nilai = new Nilai($siswaid);
                                         $aksi = "ubah";
                                     }
                             ?>
-                                    <div class="mb-3">
-                                        <label for="nilaiSiswaCP1" class="form-label">CP1</label>
-                                        <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nilaiSiswaCP2" class="form-label">CP2</label>
-                                        <input type="number" name="nilaicp2" min="0" max="100" class="form-control" id="nilaiSiswaCP2" value="<?php echo $row['cp2']; ?>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nilaiSiswaCP3" class="form-label">CP3</label>
-                                        <input type="number" name="nilaicp3" min="0" max="100" class="form-control" id="nilaiSiswaCP3" value="<?php echo $row['cp3']; ?>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nilaiSiswaCP4" class="form-label">CP4</label>
-                                        <input type="number" name="nilaicp4" min="0" max="100" class="form-control" id="nilaiSiswaCP4" value="<?php echo $row['cp4']; ?>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nilaiSiswaUTS" class="form-label">UTS</label>
-                                        <input type="number" name="nilaiuts" min="0" max="100" class="form-control" id="nilaiSiswaUTS" value="<?php echo $row['uts']; ?>">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="nilaiSiswaUAS" class="form-label">UAS</label>
-                                        <input type="number" name="nilaiuas" min="0" max="100" class="form-control" id="nilaiSiswaUAS" value="<?php echo $row['uas']; ?>">
-                                    </div>
-                                    <input type="hidden" name="aksi" id="aksinilai" value="<?php echo $aksi; ?>">
-                                    <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $mapelid; ?>">
-                                    <input type="hidden" name="nis" id="nis" value="<?php echo $siswaid; ?>">
-                                    <div class="konten_ubah_nilai_opsi">
-                                        <a href="daftar-nilai"><button class="btn btn-danger">Batalkan</button></a>
-                                        <button type="submit" name="simpan-nilai" class="btn btn-primary">Simpan</button>
-                                    </div>
+                            <div class="mb-3">
+                                <label for="nilaiSiswaCP1" class="form-label">CP1</label>
+                                <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nilaiSiswaCP2" class="form-label">CP2</label>
+                                <input type="number" name="nilaicp2" min="0" max="100" class="form-control" id="nilaiSiswaCP2" value="<?php echo $row['cp2']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nilaiSiswaCP3" class="form-label">CP3</label>
+                                <input type="number" name="nilaicp3" min="0" max="100" class="form-control" id="nilaiSiswaCP3" value="<?php echo $row['cp3']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nilaiSiswaCP4" class="form-label">CP4</label>
+                                <input type="number" name="nilaicp4" min="0" max="100" class="form-control" id="nilaiSiswaCP4" value="<?php echo $row['cp4']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nilaiSiswaUTS" class="form-label">UTS</label>
+                                <input type="number" name="nilaiuts" min="0" max="100" class="form-control" id="nilaiSiswaUTS" value="<?php echo $row['uts']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nilaiSiswaUAS" class="form-label">UAS</label>
+                                <input type="number" name="nilaiuas" min="0" max="100" class="form-control" id="nilaiSiswaUAS" value="<?php echo $row['uas']; ?>">
+                            </div>
+                            <input type="hidden" name="aksi" id="aksinilai" value="<?php echo $aksi; ?>">
+                            <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $mapelid; ?>">
+                            <input type="hidden" name="nis" id="nis" value="<?php echo $siswaid; ?>">
+                            <div class="konten_ubah_nilai_opsi">
+                                <a href="daftar-nilai"><button type="button" class="btn btn-danger">Batalkan</button></a>
+                                <button type="submit" name="simpan-nilai" class="btn btn-primary d-inline-flex align-items-center">Simpan <i class='bx bx-save'></i></button>
+                            </div>
                         </form>
 
         <?php

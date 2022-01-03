@@ -383,6 +383,25 @@ body {
     display: none;
 }
 
+.back-btn {
+    vertical-align: middle;
+}
+
+.konten_table .daftar_chat td:hover {
+    background: #f3f3f3;
+    cursor: pointer;
+}
+
+.konten_table .daftar_chat td {
+    display: flex;
+}
+
+#chat-loading {
+    position: absolute;
+    right: 50%;
+    top: 50%;
+}
+
 /* Untuk Dashboard */
 .dashboard-container .guru-card {
     color: #fff;
