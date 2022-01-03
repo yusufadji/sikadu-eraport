@@ -17,9 +17,9 @@ if (isset($_POST['tambah-guru'])) {
     $result = $guru->tambah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $statuss = "sukses";
+        $status = "sukses";
     } else {
-        $statuss = "gagal";
+        $status = "gagal";
     }
     header("location: ../admin/data-guru?status=$status");
 } else if (isset($_POST['batalkan'])) {
