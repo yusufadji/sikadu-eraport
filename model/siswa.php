@@ -7,7 +7,7 @@ class Siswa {
     public function get_detail_siswa($nis)
     {
         global $conn;
-        $query = "SELECT * FROM siswa WHERE nis = '$nis'";
+        $query = "SELECT * FROM siswa WHERE nis = '$nis' LIMIT 1";
         $result = $conn->query($query);
 
         if ($result) {
@@ -15,17 +15,33 @@ class Siswa {
                 $siswa = $result->fetch_assoc();
                 return $siswa;
             }
-        }
+        } 
+        return false;
 
     }
+
+    public function cek_login_siswa($nis, $password)
+    {
+        $siswa = $this->get_detail_siswa($nis);
+        if (!$siswa) {
+            return false;
+        }
+        $db_password = $siswa['password'];
+        $id_siswa = $siswa['nis'];
+        $email = $siswa['email'];
+        $verify = password_verify($password, $db_password);
+        if ($verify) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function get_nama_siswa($nis)
     {
-        global $conn;
-        $query = "SELECT nama_siswa FROM siswa WHERE nis = '$nis'";
-        $result = $conn->query($query);
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $nama_siswa = $row['nama_siswa'];
+        $result = $this->get_detail_siswa($nis);
+        if ($result) {
+            $nama_siswa = $result['nama_siswa'];
             return $nama_siswa;
         } else {
             return false;

@@ -19,12 +19,8 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    var_dump($email);
-    var_dump($password);
-
     $result = $conn->query("SELECT * FROM admin WHERE email = '$email' LIMIT 1"); // TODO: nanti diganti dg stored procedure
     // $conn->next_result();
-    var_dump($result);
 
     if ($result) {
         if ($result->num_rows === 1) {

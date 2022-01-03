@@ -18,9 +18,16 @@ if (isset($_COOKIE['login_as'])) {
     $login_as = $_SESSION['login_as'];
 }
 
-$query = "SELECT * FROM $login_as WHERE " . (($login_as == "admin" ? "id_admin" : $login_as == "guru") ? "nip" : "nis") . " = $userid";
-$get_user = $conn->query($query);
+if ($login_as == "admin") {
+    $where = "id_admin";
+} elseif ($login_as == "guru") {
+    $where = "nip";
+} else {
+    $where = "nis";
+}
 
+$query = "SELECT * FROM $login_as WHERE " . $where .  " = $userid";
+$get_user = $conn->query($query);
 
 // $conn->next_result();
 if ($get_user->num_rows === 1) {

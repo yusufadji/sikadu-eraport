@@ -12,17 +12,17 @@ if (isset($_POST['tambah-siswa'])) {
     $agama = $_POST['agama'];
     $kelas = $_POST['kelas'];
     $passsiswa = $_POST['passsiswa'];
+    $hashed_password = password_hash($passsiswa, PASSWORD_BCRYPT);
     $siswa = new Data();
-    $result = $siswa->tambah_data_siswa($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $kelas, $tanggallahir, $passsiswa);
+    $result = $siswa->tambah_data_siswa($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $kelas, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
         $status = "sukses";
     } else {
         $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-siswa");
+
+    header("location: ../admin/data-siswa?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-siswa");
 }
