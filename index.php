@@ -43,13 +43,15 @@ if ($login_as == "admin") {
     $get_user = $siswa->get_detail_siswa($userid);
 }
 
+if (!$get_user) {
+    header('location: logout');
+}
 
 if (isset($_COOKIE['id'])) {
     if ($kodenuklir !== hash('sha256', $get_user['email'])) {
         header("location: logout");
     }
 }
-$logged_email = $get_user["email"];
 
 ?>
 <!DOCTYPE html>
