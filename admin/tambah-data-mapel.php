@@ -125,17 +125,36 @@ $adjacents = "2";
                 Tambah Data Mapel
             </h2>
             <div class="konten_isi">
-                <form action="../controller/action_mapel" method="post" class="konten_ubah_nilai">
+                <form action="../controller/action_mapel" method="post" class="konten_ubah_nilai was-validated">
                     <div class="mb-3">
                         <label for="namaMapel" class="form-label">Nama Mata Pelajaran</label>
-                        <input type="text" name="namaMapel" class="form-control" id="namaMapel">
+                        <input type="text" required name="namaMapel" class="form-control" id="namaMapel">
+                        <div class="invalid-feedback">
+                            Masukkan nama mata pelajaran
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="guruPengampu" class="form-label">NIP Guru Pengampu</label>
-                        <input type="number" name="guruPengampu" class="form-control" id="guruPengampu">
+                        <select name="guruPengampu" class="form-select" id="guruPengampu" required>
+                            <?php
+                            $result_guru = $conn->query("SELECT * FROM guru");
+                            if ($result_guru && $result_guru->num_rows > 0) {
+                                $no = 1;
+                                while ($row = $result_guru->fetch_assoc()) {
+                                    echo "
+                                                <option value='${row['nip']}'>${row['nip']} - ${row['nama_guru']}</option>
+                                            ";
+                                    $no++;
+                                }
+                            }
+                            ?>
+                        </select>
+                        <div class="invalid-feedback">
+                            Masukkan NIP Guru pengampu mata pelajaran
+                        </div>
                     </div>
                     <div class="konten_ubah_nilai_opsi">
-                        <a href="data-mapel"><button class="btn btn-danger">Batalkan</button></a>
+                        <button onclick="window.location.replace('../admin/data-mapel'); return false;" type="button" class="btn btn-danger">Batalkan</button>
                         <button type="submit" name="tambah-mapel" class="btn btn-success">Tambahkan</button>
                     </div>
                 </form>

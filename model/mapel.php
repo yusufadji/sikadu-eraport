@@ -38,8 +38,19 @@ class Mapel
     public function tambah_mapel($nip, $namamapel)
     {
         global $conn;
-        $query = "INSERT INTO mata_pelajaran(id_mapel,nip, nama_mapel)
-        VALUES ('',$nip, $namamapel)";
+        $query = "INSERT INTO mata_pelajaran(nip, nama_mapel) VALUES ('$nip', '$namamapel')";
+        $result = $conn->query($query);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function ubah_mapel($idmapel, $nipwali, $namamapel)
+    {
+        global $conn;
+        $query = "UPDATE mata_pelajaran SET nip='$nipwali', nama_mapel='$namamapel' WHERE id_mapel=$idmapel";
         $result = $conn->query($query);
         if ($result) {
             return true;
@@ -48,4 +59,3 @@ class Mapel
         }
     }
 }
-?>

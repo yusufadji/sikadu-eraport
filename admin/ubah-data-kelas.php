@@ -36,6 +36,12 @@ $total_no_of_pages = ceil($total_records / $records_per_page);
 $second_last = $total_no_of_pages - 1;
 $adjacents = "2";
 
+if (isset($_GET['id-kelas'])) {
+    $kelasid = $_GET['id-kelas'];
+} else {
+    header('location: data-kelas');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -79,13 +85,13 @@ $adjacents = "2";
                         <span class="title">Data Siswa</span>
                     </a>
                 </li>
-                <li>
+                <li class="hovered">
                     <a href="data-kelas">
                         <span class="icon"><i class='bx bx-door-open'></i></span>
                         <span class="title">Data Kelas</span>
                     </a>
                 </li>
-                <li class="hovered">
+                <li>
                     <a href="data-mapel">
                         <span class="icon"><i class='bx bx-book-alt'></i></span>
                         <span class="title">Data Mapel</span>
@@ -107,18 +113,12 @@ $adjacents = "2";
         </div>
     </div>
 
+
     <!-- main -->
     <div class="main">
         <div class="topbar">
             <div class="toggle">
                 <i class='bx bx-menu'></i>
-            </div>
-            <!-- search -->
-            <div class="search">
-                <label>
-                    <input type="text" name="search" id="search" placeholder="Search here">
-                    <i class='bx bx-search'></i>
-                </label>
             </div>
             <!-- user -->
             <div class="user">
@@ -126,78 +126,54 @@ $adjacents = "2";
             </div>
         </div>
 
-        <!-- card -->
-        <div class="cardBox">
-            <div class="card">
-                <div>
-                    <?php
-                    $result_mapel = $conn->query("SELECT * FROM mata_pelajaran LIMIT $records_per_page OFFSET $offset");
-                    if ($result_mapel && $result_mapel->num_rows > 0) {
-                        $result_jml = $conn->query("SELECT COUNT(*) AS total_mapel FROM mata_pelajaran");
-                        $jml = $result_jml->fetch_assoc();
-                        echo "<div class='numbers'>${jml['total_mapel']}</div>";
-                    }
-                    ?>
-                    <div class="cardName">Mata pelajaran</div>
-                </div>
-                <div class="iconBx">
-                    <i class='bx bx-book-alt'></i>
-                </div>
-            </div>
-        </div>
-
         <div class="konten">
             <h2 class="konten_title">
-                Data Mapel
+                Ubah Data Kelas
             </h2>
             <div class="konten_isi">
-                <div class="konten_pengaturan">
-                    <a href="tambah-data-mapel"><button type="button" class="btn btn-success">Tambah
-                            mapel</button></a>
-                </div>
-                <div class="konten_table table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Mata pelajaran</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $result_mapel = $conn->query("SELECT * FROM mata_pelajaran LIMIT $records_per_page OFFSET $offset");
-                            if ($result_mapel && $result_mapel->num_rows > 0) {
-                                $no = 1;
-                                while ($row = $result_mapel->fetch_assoc()) {
-                                    echo "
-                                <tr>
-                                    <td>$no</td>
-                                    <td>${row['nama_mapel']}</td>
-                                    <td class='aksi'>
-                                        <a href='ubah-data-mapel?id_mapel=${row['id_mapel']}'><button type='button' data-bs-toggle='tooltip' class='btn btn-primary btn-sm' title='Ubah'><i class='bx bx-pencil'></i></button></a>
-                                        <a href='hapus-data-mapel?id_mapel=${row['id_mapel']}'><button type='button' data-bs-toggle='tooltip' class='btn btn-danger btn-sm' title='Hapus'><i class='bx bx-trash'></i></button></a>
-                                    </td>
-                                </tr>
-                                ";
-                                    $no++;
-                                }
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="konten_nav">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                <?php
+                $result_kelas = $conn->query("SELECT * FROM kelas WHERE id_kelas = $kelasid LIMIT 1");
+                if ($result_kelas && $result_kelas->num_rows > 0) {
+                    while ($row = $result_kelas->fetch_assoc()) {
+                ?>
+                        <form id="formulir" action="../controller/action_kelas" class="konten_ubah_nilai was-validated" method="post">
+                            <div class="mb-3">
+                                <label for="namaKelas" class="form-label">Nama Kelas</label>
+                                <input type="text" required name="namaKelas" class="form-control" id="namaKelas" value="<?php echo $row['nama_kelas']; ?>">
+                                <div class="invalid-feedback">
+                                    Masukkan nama kelas
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="waliKelas" class="form-label">NIP Wali Kelas</label>
+                                <select name="waliKelas" class="form-select" id="waliKelas" required>
+                                    <?php
+                                    $result_guru = $conn->query("SELECT * FROM guru");
+                                    if ($result_guru && $result_guru->num_rows > 0) {
+                                        $no = 1;
+                                        while ($row = $result_guru->fetch_assoc()) {
+                                            echo "
+                                                <option value='${row['nip']}'>${row['nip']} - ${row['nama_guru']}</option>
+                                            ";
+                                            $no++;
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Masukkan NIP Wali kelas
+                                </div>
+                            </div>
+                            <input type="hidden" name="id-kelas" value="<?php echo $kelasid ?>">
+                            <div class="konten_ubah_nilai_opsi">
+                                <button onclick="window.location.replace('../admin/data-kelas'); return false;" type="button" class="btn btn-danger">Batalkan</button>
+                                <button type="submit" name="ubah-kelas" class="btn btn-primary">Ubah</button>
+                            </div>
+                        </form>
+                <?php
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>

@@ -346,9 +346,11 @@ body {
 .konten .konten_isi .konten_table table .aksi a {
     margin-right: var(--pad-sm);
 }
+
 .dropdown-menu {
-    box-shadow: 1px 0px 24px -4px rgba(0,0,0,0.32);
+    box-shadow: 1px 0px 24px -4px rgba(0, 0, 0, 0.32);
 }
+
 .konten .konten_nav {
     width: 100%;
     display: flex;
@@ -365,7 +367,7 @@ body {
 }
 
 .konten .konten_ubah_nilai {
-    margin: var(--pad-lg) 0;
+    margin: var(--pad-lg) var(--pad-sm);
 }
 
 .konten .konten_ubah_nilai .konten_ubah_nilai_opsi {
@@ -376,6 +378,7 @@ body {
 .konten .konten_ubah_nilai button {
     margin-right: var(--pad-md);
 }
+
 #loading-status {
     display: none;
 }
@@ -386,26 +389,26 @@ body {
 }
 
 .dashboard-container .bg-c-blue {
-    background: linear-gradient(45deg,#4099ff,#73b4ff);
+    background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
 
 .dashboard-container .bg-c-green {
-    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+    background: linear-gradient(45deg, #2ed8b6, #59e0c5);
 }
 
 .dashboard-container .bg-c-yellow {
-    background: linear-gradient(45deg,#FFB64D,#ffcb80);
+    background: linear-gradient(45deg, #FFB64D, #ffcb80);
 }
 
 .dashboard-container .bg-c-pink {
-    background: linear-gradient(45deg,#FF5370,#ff869a);
+    background: linear-gradient(45deg, #FF5370, #ff869a);
 }
 
 
 .dashboard-container .card {
     border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
     border: none;
     margin-bottom: 30px;
     -webkit-transition: all 0.3s ease-in-out;

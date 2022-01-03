@@ -67,13 +67,13 @@ $adjacents = "2";
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-                <li class="hovered">
+                <li>
                     <a href="data-guru">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Guru</span>
                     </a>
                 </li>
-                <li>
+                <li class="hovered">
                     <a href="data-siswa">
                         <span class="icon"><i class='bx bx-user'></i></span>
                         <span class="title">Data Siswa</span>
@@ -122,65 +122,65 @@ $adjacents = "2";
 
         <div class="konten">
             <h2 class="konten_title">
-                Tambah Data Guru
+                Tambah Data Siswa
             </h2>
             <div class="konten_isi">
-                <form action="../controller/action_guru" method="post" class="konten_ubah_nilai was-validated">
+                <form action="../controller/action_siswa" method="post" class="konten_ubah_nilai was-validated">
                     <div class="mb-3">
-                        <label for="nipGuru" class="form-label">NIP</label>
-                        <input type="text" name="nip" class="form-control" id="nipGuru" required>
+                        <label for="nisSiswa" class="form-label">NIS</label>
+                        <input type="text" name="nis" class="form-control" id="nisSiswa" required>
                         <div class="invalid-feedback">
-                            Masukkan NIP guru
+                            Masukkan NIS Siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="namaGuru" class="form-label">Nama guru</label>
-                        <input type="text" name="nama" class="form-control" id="namaGuru" required>
+                        <label for="namaSiswa" class="form-label">Nama siswa</label>
+                        <input type="text" name="nama" class="form-control" id="namaSiswa" required>
                         <div class="invalid-feedback">
-                            Masukkan nama guru
+                            Masukkan nama siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="jkGuru" class="form-label">Jenis kelamin</label>
-                        <select name="jenkel" class="form-select" id="jkGuru" required>
+                        <label for="jkSiswa" class="form-label">Jenis kelamin</label>
+                        <select name="jenkel" class="form-select" id="jkSiswa" required>
                             <option value="Laki-laki" selected>Laki-laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
                         <div class="invalid-feedback">
-                            Masukkan jenis kelamin guru
+                            Pilih jenis kelamin siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="tanggalLahirGuru" class="form-label">Tanggal Lahir</label>
-                        <input type="date" name="tanggallahir" class="form-control" id="tanggalLahirGuru" required>
+                        <label for="tanggalLahirSiswa" class="form-label">Tanggal Lahir</label>
+                        <input type="date" name="tanggallahir" class="form-control" id="tanggalLahirSiswa" required>
                         <div class="invalid-feedback">
-                            Masukkan tanggal lahir guru
+                            Masukkan tanggal lahir siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="alamatGuru" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" id="alamatGuru" rows="3" required></textarea>
+                        <label for="alamatSiswa" class="form-label">Alamat</label>
+                        <textarea class="form-control" name="alamat" id="alamatSiswa" rows="3" required></textarea>
                         <div class="invalid-feedback">
-                            Masukkan alamat guru
+                            Masukkan alamat siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="emailGuru" class="form-label">Alamat Email</label>
-                        <input type="email" name="email" class="form-control" id="emailGuru" placeholder="name@example.com" required>
+                        <label for="emailSiswa" class="form-label">Alamat Email</label>
+                        <input type="email" name="email" class="form-control" id="emailSiswa" placeholder="name@example.com" required>
                         <div class="invalid-feedback">
-                            Masukkan alamat email guru
+                            Masukkan alamat email siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="noTelpGuru" class="form-label">Nomor Telepon</label>
-                        <input type="number" name="telepon" class="form-control" id="noTelpGuru" placeholder="08123456789" required>
+                        <label for="noTelpSiswa" class="form-label">Nomor Telepon</label>
+                        <input type="number" name="telepon" class="form-control" id="noTelpSiswa" placeholder="08123456789" required>
                         <div class="invalid-feedback">
-                            Masukkan nomor telepon guru
+                            Masukkan nomor telepon siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="agamaGuru" class="form-label">Agama</label>
-                        <select name="agama" class="form-select" id="agamaGuru" required>
+                        <label for="agamaSiswa" class="form-label">Agama</label>
+                        <select name="agama" class="form-select" id="agamaSiswa" required>
                             <option value="Buddha" selected>Buddha</option>
                             <option value="Hindu">Hindu</option>
                             <option value="Islam">Islam</option>
@@ -189,30 +189,39 @@ $adjacents = "2";
                             <option value="Kristen">Kristen</option>
                         </select>
                         <div class="invalid-feedback">
-                            Masukkan agama guru
+                            Masukkan agama siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="statusGuru" class="form-label">Status</label>
-                        <select name="status" class="form-select" id="statusGuru" required>
-                            <option value="Pegawai Negeri Sipil" selected>Pegawai Negeri Sipil</option>
-                            <option value="Guru Tidak Tetap">Guru Tidak Tetap</option>
-                            <option value="Guru Tetap Yayasan">Guru Tetap Yayasan</option>
+                        <label for="kelasSiswa" class="form-label">Kelas</label>
+                        <select name="kelas" class="form-select" id="kelasSiswa" required>
+                            <?php
+                            $result_kelas = $conn->query("SELECT * FROM kelas");
+                            if ($result_kelas && $result_kelas->num_rows > 0) {
+                                $no = 1;
+                                while ($row = $result_kelas->fetch_assoc()) {
+                                    echo "
+                                    <option value='${row['id_kelas']}'>${row['nama_kelas']}</option>
+                                ";
+                                    $no++;
+                                }
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback">
-                            Masukkan status guru
+                            Masukkan kelas siswa
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="passwordGuru" class="form-label">Password</label>
-                        <input type="password" name="passguru" class="form-control" id="passwordGuru" required>
+                        <label for="passwordSiswa" class="form-label">Password</label>
+                        <input type="password" name="passsiswa" class="form-control" id="passwordSiswa" required>
                         <div class="invalid-feedback">
-                            Masukkan password akun guru
+                            Masukkan password akun siswa
                         </div>
                     </div>
                     <div class="konten_ubah_nilai_opsi">
-                        <button onclick="window.location.replace('../admin/data-guru'); return false;" type="button" class="btn btn-danger">Batalkan</button>
-                        <button name="tambah-guru" type="submit" class="btn btn-success">Tambahkan</button>
+                        <button onclick="window.location.replace('../admin/data-siswa'); return false;" type="button" class="btn btn-danger">Batalkan</button>
+                        <button type="submit" name="tambah-siswa" class="btn btn-success">Tambahkan</button>
                     </div>
                 </form>
             </div>

@@ -35,17 +35,4 @@ class Guru
             return false;
         }
     }
-
-    public function tambah_data_guru($nip, $nama_guru, $jenis_kelamin, $alamat, $email, $no_telp, $agama, $status, $id_kelas, $tanggal_lahir, $uas)
-    {
-        global $conn;
-        $query = "INSERT INTO guru(nip, nama_guru, jenis_kelamin, alamat, email, no_telp, agama, status, id_kelas, tanggal_lahir, password)
-        VALUES ($nip, $nama_guru, $jenis_kelamin, $alamat, $email, $no_telp, $agama, $status, $id_kelas, $tanggal_lahir, $uas)";
-        $result = $conn->query($query);
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
