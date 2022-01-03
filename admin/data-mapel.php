@@ -92,12 +92,6 @@ $adjacents = "2";
                     </a>
                 </li>
                 <li>
-                    <a href="data-nilai">
-                        <span class="icon"><i class='bx bx-book-add'></i></span>
-                        <span class="title">Data Nilai</span>
-                    </a>
-                </li>
-                <li>
                     <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>

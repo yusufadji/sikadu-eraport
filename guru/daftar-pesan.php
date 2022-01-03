@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once dirname(__FILE__) . '/../connection.php';
 session_start();
 
@@ -12,7 +12,7 @@ if (isset($_COOKIE['login_as'])) {
 }
 if (!isset($_SESSION['login_as'])) {
     header('location: ../index');
-} else{
+} else {
     if ($_SESSION['login_as'] != "guru") {
         header('location: ../index');
     }
@@ -29,7 +29,7 @@ if (!isset($_GET['kls'])) {
     $kelas_id = $_GET['kls'];
 }
 $records_per_page = 30;
-$offset = ($page_no-1) * $records_per_page;
+$offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 
@@ -102,7 +102,7 @@ $adjacents = "2";
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -120,8 +120,7 @@ $adjacents = "2";
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -131,7 +130,7 @@ $adjacents = "2";
             </h2>
             <div class="konten_isi">
                 <div class="konten_pengaturan">
-                    <?php 
+                    <?php
                     if ($total_records == 0) {
                         echo "Tidak ada pesan!";
                     }
@@ -140,26 +139,26 @@ $adjacents = "2";
                 <div class="konten_table table-responsive">
                     <table class="daftar_chat table table-bordered">
                         <tbody>
-                            <?php 
+                            <?php
                             $result_siswa = $conn->query("CALL get_list_chat_siswa('$nip')");
                             if ($result_siswa && $result_siswa->num_rows > 0) {
-                                while($row = $result_siswa->fetch_assoc()){
+                                while ($row = $result_siswa->fetch_assoc()) {
                                     $nis = $row['murid_id'];
                                     $kls = $row['nama_kelas']
                             ?>
-                            <tr>
-                                <td onclick="location.href='pesan?nis=<?php echo $nis ?>'">
-                                
-                                <i class='bx bx-message-dots m-1'></i>
-                                <div class="mx-1">
-                                <h5><?php echo $row['nama_siswa'] ?></h5>
-                                    <?php echo $nis . " • " . $kls; ?>
-                                </div>
-                                
-                                </td>
-                            </tr>
-                            <?php 
-                                
+                                    <tr>
+                                        <td onclick="location.href='pesan?nis=<?php echo $nis ?>'">
+
+                                            <i class='bx bx-message-dots m-1'></i>
+                                            <div class="mx-1">
+                                                <h5><?php echo $row['nama_siswa'] ?></h5>
+                                                <?php echo $nis . " • " . $kls; ?>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                            <?php
+
                                 } //end while
                             } // endif
                             ?>
@@ -170,20 +169,20 @@ $adjacents = "2";
             <div class="konten_nav">
                 <nav aria-label="Page Navigation">
                     <ul class="pagination">
-                        <?php 
-                        if ($total_no_of_pages > 1) {
-                         ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$previous_page"; ?>">Previous</a></li>
-                        <?php 
-                        
-                            for ($i=1; $i <= $total_no_of_pages; $i++) { 
-                        ?>
-                        <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?kls=$kelas_id&p=$i"; ?>'><?php echo $i; ?></a></li>
                         <?php
-                            }
+                        if ($total_no_of_pages > 1) {
                         ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$next_page" ?>">Next</a></li>
-                        <?php 
+                            <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$previous_page"; ?>">Previous</a></li>
+                            <?php
+
+                            for ($i = 1; $i <= $total_no_of_pages; $i++) {
+                            ?>
+                                <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?kls=$kelas_id&p=$i"; ?>'><?php echo $i; ?></a></li>
+                            <?php
+                            }
+                            ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo "?kls=$kelas_id&$next_page" ?>">Next</a></li>
+                        <?php
                         }
                         ?>
                     </ul>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once dirname(__FILE__) . '/../connection.php';
 require_once dirname(__FILE__) . '/../model/siswa.php';
 session_start();
@@ -13,7 +13,7 @@ if (isset($_COOKIE['login_as'])) {
 }
 if (!isset($_SESSION['login_as'])) {
     header('location: ../index');
-} else{
+} else {
     if ($_SESSION['login_as'] != "guru") {
         header('location: ../index');
     }
@@ -90,7 +90,7 @@ $nama_siswa = $siswa->get_nama_siswa($nis);
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -108,24 +108,23 @@ $nama_siswa = $siswa->get_nama_siswa($nis);
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
         <div class="konten" style="height: 100%; overflow: unset;">
             <h2 class="konten_title">
-            <a href="./daftar-pesan" class="back-btn"><i class='bx bx-arrow-back'></i></a>
+                <a href="./daftar-pesan" class="back-btn"><i class='bx bx-arrow-back'></i></a>
                 Pesan dari <?php echo $nama_siswa; ?>
             </h2>
             <div class="konten_isi" style="height: 90%;">
                 <div class="chat-container" style="height: 100%;">
                     <div class="chat-list">
-                        
+
                     </div>
                     <div class="chat d-flex flex-column m-3 p-0">
                         <div class="card-header d-flex align-items-center">
-                            
+
                             <span class="chat-header-name mx-auto" data-id-siswa="<?php echo $nis ?>" id="nama-siswa">
                                 <?php echo $nama_siswa; ?>
                             </span>
@@ -145,27 +144,27 @@ $nama_siswa = $siswa->get_nama_siswa($nis);
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/main.js"></script>
         <script src="../assets/js/chat.js"></script>
-        <?php 
-        
+        <?php
+
         echo "<script> var id_siswa = '$nis'; var id_wali = '$nip'; </script>";
 
         ?>
         <script>
-$('#dropdown-kelas a').on('click', function () {
-    var txt= ($(this).data('kelas'));
-    window.open("./daftar-siswa?kls="+txt,"_self")
-});
+            $('#dropdown-kelas a').on('click', function() {
+                var txt = ($(this).data('kelas'));
+                window.open("./daftar-siswa?kls=" + txt, "_self")
+            });
 
 
-// jalankan cekPesan setiap 1 detik
-setInterval(cekPesanDariSiswa, 3000, id_siswa, id_wali);
+            // jalankan cekPesan setiap 1 detik
+            setInterval(cekPesanDariSiswa, 3000, id_siswa, id_wali);
         </script>
 </body>
 

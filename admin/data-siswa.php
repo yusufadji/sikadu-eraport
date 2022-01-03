@@ -97,12 +97,6 @@ $adjacents = "2";
                     </a>
                 </li>
                 <li>
-                    <a href="data-nilai">
-                        <span class="icon"><i class='bx bx-book-add'></i></span>
-                        <span class="title">Data Nilai</span>
-                    </a>
-                </li>
-                <li>
                     <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
@@ -247,10 +241,10 @@ $adjacents = "2";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
-$('#dropdown-kelas a').on('click', function() {
-    var txt = ($(this).data('kelas'));
-    window.open("./data-siswa?kls=" + txt, "_self")
-});
+        $('#dropdown-kelas a').on('click', function() {
+            var txt = ($(this).data('kelas'));
+            window.open("./data-siswa?kls=" + txt, "_self")
+        });
     </script>
 </body>
 

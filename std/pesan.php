@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 session_start();
 require_once '../connection.php';
 require_once '../model/siswa.php';
+require_once '../controller/action_chat.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -86,7 +87,7 @@ if ($walikelas != null) {
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -104,8 +105,7 @@ if ($walikelas != null) {
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
             </div>
         </div>
 
@@ -113,38 +113,38 @@ if ($walikelas != null) {
             <h2 class="konten_title">
                 Hubungi Wali Kelas
             </h2>
-            <?php 
+            <?php
             if (isset($tidak_tersedia) && $tidak_tersedia = true) {
                 echo "Tidak tersedia!";
             } else {
             ?>
-            <div class="konten_isi" style="height: 90%;">
-                <div class="chat-container" style="height: 100%;">
-                    <div class="chat-list">
-                        
-                    </div>
-                    <div class="chat d-flex flex-column m-3 p-0">
-                        <div class="card-header d-flex align-items-center">
-                            
-                            <span class="chat-header-name mx-auto" data-id-walikelas="<?php echo $nip_walikelas ?>" id="nama-walikelas">
-                                <?php echo $prefix_nama.$nama_walikelas; ?>
-                            </span>
+                <div class="konten_isi" style="height: 90%;">
+                    <div class="chat-container" style="height: 100%;">
+                        <div class="chat-list">
+
                         </div>
-                        <div class="chat-messages d-flex flex-column" id="chat-messages">
-                            <div class="spinner-border spinner-border-sm text-primary" role="status" id="chat-loading">
-                                <span class="visually-hidden">Loading...</span>
+                        <div class="chat d-flex flex-column m-3 p-0">
+                            <div class="card-header d-flex align-items-center">
+
+                                <span class="chat-header-name mx-auto" data-id-walikelas="<?php echo $nip_walikelas ?>" id="nama-walikelas">
+                                    <?php echo $prefix_nama . $nama_walikelas; ?>
+                                </span>
                             </div>
-                        </div>
-                        <div class="card-footer bg-white">
-                            <div class="input-group ">
-                                <input id="input-pesan" type="text" class="form-control" placeholder="Chat di sini..." aria-label="Chat di sini..." aria-describedby="send-button">
-                                <button class="btn btn-primary input-group-text" id="send-button" onclick="send_message_to_wali_kelas('<?php echo $nis; ?>','<?php echo $nip_walikelas; ?>')"><i class='bx bx-send'></i></button>
+                            <div class="chat-messages d-flex flex-column" id="chat-messages">
+                                <div class="spinner-border spinner-border-sm text-primary" role="status" id="chat-loading">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <div class="input-group ">
+                                    <input id="input-pesan" type="text" class="form-control" placeholder="Chat di sini..." aria-label="Chat di sini..." aria-describedby="send-button">
+                                    <button class="btn btn-primary input-group-text" id="send-button" onclick="send_message_to_wali_kelas('<?php echo $nis; ?>','<?php echo $nip_walikelas; ?>')"><i class='bx bx-send'></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php 
+            <?php
             }
             ?>
         </div>
@@ -152,15 +152,14 @@ if ($walikelas != null) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/main.js"></script>
         <script src="../assets/js/chat.js"></script>
-        <?php 
-        
+        <?php
+
         echo "<script> var id_siswa = '$nis'; var id_wali = '$nip_walikelas'; </script>";
 
         ?>
         <script>
-
-// cek pesan dari wali kelas tiap 3 detik
-setInterval(cekPesanDariWaliKelas, 3000, id_siswa, id_wali);
+            // cek pesan dari wali kelas tiap 3 detik
+            setInterval(cekPesanDariWaliKelas, 3000, id_siswa, id_wali);
         </script>
 </body>
 

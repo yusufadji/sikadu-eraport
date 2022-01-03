@@ -97,12 +97,6 @@ $adjacents = "2";
                     </a>
                 </li>
                 <li>
-                    <a href="data-nilai">
-                        <span class="icon"><i class='bx bx-book-add'></i></span>
-                        <span class="title">Data Nilai</span>
-                    </a>
-                </li>
-                <li>
                     <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
@@ -140,7 +134,20 @@ $adjacents = "2";
                     </div>
                     <div class="mb-3">
                         <label for="waliKelas" class="form-label">NIP Wali Kelas</label>
-                        <input type="number" required name="waliKelas" class="form-control" id="waliKelas">
+                        <select name="waliKelas" class="form-select" id="waliKelas" required>
+                            <?php
+                            $result_guru = $conn->query("SELECT * FROM guru");
+                            if ($result_guru && $result_guru->num_rows > 0) {
+                                $no = 1;
+                                while ($row = $result_guru->fetch_assoc()) {
+                                    echo "
+                                                <option value='${row['nip']}'>${row['nip']} - ${row['nama_guru']}</option>
+                                            ";
+                                    $no++;
+                                }
+                            }
+                            ?>
+                        </select>
                         <div class="invalid-feedback">
                             Masukkan NIP Wali kelas
                         </div>

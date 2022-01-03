@@ -50,9 +50,13 @@ CREATE TABLE `chats` (
   KEY `chats_ibfk_2` (`murid_id`),
   CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`guru_id`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `chats_ibfk_2` FOREIGN KEY (`murid_id`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
+
+insert  into `chats`(`id_chat`,`murid_id`,`guru_id`,`timestamps`,`message`,`is_read`,`is_from_murid`) values 
+(1,'51904100001','48295013901','2022-01-03 21:48:14','halo pak',0,1),
+(2,'51904100001','48295013901','2022-01-03 21:49:39','halo juga nak',0,0);
 
 /*Table structure for table `guru` */
 
@@ -75,7 +79,8 @@ CREATE TABLE `guru` (
 /*Data for the table `guru` */
 
 insert  into `guru`(`nip`,`nama_guru`,`jenis_kelamin`,`alamat`,`email`,`no_telp`,`agama`,`status`,`tanggal_lahir`,`password`) values 
-('20000000001','Steven','Laki-laki','Tulungagung','steven@example.com','0812398487','Konghuchu','Pegawai Negeri Sipil','1999-01-18','123');
+('48295013901','Steven','Laki-laki','Tulungagung','steven@example.com','08123947562','Kristen','Pegawai Negeri Sipil','1998-08-18','$2y$10$c4zaqzGFLhvzSZBuo3oKROKDuv4cVlG890yqgXaQsTlN.UuuSz.2S'),
+('48295013902','Dimas Zulfikar','Laki-laki','Kalimantan Utara','dimzul@example.com','08134792835128','Islam','Pegawai Negeri Sipil','1999-09-05','$2y$10$VJ6Fu9DNV9XC6RrQmZSPt.ocCG3TozkZbDjD7QkAjq62ahe8Z6EGq');
 
 /*Table structure for table `kelas` */
 
@@ -88,12 +93,13 @@ CREATE TABLE `kelas` (
   PRIMARY KEY (`id_kelas`),
   KEY `kelas_ibfk_1` (`nip`),
   CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `kelas` */
 
 insert  into `kelas`(`id_kelas`,`nama_kelas`,`nip`) values 
-(1,'X IPA A','20000000001');
+(1,'X IPA A','48295013901'),
+(8,'X Bahasa A','48295013902');
 
 /*Table structure for table `mata_pelajaran` */
 
@@ -111,8 +117,8 @@ CREATE TABLE `mata_pelajaran` (
 /*Data for the table `mata_pelajaran` */
 
 insert  into `mata_pelajaran`(`id_mapel`,`nama_mapel`,`nip`) values 
-(7,'Matematika','20000000001'),
-(8,'Biologi','20000000001');
+(7,'Matematika','48295013901'),
+(8,'Biologi','48295013902');
 
 /*Table structure for table `nilai` */
 
@@ -139,9 +145,12 @@ CREATE TABLE `nilai` (
   CONSTRAINT `nilai_ibfk_1` FOREIGN KEY (`id_mapel`) REFERENCES `mata_pelajaran` (`id_mapel`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nilai_ibfk_2` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nilai_ibfk_3` FOREIGN KEY (`id_raport`) REFERENCES `raport` (`id_raport`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nilai` */
+
+insert  into `nilai`(`id_nilai`,`nis`,`id_mapel`,`id_raport`,`semester`,`cp1`,`cp2`,`cp3`,`cp4`,`uts`,`uas`,`nilai_akhir`,`keterangan`) values 
+(2,'51904100001',7,4,1,70,70,80,85,90,60,NULL,NULL);
 
 /*Table structure for table `raport` */
 
@@ -162,9 +171,12 @@ CREATE TABLE `raport` (
   KEY `raport_ibfk_1` (`nis`),
   CONSTRAINT `raport_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `raport_ibfk_2` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `raport` */
+
+insert  into `raport`(`id_raport`,`tanggal`,`nis`,`nip`,`tahun_ajaran`,`rapor_semester`,`nilai_avg`,`nilai_huruf`,`keterangan`) values 
+(4,'2022-01-03','51904100001','48295013901',20202021,1,NULL,NULL,NULL);
 
 /*Table structure for table `siswa` */
 
@@ -189,7 +201,46 @@ CREATE TABLE `siswa` (
 /*Data for the table `siswa` */
 
 insert  into `siswa`(`nis`,`nama_siswa`,`jenis_kelamin`,`alamat`,`email`,`no_telp`,`agama`,`id_kelas`,`tanggal_lahir`,`password`) values 
-('51904100001','Dimas Zul','Laki-laki','Wonogiri','johndoe@example.com','08123456789','',1,'2021-12-26','123');
+('51904100001','Agus','Laki-laki','Wonogiri','aguskoen@example.com','08123456789','Kristen',1,'2021-12-26','$2y$10$AdCdBks.gd8kHSjtMAhHiOvlyJgixL9Aksar1Bnp6OFse5qW303aS'),
+('51904100002','Wansyah','Laki-laki','Sulawesi Selatan','wanca@example.com','08123791259812','Islam',8,'2000-09-18','$2y$10$yB.TuGgbUMjLSW56Km9gguSbqHES4uQtb4.SIeqHSt7yLublgS0gq');
+
+/* Procedure structure for procedure `get_list_chat_siswa` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `get_list_chat_siswa` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_list_chat_siswa`(IN nip VARCHAR(11))
+BEGIN 
+	SELECT murid_id,nama_siswa,guru_id,nama_kelas FROM chats INNER JOIN siswa ON siswa.nis = chats.murid_id 
+	INNER JOIN kelas ON siswa.id_kelas = kelas.id_kelas
+	WHERE guru_id = nip GROUP BY murid_id;
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `send_message_to_siswa` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `send_message_to_siswa` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `send_message_to_siswa`(IN id_murid VARCHAR(11), IN id_guru VARCHAR(11), IN msg VARCHAR(255))
+BEGIN 
+        INSERT INTO chats VALUES(NULL, id_murid, id_guru, NOW(), msg, FALSE, FALSE); 
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `send_message_to_wali_kelas` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `send_message_to_wali_kelas` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `send_message_to_wali_kelas`(IN id_murid VARCHAR(11), IN id_guru VARCHAR(11), IN msg VARCHAR(255))
+BEGIN 
+        INSERT INTO chats VALUES(NULL, id_murid, id_guru, NOW(), msg, FALSE, TRUE); 
+    END */$$
+DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
