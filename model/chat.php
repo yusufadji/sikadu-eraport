@@ -73,7 +73,9 @@ class Chat
     {
         global $conn;
         $result = $conn->query("CALL send_message_to_siswa('$nis', '$nip_wali', '$msg')");
-        $conn->next_result();
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             $status = true;
             $message = "Sukses mengirim pesan";
@@ -95,7 +97,9 @@ class Chat
     {
         global $conn;
         $result = $conn->query("CALL send_message_to_wali_kelas('$nis', '$nip_wali', '$msg')");
-        $conn->next_result();
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             $status = true;
             $message = "Sukses mengirim pesan";

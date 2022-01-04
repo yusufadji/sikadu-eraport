@@ -40,7 +40,9 @@ class Mapel
         global $conn;
         $query = "CALL tambah_mapel('$nip','$namamapel')";
         $result = $conn->query($query);
-        $conn->next_result();
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             return true;
         } else {
@@ -53,7 +55,9 @@ class Mapel
         global $conn;
         $query = "CALL ubah_mapel('$idmapel', '$nipwali', '$namamapel')";
         $result = $conn->query($query);
-        $conn->next_result();
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             return true;
         } else {

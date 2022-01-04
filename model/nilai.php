@@ -43,8 +43,10 @@ class Nilai
         global $conn;
         $this->set_wali_kelas();
         $query = "CALL buat_raport('$this->nis_siswa', '$this->nip_walikelas', " . CURRENT_TAHUN_AJARAN . ", " . CURRENT_SEMESTER . ")";
-        $conn->next_result();
         $result = $conn->query($query);
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             $this->id_raport = $conn->insert_id;
             echo $this->id_raport;
@@ -59,8 +61,10 @@ class Nilai
         }
         $smt = CURRENT_SEMESTER;
         $query = "CALL tambah_nilai('$this->nis_siswa', $id_mapel, $this->id_raport, $smt, $cp1, $cp2, $cp3, $cp4, $uts, $uas)";
-        $conn->next_result();
         $result = $conn->query($query);
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             return true;
         } else {
@@ -77,6 +81,9 @@ class Nilai
         $smt = CURRENT_SEMESTER;
         $query = "CALL ubah_nilai('$this->nis_siswa', '$id_mapel', '$smt', '$cp1', '$cp2', '$cp3', '$cp4', '$uts', '$uas')";
         $result = $conn->query($query);
+        while ($conn->more_results()) {
+            $conn->next_result();
+        }
         if ($result) {
             return true;
         } else {

@@ -152,6 +152,9 @@ $adjacents = "2";
                         <tbody>
                             <?php
                             $result_siswa = $conn->query("CALL get_list_chat_siswa('$nip')");
+                            while ($conn->more_results()) {
+                                $conn->next_result();
+                            }
                             if ($result_siswa && $result_siswa->num_rows > 0) {
                                 while ($row = $result_siswa->fetch_assoc()) {
                                     $nis = $row['murid_id'];
