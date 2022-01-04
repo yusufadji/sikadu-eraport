@@ -226,8 +226,8 @@ if (isset($_COOKIE['id'])) {
                     echo "Selamat datang, $nama_siswa";
                 }
                 if ($login_as == "admin") {
-                    $nama_guru = $get_user["nama_admin"];
-                    echo "Selamat datang, $nama_guru";
+                    $nama_admin = $get_user["nama_admin"];
+                    echo "Selamat datang, $nama_admin";
                 }
                 ?>
             </h2>
