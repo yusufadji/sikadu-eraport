@@ -54,7 +54,7 @@ class Nilai {
             $this->buat_raport();
         } 
         $smt = CURRENT_SEMESTER;
-        $query = "INSERT  INTO nilai(nis, id_mapel, id_raport, semester, cp1, cp2, cp3, cp4, uts, uas) VALUES ('$this->nis_siswa', $id_mapel, $this->id_raport, $smt, $cp1, $cp2, $cp3, $cp4, $uts, $uas)";
+        $query = "INSERT  INTO nilai(nis, id_mapel, id_raport, semester, cp1, cp2, cp3, cp4, uts, uas, nilai_akhir) VALUES ('$this->nis_siswa', $id_mapel, $this->id_raport, $smt, $cp1, $cp2, $cp3, $cp4, $uts, $uas, hitung_nilai_akhir($cp1, $cp2, $cp3, $cp4, $uts, $uas))";
         $result = $conn->query($query);
         if ($result) {
             return true;
@@ -69,7 +69,7 @@ class Nilai {
             echo "belum ada raport";
             return false;
         }
-        $query = "UPDATE nilai SET cp1 = $cp1, cp2 = $cp2, cp3 = $cp3, cp4 = $cp4, uts = $uts, uas = $uas WHERE nis = '$this->nis_siswa' AND id_mapel = $id_mapel AND semester = ".CURRENT_SEMESTER."";
+        $query = "UPDATE nilai SET cp1 = $cp1, cp2 = $cp2, cp3 = $cp3, cp4 = $cp4, uts = $uts, uas = $uas, nilai_akhir = hitung_nilai_akhir($cp1, $cp2, $cp3, $cp4, $uts, $uas) WHERE nis = '$this->nis_siswa' AND id_mapel = $id_mapel AND semester = ".CURRENT_SEMESTER."";
         $result = $conn->query($query);
         if ($result) {
             return true;
