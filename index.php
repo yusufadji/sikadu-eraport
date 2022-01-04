@@ -39,6 +39,7 @@ if ($login_as == "admin") {
     } else {
         $is_walikelas = false;
     }
+    $_SESSION['is_walikelas'] = $is_walikelas;
 } elseif ($login_as == "siswa") {
     $siswa = new Siswa();
     $get_user = $siswa->get_detail_siswa($userid);

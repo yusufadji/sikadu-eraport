@@ -11,7 +11,7 @@ if (isset($_COOKIE['login_as'])) {
     $nip = $_SESSION['id'];
     $login_as = $_SESSION['login_as'];
 }
-if (!isset($_SESSION['login_as'])) {
+if (!isset($_SESSION['login_as']) || (!isset($_SESSION['is_walikelas']) && $_SESSION['is_walikelas'] == false)) {
     header('location: ../index');
 } else {
     if ($_SESSION['login_as'] != "guru") {

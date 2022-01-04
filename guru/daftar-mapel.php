@@ -98,12 +98,19 @@ $adjacents = "2";
                         <span class="title">Daftar Nilai</span>
                     </a>
                 </li>
-                <li>
-                    <a href="pesan">
-                        <span class="icon"><i class='bx bx-chat'></i></span>
-                        <span class="title">Pesan</span>
-                    </a>
-                </li>
+                <?php
+                if (isset($_SESSION['is_walikelas']) && $_SESSION['is_walikelas'] == true) {
+                ?>
+
+                    <li>
+                        <a href="<?php echo $login_as == "guru" ? "guru" : "std"; ?>/pesan">
+                            <span class="icon"><i class='bx bx-chat'></i></span>
+                            <span class="title">Pesan</span>
+                        </a>
+                    </li>
+                <?php
+                }
+                ?>
                 <li>
                     <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
