@@ -34,7 +34,8 @@ class Kelas
         $query = "SELECT COUNT(*) As total_records FROM siswa WHERE id_kelas = $idkelas";
         $result = $conn->query($query);
         if ($result && $result->num_rows > 0) {
-            return $result['total_records'];
+            $row = $result->fetch_assoc();
+            return $row['total_records'];
         } else {
             return 0;
         }
