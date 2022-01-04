@@ -8,8 +8,8 @@ class Kelas
     {
         global $conn;
         $query = "CALL tambah_kelas('$nipwali','$namakelas')";
-        $conn->next_result();
         $result = $conn->query($query);
+        $conn->next_result();
         if ($result) {
             return true;
         } else {
@@ -21,8 +21,8 @@ class Kelas
     {
         global $conn;
         $query = "CALL ubah_kelas('$idkelas','$nipwali','$namakelas')";
-        $conn->next_result();
         $result = $conn->query($query);
+        $conn->next_result();
         if ($result) {
             return true;
         } else {

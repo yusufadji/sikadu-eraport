@@ -8,8 +8,8 @@ class Data
     {
         global $conn;
         $query = "CALL tambah_data_guru('$nip','$nama_guru','$jenis_kelamin','$alamat','$email','$no_telp','$agama','$status','$tanggal_lahir','$password')";
-        $conn->next_result();
         $result = $conn->query($query);
+        $conn->next_result();
         if ($result) {
             return true;
         } else {
@@ -21,8 +21,8 @@ class Data
     {
         global $conn;
         $query = "CALL ubah_data_guru('$nip','$nama_guru','$jenis_kelamin','$alamat','$email','$no_telp','$agama','$status','$tanggal_lahir','$password')";
-        $conn->next_result();
         $result = $conn->query($query);
+        $conn->next_result();
         if ($result) {
             return true;
         } else {
@@ -34,8 +34,8 @@ class Data
     {
         global $conn;
         $query = "CALL tambah_data_siswa('$nis', '$nama_siswa', '$jenis_kelamin', '$alamat', '$email', '$no_telp', '$agama', '$kelas', '$tanggal_lahir', '$password')";
-        $conn->next_result();
         $result = $conn->query($query);
+        $conn->next_result();
         if ($result) {
             return true;
         } else {
@@ -47,8 +47,8 @@ class Data
     {
         global $conn;
         $query = "CALL ubah_data_siswa('$nis', '$nama_siswa', '$jenis_kelamin', '$alamat', '$email', '$no_telp', '$agama', '$kelas', '$tanggal_lahir', '$password')";
-        $conn->next_result();
         $result = $conn->query($query);
+        $conn->next_result();
         if ($result) {
             return true;
         } else {
