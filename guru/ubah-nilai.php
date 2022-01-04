@@ -64,7 +64,7 @@ $siswa = new Siswa();
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../index">
                         <span class="icon"><i class='bx bx-grid-alt'></i></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -100,7 +100,7 @@ $siswa = new Siswa();
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="../logout">
                         <span class="icon"><i class='bx bx-exit'></i></span>
                         <span class="title">Logout</span>
                     </a>
@@ -124,107 +124,125 @@ $siswa = new Siswa();
 
         <div class="konten">
             <h2 class="konten_title">
-            <a href="./daftar-nilai" class="back-btn"><i class='bx bx-arrow-back'></i></a>
+                <a href="./daftar-nilai" class="back-btn"><i class='bx bx-arrow-back'></i></a>
                 Ubah Nilai
             </h2>
             <div class="konten_isi">
                 <?php
                 $result_siswa = $siswa->get_detail_siswa($siswaid);
                 if ($result_siswa) {
-                    
+
                 ?>
-                        <form class="konten_ubah_nilai" id="form_ubah_nilai" name="form_nilai" action="../controller/action_nilai" method="post">
-                            <div class="mb-3">
-                                <label for="namaSiswa" class="form-label">Nama siswa</label>
-                                <input type="text" class="form-control" id="namaSiswa" disabled value="<?php echo $result_siswa['nama_siswa']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nomorIndukSiswa" class="form-label">Nomor induk siswa</label>
-                                <input type="text" name="nis-disabled" class="form-control" id="nomorIndukSiswa" disabled value="<?php echo $result_siswa['nis']; ?>" placeholder="<?php echo $result_siswa['nis']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="kelasSiswa" class="form-label">Kelas</label>
-                                <?php
-                                $nama_kelas = $siswa->get_kelas_siswa($siswaid);
-                                if ($nama_kelas) {
-                                    
-                                ?>
-                                        <input type="text" class="form-control" id="kelasSiswa" disabled value="<?php echo $nama_kelas; ?>">
-                                <?php
-                                    
-                                }
-                                ?>
-                            </div>
-                            <div class="mb-3">
-                                <div class="dropdown">
-                                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuMapel" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Mata Pelajaran
-                                    </a>
-                                    <ul class="dropdown-menu" id="dropdown-mapel" aria-labelledby="dropdownMenuMapel">
-                                        <?php
-                                        $result_mapel = $guru->get_mapel_by_guru($userid);
-                                        if ($result_mapel && $result_mapel->num_rows > 0) {
-                                            while ($row = $result_mapel->fetch_assoc()) {
-                                        ?>
-                                                <li><a class="dropdown-item <?php echo $mapelid == $row['id_mapel'] ? "bg-primary text-white" : ""; ?>" data-mapel="<?php echo $row['id_mapel'] ?>" href="#"><?php echo $row['nama_mapel'] ?></a></li>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                    </ul>
-                                </div>
-                            </div>
+                    <form class="konten_ubah_nilai was-validated" id="form_ubah_nilai" name="form_nilai" action="../controller/action_nilai" method="post">
+                        <div class="mb-3">
+                            <label for="namaSiswa" class="form-label">Nama siswa</label>
+                            <input type="text" class="form-control" id="namaSiswa" disabled value="<?php echo $result_siswa['nama_siswa']; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nomorIndukSiswa" class="form-label">Nomor induk siswa</label>
+                            <input type="text" name="nis-disabled" class="form-control" id="nomorIndukSiswa" disabled value="<?php echo $result_siswa['nis']; ?>" placeholder="<?php echo $result_siswa['nis']; ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="kelasSiswa" class="form-label">Kelas</label>
                             <?php
-                            if ($mapelid > 0) {
-                                $nilai_siswa = $nilai->get_nilai($mapelid);
-                                if ($nilai_siswa) {
-                                    $row = $nilai_siswa->fetch_assoc();
-                                    if ($nilai_siswa->num_rows === 0) {
-                                        echo "Belum Ada Nilai";
-                                        $aksi = "tambah";
-                                    } else {
-                                        $id_nilai = $row['id_nilai'];
-                                        $aksi = "ubah";
-                                    }
+                            $nama_kelas = $siswa->get_kelas_siswa($siswaid);
+                            if ($nama_kelas) {
+
                             ?>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP1" class="form-label">CP1</label>
-                                <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
+                                <input type="text" class="form-control" id="kelasSiswa" disabled value="<?php echo $nama_kelas; ?>">
+                            <?php
+
+                            }
+                            ?>
+                        </div>
+                        <div class="mb-3">
+                            <div class="dropdown">
+                                <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuMapel" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mata Pelajaran
+                                </a>
+                                <ul class="dropdown-menu" id="dropdown-mapel" aria-labelledby="dropdownMenuMapel">
+                                    <?php
+                                    $result_mapel = $guru->get_mapel_by_guru($userid);
+                                    if ($result_mapel && $result_mapel->num_rows > 0) {
+                                        while ($row = $result_mapel->fetch_assoc()) {
+                                    ?>
+                                            <li><a class="dropdown-item <?php echo $mapelid == $row['id_mapel'] ? "bg-primary text-white" : ""; ?>" data-mapel="<?php echo $row['id_mapel'] ?>" href="#"><?php echo $row['nama_mapel'] ?></a></li>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
                             </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP2" class="form-label">CP2</label>
-                                <input type="number" name="nilaicp2" min="0" max="100" class="form-control" id="nilaiSiswaCP2" value="<?php echo $row['cp2']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP3" class="form-label">CP3</label>
-                                <input type="number" name="nilaicp3" min="0" max="100" class="form-control" id="nilaiSiswaCP3" value="<?php echo $row['cp3']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaCP4" class="form-label">CP4</label>
-                                <input type="number" name="nilaicp4" min="0" max="100" class="form-control" id="nilaiSiswaCP4" value="<?php echo $row['cp4']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaUTS" class="form-label">UTS</label>
-                                <input type="number" name="nilaiuts" min="0" max="100" class="form-control" id="nilaiSiswaUTS" value="<?php echo $row['uts']; ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nilaiSiswaUAS" class="form-label">UAS</label>
-                                <input type="number" name="nilaiuas" min="0" max="100" class="form-control" id="nilaiSiswaUAS" value="<?php echo $row['uas']; ?>">
-                            </div>
-                            <input type="hidden" name="aksi" id="aksinilai" value="<?php echo $aksi; ?>">
-                            <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $mapelid; ?>">
-                            <input type="hidden" name="nis" id="nis" value="<?php echo $siswaid; ?>">
-                            <div class="konten_ubah_nilai_opsi">
-                                <a href="daftar-nilai"><button type="button" class="btn btn-danger">Batalkan</button></a>
-                                <button type="submit" name="simpan-nilai" class="btn btn-primary d-inline-flex align-items-center">Simpan <i class='bx bx-save'></i></button>
-                            </div>
-                        </form>
+                        </div>
+                        <?php
+                        if ($mapelid > 0) {
+                            $nilai_siswa = $nilai->get_nilai($mapelid);
+                            if ($nilai_siswa) {
+                                $row = $nilai_siswa->fetch_assoc();
+                                if ($nilai_siswa->num_rows === 0) {
+                                    echo "Belum Ada Nilai";
+                                    $aksi = "tambah";
+                                } else {
+                                    $id_nilai = $row['id_nilai'];
+                                    $aksi = "ubah";
+                                }
+                        ?>
+                                <div class="mb-3">
+                                    <label for="nilaiSiswaCP1" class="form-label">CP1</label>
+                                    <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
+                                    <div class="invalid-feedback">
+                                        Masukkan nilai dari 0 hingga 100
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nilaiSiswaCP2" class="form-label">CP2</label>
+                                    <input type="number" name="nilaicp2" min="0" max="100" class="form-control" id="nilaiSiswaCP2" value="<?php echo $row['cp2']; ?>">
+                                    <div class="invalid-feedback">
+                                        Masukkan nilai dari 0 hingga 100
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nilaiSiswaCP3" class="form-label">CP3</label>
+                                    <input type="number" name="nilaicp3" min="0" max="100" class="form-control" id="nilaiSiswaCP3" value="<?php echo $row['cp3']; ?>">
+                                    <div class="invalid-feedback">
+                                        Masukkan nilai dari 0 hingga 100
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nilaiSiswaCP4" class="form-label">CP4</label>
+                                    <input type="number" name="nilaicp4" min="0" max="100" class="form-control" id="nilaiSiswaCP4" value="<?php echo $row['cp4']; ?>">
+                                    <div class="invalid-feedback">
+                                        Masukkan nilai dari 0 hingga 100
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nilaiSiswaUTS" class="form-label">UTS</label>
+                                    <input type="number" name="nilaiuts" min="0" max="100" class="form-control" id="nilaiSiswaUTS" value="<?php echo $row['uts']; ?>">
+                                    <div class="invalid-feedback">
+                                        Masukkan nilai dari 0 hingga 100
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nilaiSiswaUAS" class="form-label">UAS</label>
+                                    <input type="number" name="nilaiuas" min="0" max="100" class="form-control" id="nilaiSiswaUAS" value="<?php echo $row['uas']; ?>">
+                                    <div class="invalid-feedback">
+                                        Masukkan nilai dari 0 hingga 100
+                                    </div>
+                                </div>
+                                <input type="hidden" name="aksi" id="aksinilai" value="<?php echo $aksi; ?>">
+                                <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $mapelid; ?>">
+                                <input type="hidden" name="nis" id="nis" value="<?php echo $siswaid; ?>">
+                                <div class="konten_ubah_nilai_opsi">
+                                    <a href="daftar-nilai"><button type="button" class="btn btn-danger">Batalkan</button></a>
+                                    <button type="submit" name="simpan-nilai" class="btn btn-primary d-inline-flex align-items-center">Simpan <i class='bx bx-save'></i></button>
+                                </div>
+                    </form>
 
         <?php
-                                }
                             }
                         }
-                    
+                    }
+
         ?>
             </div>
         </div>

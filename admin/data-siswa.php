@@ -30,7 +30,7 @@ if (!isset($_GET['kls'])) {
 } else {
     $kelas_id = $_GET['kls'];
 }
-$records_per_page = 40;
+$records_per_page = 30;
 $offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;

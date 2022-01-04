@@ -50,13 +50,14 @@ CREATE TABLE `chats` (
   KEY `chats_ibfk_2` (`murid_id`),
   CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`guru_id`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `chats_ibfk_2` FOREIGN KEY (`murid_id`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `chats` */
 
 insert  into `chats`(`id_chat`,`murid_id`,`guru_id`,`timestamps`,`message`,`is_read`,`is_from_murid`) values 
 (1,'51904100001','48295013901','2022-01-03 21:48:14','halo pak',0,1),
-(2,'51904100001','48295013901','2022-01-03 21:49:39','halo juga nak',0,0);
+(2,'51904100001','48295013901','2022-01-03 21:49:39','halo juga nak',0,0),
+(3,'51904100001','48295013901','2022-01-04 12:07:38','mau protes nilai pak',0,1);
 
 /*Table structure for table `guru` */
 
@@ -69,7 +70,7 @@ CREATE TABLE `guru` (
   `alamat` text NOT NULL,
   `email` varchar(30) NOT NULL,
   `no_telp` varchar(14) NOT NULL,
-  `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
+  `agama` enum('Islam','Kristen','Katolik','Hindu','Buddha','Konghuchu') NOT NULL,
   `status` varchar(20) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -80,7 +81,8 @@ CREATE TABLE `guru` (
 
 insert  into `guru`(`nip`,`nama_guru`,`jenis_kelamin`,`alamat`,`email`,`no_telp`,`agama`,`status`,`tanggal_lahir`,`password`) values 
 ('48295013901','Steven','Laki-laki','Tulungagung','steven@example.com','08123947562','Kristen','Pegawai Negeri Sipil','1998-08-18','$2y$10$c4zaqzGFLhvzSZBuo3oKROKDuv4cVlG890yqgXaQsTlN.UuuSz.2S'),
-('48295013902','Dimas Zulfikar','Laki-laki','Kalimantan Utara','dimzul@example.com','08134792835128','Islam','Pegawai Negeri Sipil','1999-09-05','$2y$10$VJ6Fu9DNV9XC6RrQmZSPt.ocCG3TozkZbDjD7QkAjq62ahe8Z6EGq');
+('48295013902','Dimas Zulfikar','Laki-laki','Kalimantan Utara','dimzul@example.com','08134792835128','Islam','Pegawai Negeri Sipil','1999-09-05','$2y$10$VJ6Fu9DNV9XC6RrQmZSPt.ocCG3TozkZbDjD7QkAjq62ahe8Z6EGq'),
+('48295013903','Rafif','Laki-laki','Surabaya','rafif@example.com','08182748151257','Islam','Pegawai Negeri Sipil','1990-04-16','$2y$10$qQVR3hL57CJnIVR9VeiFHetbpnLGd/XirxL1xey8KsqXtLcQc6aG2');
 
 /*Table structure for table `kelas` */
 
@@ -137,7 +139,6 @@ CREATE TABLE `nilai` (
   `uts` int(11) DEFAULT NULL,
   `uas` int(11) DEFAULT NULL,
   `nilai_akhir` varchar(1) DEFAULT NULL,
-  `keterangan` text DEFAULT NULL,
   PRIMARY KEY (`id_nilai`),
   KEY `id_raport` (`id_raport`),
   KEY `nilai_ibfk_2` (`nis`),
@@ -145,12 +146,13 @@ CREATE TABLE `nilai` (
   CONSTRAINT `nilai_ibfk_1` FOREIGN KEY (`id_mapel`) REFERENCES `mata_pelajaran` (`id_mapel`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nilai_ibfk_2` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nilai_ibfk_3` FOREIGN KEY (`id_raport`) REFERENCES `raport` (`id_raport`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nilai` */
 
-insert  into `nilai`(`id_nilai`,`nis`,`id_mapel`,`id_raport`,`semester`,`cp1`,`cp2`,`cp3`,`cp4`,`uts`,`uas`,`nilai_akhir`,`keterangan`) values 
-(2,'51904100001',7,4,1,70,70,80,85,90,60,NULL,NULL);
+insert  into `nilai`(`id_nilai`,`nis`,`id_mapel`,`id_raport`,`semester`,`cp1`,`cp2`,`cp3`,`cp4`,`uts`,`uas`,`nilai_akhir`) values 
+(2,'51904100001',7,4,1,70,70,70,75,80,70,'B'),
+(3,'51904100003',7,5,1,90,80,70,60,50,40,'C');
 
 /*Table structure for table `raport` */
 
@@ -163,20 +165,18 @@ CREATE TABLE `raport` (
   `nip` varchar(11) NOT NULL,
   `tahun_ajaran` int(11) NOT NULL,
   `rapor_semester` int(11) NOT NULL,
-  `nilai_avg` double DEFAULT NULL,
-  `nilai_huruf` varchar(10) DEFAULT NULL,
-  `keterangan` text DEFAULT NULL,
   PRIMARY KEY (`id_raport`),
   KEY `raport_ibfk_2` (`nip`),
   KEY `raport_ibfk_1` (`nis`),
   CONSTRAINT `raport_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `raport_ibfk_2` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `raport` */
 
-insert  into `raport`(`id_raport`,`tanggal`,`nis`,`nip`,`tahun_ajaran`,`rapor_semester`,`nilai_avg`,`nilai_huruf`,`keterangan`) values 
-(4,'2022-01-03','51904100001','48295013901',20202021,1,NULL,NULL,NULL);
+insert  into `raport`(`id_raport`,`tanggal`,`nis`,`nip`,`tahun_ajaran`,`rapor_semester`) values 
+(4,'2022-01-03','51904100001','48295013901',20202021,1),
+(5,'2022-01-04','51904100003','48295013901',20202021,1);
 
 /*Table structure for table `siswa` */
 
@@ -189,7 +189,7 @@ CREATE TABLE `siswa` (
   `alamat` text NOT NULL,
   `email` varchar(50) NOT NULL,
   `no_telp` varchar(14) NOT NULL,
-  `agama` enum('Islam','Kristen','Katolik','Hindu','Budha','Konghuchu') NOT NULL,
+  `agama` enum('Islam','Kristen','Katolik','Hindu','Buddha','Konghuchu') NOT NULL,
   `id_kelas` int(11) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -202,7 +202,36 @@ CREATE TABLE `siswa` (
 
 insert  into `siswa`(`nis`,`nama_siswa`,`jenis_kelamin`,`alamat`,`email`,`no_telp`,`agama`,`id_kelas`,`tanggal_lahir`,`password`) values 
 ('51904100001','Agus','Laki-laki','Wonogiri','aguskoen@example.com','08123456789','Kristen',1,'2021-12-26','$2y$10$AdCdBks.gd8kHSjtMAhHiOvlyJgixL9Aksar1Bnp6OFse5qW303aS'),
-('51904100002','Wansyah','Laki-laki','Sulawesi Selatan','wanca@example.com','08123791259812','Islam',8,'2000-09-18','$2y$10$yB.TuGgbUMjLSW56Km9gguSbqHES4uQtb4.SIeqHSt7yLublgS0gq');
+('51904100002','Wansyah','Laki-laki','Sulawesi Selatan','wanca@example.com','08123791259812','Islam',8,'2000-09-18','$2y$10$yB.TuGgbUMjLSW56Km9gguSbqHES4uQtb4.SIeqHSt7yLublgS0gq'),
+('51904100003','Radi','Laki-laki','Jakarta','radi@example.com','081273491876','Islam',1,'1999-08-19','$2y$10$G6fyocq7VenvHEUFLSoVbupp5XK/DV5ygcskRBjang6mk/reF5xI.'),
+('51904100004','Putra','Laki-laki','Surabaya','putra@example.com','082192871928','Kristen',1,'1999-09-18','$2y$10$2yvnmXsL8WcpOvizxXi3PeZXTB8Aloe4oJXnc78yMlqGZnc7Lek6m'),
+('51904100005','Farhan','Laki-laki','Jombang','farhan@example.com','081273827563','Islam',1,'1999-03-15','$2y$10$wIlRFzKXYVMljUGlpwCnAu.49zIANhxvfhfpP6VB.CTM.hvXpOo0K');
+
+/* Function  structure for function  `hitung_nilai_akhir` */
+
+/*!50003 DROP FUNCTION IF EXISTS `hitung_nilai_akhir` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `hitung_nilai_akhir`(cp1 INT, cp2 INT, cp3 INT, cp4 INT, uts INT, uas INT) RETURNS char(1) CHARSET utf8mb4
+BEGIN
+	DECLARE rata DOUBLE;
+	DECLARE nilai_akhir CHAR(1);
+	SET rata = (SELECT AVG( (COALESCE(cp1,0) + COALESCE(cp2,0) + COALESCE(cp3,0) + COALESCE(cp4,0) + COALESCE(uts,0) + COALESCE(uas,0))/6) );
+
+	IF rata > 90 THEN
+		SET nilai_akhir = "A";
+	ELSEIF rata > 70 THEN
+		SET nilai_akhir = "B";
+	ELSEIF rata > 60 THEN
+		SET nilai_akhir = "C";
+	ELSEIF rata > 50 THEN 
+		SET nilai_akhir = "D";
+	ELSE
+		SET nilai_akhir = "E";
+	END IF;
+	RETURN (nilai_akhir);
+END */$$
+DELIMITER ;
 
 /* Procedure structure for procedure `get_list_chat_siswa` */
 

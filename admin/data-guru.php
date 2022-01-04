@@ -168,7 +168,7 @@ $adjacents = "2";
                             </tr>
                         </thead>
                         <?php
-                        $result_guru = $conn->query("SELECT * FROM guru");
+                        $result_guru = $conn->query("SELECT * FROM guru LIMIT $records_per_page OFFSET $offset");
                         if ($result_guru && $result_guru->num_rows > 0) {
                             $no = 1;
                             while ($row = $result_guru->fetch_assoc()) {
@@ -199,11 +199,24 @@ $adjacents = "2";
             <div class="konten_nav">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <?php
+                        if ($total_no_of_pages > 1) {
+                        ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo "?$previous_page"; ?>">Previous</a></li>
+                            <?php
+
+                            for ($i = 1; $i <= $total_no_of_pages; $i++) {
+                            ?>
+                                <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?p=$i"; ?>'><?php echo $i; ?></a></li>
+                            <?php
+
+                            }
+
+                            ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo "?$next_page" ?>">Next</a></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </nav>
             </div>

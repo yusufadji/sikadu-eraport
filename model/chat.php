@@ -1,10 +1,11 @@
-<?php 
+<?php
 require_once '../connection.php';
 
 class Chat
 {
 
-    public function cek() {
+    public function cek()
+    {
         global $conn;
         if ($conn->connect_errno) {
             echo "Failed";
@@ -34,7 +35,8 @@ class Chat
         $query = "SELECT COUNT(*) As total_records FROM chats INNER JOIN siswa ON siswa.nis = chats.murid_id WHERE guru_id = $nip GROUP BY murid_id";
         $result = $conn->query($query);
         if ($result && $result->num_rows > 0) {
-            return $result['total_records'];
+            $row = $result->fetch_assoc();
+            return $row['total_records'];
         } else {
             return 0;
         }
@@ -57,7 +59,7 @@ class Chat
             $data = [];
             $code = 404;
         }
-        
+
         $response = array(
             'status' => $status,
             'message' => $message,
@@ -114,5 +116,3 @@ class Chat
 }
 
 $chat = new Chat();
-
-?>

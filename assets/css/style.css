@@ -326,6 +326,7 @@ body {
 
 .konten .konten_isi {
     overflow: hidden;
+    padding: var(--pad-sm);
 }
 
 .konten .konten_title,
