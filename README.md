@@ -9,6 +9,7 @@ Changelog:
 6. Update tabel siswa -> password jadi 255 (untuk hash)
 7. Update tabel guru -> password jadi 255 (untuk hash)
 8. Perbarui database (stored pocedure fitur chat)
+9. Tambah function hitung_nilai_akhir
 
 Todo List :
 1. (+)Fungsi hitung rata2 nilai
