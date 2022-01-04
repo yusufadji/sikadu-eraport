@@ -17,7 +17,7 @@ if (isset($_POST['tambah-guru'])) {
     $result = $guru->tambah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
@@ -42,7 +42,7 @@ if (isset($_POST['ubah-guru'])) {
     $result = $guru->ubah_data_guru($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $status, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }

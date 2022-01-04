@@ -17,7 +17,7 @@ if (isset($_POST['tambah-siswa'])) {
     $result = $siswa->tambah_data_siswa($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $kelas, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
@@ -43,13 +43,11 @@ if (isset($_POST['ubah-siswa'])) {
     $result = $siswa->ubah_data_siswa($nip, $nama, $jenkel, $alamat, $email, $telepon, $agama, $kelas, $tanggallahir, $hashed_password);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-siswa");
+    header("location: ../admin/data-siswa?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-siswa");
 }

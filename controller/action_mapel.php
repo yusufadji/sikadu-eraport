@@ -8,13 +8,11 @@ if (isset($_POST['tambah-mapel'])) {
     $result = $mapel->tambah_mapel($nip, $namamapel);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-mapel");
+    header("location: ../admin/data-mapel?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-mapel");
 }
@@ -27,13 +25,11 @@ if (isset($_POST['ubah-mapel'])) {
     $result = $mapel->ubah_mapel($idmapel, $nipwali, $namamapel);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-mapel");
+    header("location: ../admin/data-mapel?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-mapel");
 }

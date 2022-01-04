@@ -147,6 +147,23 @@ $adjacents = "2";
                 Data Mapel
             </h2>
             <div class="konten_isi">
+                <?php
+                    if (isset($_GET['status'])) {
+                        if ($_GET['status'] == "berhasil") {
+                            echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            Data berhasil diubah/ditambahkan!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+
+                        } else if ($_GET['status'] == "gagal") {
+
+                            echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            Data gagal diubah/ditambahkan!
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div>";
+                        }
+                    }
+                ?>
                 <div class="konten_pengaturan">
                     <a href="tambah-data-mapel"><button type="button" class="btn btn-success">Tambah
                             mapel</button></a>

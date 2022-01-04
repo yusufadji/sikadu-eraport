@@ -8,13 +8,11 @@ if (isset($_POST['tambah-kelas'])) {
     $result = $kelas->tambah_kelas($nipwali, $namakelas);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-kelas");
+    header("location: ../admin/data-kelas?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-kelas");
 }
@@ -27,13 +25,11 @@ if (isset($_POST['ubah-kelas'])) {
     $result = $kelas->ubah_kelas($idkelas, $nipwali, $namakelas);
     var_dump($result);
     if ($result) {
-        $status = "sukses";
+        $status = "berhasil";
     } else {
         $status = "gagal";
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: ../admin/data-kelas");
+    header("location: ../admin/data-kelas?status=$status");
 } else if (isset($_POST['batalkan'])) {
     header("location: ../admin/data-kelas");
 }
