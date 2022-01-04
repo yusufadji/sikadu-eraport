@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once dirname(__FILE__) . '/../model/nilai.php';
 
 if (isset($_POST['simpan-nilai'])) {
@@ -14,24 +14,24 @@ if (isset($_POST['simpan-nilai'])) {
 
     $nilai = new Nilai($nis);
 
-    switch($aksi){
+    switch ($aksi) {
         case 'tambah':
             $result = $nilai->tambah_nilai($id_mapel, $cp1, $cp2, $cp3, $cp4, $uts, $uas);
             if ($result) {
-                $status = "sukses";
+                $status = "berhasil";
             } else {
                 $status = "gagal";
             }
-            header("location: ../guru/ubah-nilai?nis=$nis&mapel=$id_mapel&status=$status");
+            header("location: ../guru/ubah-nilai?nis=$nis&mapel=$id_mapel&tambah-nilai=$status");
             break;
-        case 'ubah': 
+        case 'ubah':
             $result = $nilai->ubah_nilai($id_mapel, $cp1, $cp1, $cp3, $cp4, $uts, $uas);
             if ($result) {
-                $status = "sukses";
+                $status = "berhasil";
             } else {
                 $status = "gagal";
             }
-            header("location: ../guru/ubah-nilai?nis=$nis&mapel=$id_mapel&status=$status");
+            header("location: ../guru/ubah-nilai?nis=$nis&mapel=$id_mapel&ubah-nilai=$status");
             break;
     }
 } elseif (isset($_POST['lihat_nilai'])) {
@@ -41,7 +41,7 @@ if (isset($_POST['simpan-nilai'])) {
         $smt = $_POST['semester'];
         $ta = $_POST['tahun_ajaran'];
         $data = array();
-    
+
         $result = $nilai->get_nilai_raport($nis, $ta, $smt);
         while ($row = $result->fetch_object()) {
             $data[] = $row;
@@ -56,4 +56,3 @@ if (isset($_POST['simpan-nilai'])) {
         echo json_encode($response);
     }
 }
-?>

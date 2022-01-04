@@ -81,8 +81,9 @@ CREATE TABLE `guru` (
 
 insert  into `guru`(`nip`,`nama_guru`,`jenis_kelamin`,`alamat`,`email`,`no_telp`,`agama`,`status`,`tanggal_lahir`,`password`) values 
 ('48295013901','Steven','Laki-laki','Tulungagung','steven@example.com','08123947562','Kristen','Pegawai Negeri Sipil','1998-08-18','$2y$10$c4zaqzGFLhvzSZBuo3oKROKDuv4cVlG890yqgXaQsTlN.UuuSz.2S'),
-('48295013902','Dimas Zulfikar','Laki-laki','Kalimantan Utara','dimzul@example.com','08134792835128','Islam','Pegawai Negeri Sipil','1999-09-05','$2y$10$VJ6Fu9DNV9XC6RrQmZSPt.ocCG3TozkZbDjD7QkAjq62ahe8Z6EGq'),
-('48295013903','Rafif','Laki-laki','Surabaya','rafif@example.com','08182748151257','Islam','Pegawai Negeri Sipil','1990-04-16','$2y$10$qQVR3hL57CJnIVR9VeiFHetbpnLGd/XirxL1xey8KsqXtLcQc6aG2');
+('48295013902','Dimas','Laki-laki','Kalimantan Utara','dimzul@example.com','08134792835','Hindu','Pegawai Negeri Sipil','1990-09-05','$2y$10$d0yyaYNwdPcnJxIgilv8buEL2UPaUEnp7RmqrjCFUSG94mQBR8E1O'),
+('48295013903','Rafif','Laki-laki','Surabaya','rafif@example.com','08182748151257','Islam','Pegawai Negeri Sipil','1990-04-16','$2y$10$qQVR3hL57CJnIVR9VeiFHetbpnLGd/XirxL1xey8KsqXtLcQc6aG2'),
+('48295013904','Alvian','Laki-laki','Surabaya','alvian@example.com','08123781265','Buddha','Pegawai Negeri Sipil','1990-08-18','$2y$10$V.3Gm9zhvM.IhilUUelZy.YwD0nCMuyRFI9urNYvoXOq6vHlndXBC');
 
 /*Table structure for table `kelas` */
 
@@ -95,13 +96,15 @@ CREATE TABLE `kelas` (
   PRIMARY KEY (`id_kelas`),
   KEY `kelas_ibfk_1` (`nip`),
   CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `kelas` */
 
 insert  into `kelas`(`id_kelas`,`nama_kelas`,`nip`) values 
 (1,'X IPA A','48295013901'),
-(8,'X Bahasa A','48295013902');
+(8,'X IPS A','48295013902'),
+(9,'X IPA B','48295013904'),
+(10,'XI IPA A','48295013902');
 
 /*Table structure for table `mata_pelajaran` */
 
@@ -114,13 +117,15 @@ CREATE TABLE `mata_pelajaran` (
   PRIMARY KEY (`id_mapel`),
   KEY `mata_pelajaran_ibfk_1` (`nip`),
   CONSTRAINT `mata_pelajaran_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `mata_pelajaran` */
 
 insert  into `mata_pelajaran`(`id_mapel`,`nama_mapel`,`nip`) values 
 (7,'Matematika','48295013901'),
-(8,'Biologi','48295013902');
+(8,'Biologi','48295013902'),
+(9,'Sejarah','48295013901'),
+(10,'Kimia','48295013904');
 
 /*Table structure for table `nilai` */
 
@@ -146,13 +151,16 @@ CREATE TABLE `nilai` (
   CONSTRAINT `nilai_ibfk_1` FOREIGN KEY (`id_mapel`) REFERENCES `mata_pelajaran` (`id_mapel`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nilai_ibfk_2` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nilai_ibfk_3` FOREIGN KEY (`id_raport`) REFERENCES `raport` (`id_raport`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `nilai` */
 
 insert  into `nilai`(`id_nilai`,`nis`,`id_mapel`,`id_raport`,`semester`,`cp1`,`cp2`,`cp3`,`cp4`,`uts`,`uas`,`nilai_akhir`) values 
 (2,'51904100001',7,4,1,70,70,70,75,80,70,'B'),
-(3,'51904100003',7,5,1,90,80,70,60,50,40,'C');
+(3,'51904100003',7,5,1,90,80,70,60,50,40,'C'),
+(6,'51904100004',7,6,1,80,90,80,70,80,90,'B'),
+(8,'51904100005',7,7,1,80,80,80,80,80,80,'B'),
+(9,'51904100005',9,7,1,80,80,80,80,80,80,'B');
 
 /*Table structure for table `raport` */
 
@@ -170,13 +178,15 @@ CREATE TABLE `raport` (
   KEY `raport_ibfk_1` (`nis`),
   CONSTRAINT `raport_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `raport_ibfk_2` FOREIGN KEY (`nip`) REFERENCES `guru` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `raport` */
 
 insert  into `raport`(`id_raport`,`tanggal`,`nis`,`nip`,`tahun_ajaran`,`rapor_semester`) values 
 (4,'2022-01-03','51904100001','48295013901',20202021,1),
-(5,'2022-01-04','51904100003','48295013901',20202021,1);
+(5,'2022-01-04','51904100003','48295013901',20202021,1),
+(6,'2022-01-04','51904100004','48295013901',20202021,1),
+(7,'2022-01-04','51904100005','48295013901',20202021,1);
 
 /*Table structure for table `siswa` */
 
@@ -205,7 +215,7 @@ insert  into `siswa`(`nis`,`nama_siswa`,`jenis_kelamin`,`alamat`,`email`,`no_tel
 ('51904100002','Wansyah','Laki-laki','Sulawesi Selatan','wanca@example.com','08123791259812','Islam',8,'2000-09-18','$2y$10$yB.TuGgbUMjLSW56Km9gguSbqHES4uQtb4.SIeqHSt7yLublgS0gq'),
 ('51904100003','Radi','Laki-laki','Jakarta','radi@example.com','081273491876','Islam',1,'1999-08-19','$2y$10$G6fyocq7VenvHEUFLSoVbupp5XK/DV5ygcskRBjang6mk/reF5xI.'),
 ('51904100004','Putra','Laki-laki','Surabaya','putra@example.com','082192871928','Kristen',1,'1999-09-18','$2y$10$2yvnmXsL8WcpOvizxXi3PeZXTB8Aloe4oJXnc78yMlqGZnc7Lek6m'),
-('51904100005','Farhan','Laki-laki','Jombang','farhan@example.com','081273827563','Islam',1,'1999-03-15','$2y$10$wIlRFzKXYVMljUGlpwCnAu.49zIANhxvfhfpP6VB.CTM.hvXpOo0K');
+('51904100005','Farhan Aji','Laki-laki','Jombang','farhan@example.com','081273827563','Buddha',1,'1999-03-15','$2y$10$/eq.JMVp/rl5tOqVrBVLS.9izdSL0ZOZKAGXcVoZenDzks63JYbvS');
 
 /* Function  structure for function  `hitung_nilai_akhir` */
 
@@ -230,6 +240,24 @@ BEGIN
 		SET nilai_akhir = "E";
 	END IF;
 	RETURN (nilai_akhir);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `buat_raport` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `buat_raport` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `buat_raport`(
+in nis_siswa varchar(11),
+in nip_walikelas varchar(11),
+in thnajaran int(11),
+in raporsmt int(11)
+)
+BEGIN
+    INSERT INTO raport (tanggal, nis, nip, tahun_ajaran, rapor_semester) 
+    VALUES (CURRENT_DATE(), nis_siswa, nip_walikelas, thnajaran, raporsmt);
 END */$$
 DELIMITER ;
 
@@ -269,6 +297,208 @@ DELIMITER $$
 BEGIN 
         INSERT INTO chats VALUES(NULL, id_murid, id_guru, NOW(), msg, FALSE, TRUE); 
     END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `tambah_data_guru` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `tambah_data_guru` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_data_guru`(
+in nipguru varchar(11),
+in namaguru varchar(50),
+in jenkelguru enum('Laki-laki','Perempuan'),
+in alamatguru text,
+in emailguru varchar(30),
+in notelpguru varchar(14),
+in agamaguru enum('Buddha','Hindu','Islam','Katolik','Konghuchu','Kristen'),
+in statusguru varchar(20),
+in tgllahirguru date,
+in passwordguru varchar(255)
+)
+BEGIN
+    INSERT INTO guru(nip, nama_guru, jenis_kelamin, alamat, email, no_telp, agama, status, tanggal_lahir, password)
+        VALUES (nipguru,namaguru,jenkelguru,alamatguru,emailguru,notelpguru,agamaguru,statusguru,tgllahirguru,passwordguru);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `tambah_data_siswa` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `tambah_data_siswa` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_data_siswa`(
+in nissiswa varchar(11),
+in namasiswa varchar(50),
+in jenkelsiswa enum('Laki-laki','Perempuan'),
+in alamatsiswa text,
+in emailsiswa varchar(30),
+in notelpsiswa varchar(14),
+in agamasiswa enum('Buddha','Hindu','Islam','Katolik','Konghuchu','Kristen'),
+in kelassiswa int(11),
+in tgllahirsiswa date,
+in passwordsiswa varchar(255)
+)
+BEGIN
+    INSERT INTO siswa(nis, nama_siswa, jenis_kelamin, alamat, email, no_telp, agama, id_kelas, tanggal_lahir, password)
+        VALUES (nissiswa, namasiswa, jenkelsiswa, alamatsiswa, emailsiswa, notelpsiswa, agamasiswa, kelassiswa, tgllahirsiswa, passwordsiswa);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `tambah_kelas` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `tambah_kelas` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_kelas`(
+in nipwali varchar(11),
+in namakelas varchar(30)
+)
+BEGIN
+    INSERT INTO kelas(nip, nama_kelas) VALUES (nipwali, namakelas);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `tambah_mapel` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `tambah_mapel` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_mapel`(
+in nipwali varchar(11),
+in namamapel varchar(20)
+)
+BEGIN
+    INSERT INTO mata_pelajaran(nip, nama_mapel) VALUES (nipwali, namamapel);
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `tambah_nilai` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `tambah_nilai` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `tambah_nilai`(
+in nis_siswa varchar(11),
+in id_mapel int(11),
+in id_raport INT(11),
+in smt INT(11),
+in cp1 INT(11),
+in cp2 INT(11),
+in cp3 INT(11),
+in cp4 INT(11),
+in uts INT(11),
+in uas INT(11)
+)
+BEGIN
+    INSERT INTO nilai(nis, id_mapel, id_raport, semester, cp1, cp2, cp3, cp4, uts, uas, nilai_akhir) 
+    VALUES (nis_siswa, id_mapel, id_raport, smt, cp1, cp2, cp3, cp4, uts, uas, hitung_nilai_akhir(cp1, cp2, cp3, cp4, uts, uas));
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `ubah_data_guru` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `ubah_data_guru` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `ubah_data_guru`(
+in nipguru varchar(11),
+in namaguru varchar(50),
+in jenkelguru enum('Laki-laki','Perempuan'),
+in alamatguru text,
+in emailguru varchar(30),
+in notelpguru varchar(14),
+in agamaguru enum('Buddha','Hindu','Islam','Katolik','Konghuchu','Kristen'),
+in statusguru varchar(20),
+in tgllahirguru date,
+in passwordguru varchar(255)
+)
+BEGIN
+    UPDATE guru SET nip=nipguru, nama_guru=namaguru, jenis_kelamin=jenkelguru, alamat=alamatguru, email=emailguru, no_telp=notelpguru, agama=agamaguru, status=statusguru, tanggal_lahir=tgllahirguru, password=passwordguru WHERE nip=nipguru;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `ubah_data_siswa` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `ubah_data_siswa` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `ubah_data_siswa`(
+in nissiswa varchar(11),
+in namasiswa varchar(50),
+in jenkelsiswa enum('Laki-laki','Perempuan'),
+in alamatsiswa text,
+in emailsiswa varchar(30),
+in notelpsiswa varchar(14),
+in agamasiswa enum('Buddha','Hindu','Islam','Katolik','Konghuchu','Kristen'),
+in kelassiswa int(11),
+in tgllahirsiswa date,
+in passwordsiswa varchar(255)
+)
+BEGIN
+    UPDATE siswa SET nis=nissiswa, nama_siswa=namasiswa, jenis_kelamin=jenkelsiswa, alamat=alamatsiswa, email=emailsiswa, no_telp=notelpsiswa, agama=agamasiswa, id_kelas=kelassiswa, tanggal_lahir=tgllahirsiswa, password=passwordsiswa WHERE nis=nissiswa;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `ubah_kelas` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `ubah_kelas` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `ubah_kelas`(
+in idkelas int(11),
+in nipwali varchar(11),
+in namakelas varchar(30)
+)
+BEGIN
+    UPDATE kelas SET nip=nipwali, nama_kelas=namakelas WHERE id_kelas=idkelas;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `ubah_mapel` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `ubah_mapel` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `ubah_mapel`(
+in idmapel int(11),
+in nipwali varchar(11),
+in namamapel varchar(20)
+)
+BEGIN
+    UPDATE mata_pelajaran SET nip=nipwali, nama_mapel=namamapel WHERE id_mapel=idmapel;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `ubah_nilai` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `ubah_nilai` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `ubah_nilai`(
+in nis_siswa varchar(11),
+in id_mapel int(11),
+in smt INT(11),
+in cp1 INT(11),
+in cp2 INT(11),
+in cp3 INT(11),
+in cp4 INT(11),
+in uts INT(11),
+in uas INT(11)
+)
+BEGIN
+    UPDATE nilai SET cp1 = cp1, cp2 = cp2, cp3 = cp3, cp4 = cp4, uts = uts, uas = uas, nilai_akhir = hitung_nilai_akhir(cp1, cp2, cp3, cp4, uts, uas) WHERE nis = nis_siswa AND id_mapel = id_mapel AND semester = smt;
+END */$$
 DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

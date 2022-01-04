@@ -32,7 +32,7 @@ class Guru
 
     public function get_nama_guru($nip)
     {
-        
+
         $guru = $this->get_detail_guru($nip);
         if ($guru) {
             return $guru['nama_guru'];

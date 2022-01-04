@@ -1,14 +1,16 @@
-<?php 
+<?php
 
 require_once dirname(__FILE__) . '/../config_sekolah.php';
-require_once dirname(__FILE__) .'/../connection.php';
+require_once dirname(__FILE__) . '/../connection.php';
 
-class Nilai {
+class Nilai
+{
     private $nis_siswa;
     private $nip_walikelas;
     private $id_raport;
 
-    public function __construct($nis_siswa) {
+    public function __construct($nis_siswa)
+    {
         $this->nis_siswa = $nis_siswa;
     }
     private function set_wali_kelas()
@@ -20,9 +22,10 @@ class Nilai {
         $this->nip_walikelas = $result['nip'];
     }
 
-    private function cek_raport(){
+    private function cek_raport()
+    {
         global $conn;
-        $query = "SELECT * FROM raport WHERE nis = '$this->nis_siswa' AND tahun_ajaran = ".CURRENT_TAHUN_AJARAN." AND rapor_semester = ".CURRENT_SEMESTER."";
+        $query = "SELECT * FROM raport WHERE nis = '$this->nis_siswa' AND tahun_ajaran = " . CURRENT_TAHUN_AJARAN . " AND rapor_semester = " . CURRENT_SEMESTER . "";
         $result = $conn->query($query);
         echo $conn->error;
         if ($result->num_rows > 0) {
@@ -39,22 +42,24 @@ class Nilai {
     {
         global $conn;
         $this->set_wali_kelas();
-        $query = "INSERT INTO raport (tanggal, nis, nip, tahun_ajaran, rapor_semester) VALUES (CURRENT_DATE(), '$this->nis_siswa', '$this->nip_walikelas', ".CURRENT_TAHUN_AJARAN.", ".CURRENT_SEMESTER.")";
+        $query = "CALL buat_raport('$this->nis_siswa', '$this->nip_walikelas', " . CURRENT_TAHUN_AJARAN . ", " . CURRENT_SEMESTER . ")";
+        $conn->next_result();
         $result = $conn->query($query);
         if ($result) {
             $this->id_raport = $conn->insert_id;
             echo $this->id_raport;
         }
     }
-    public function tambah_nilai($id_mapel, $cp1=0, $cp2=0, $cp3=0, $cp4=0, $uts=0, $uas=0)
+    public function tambah_nilai($id_mapel, $cp1 = 0, $cp2 = 0, $cp3 = 0, $cp4 = 0, $uts = 0, $uas = 0)
     {
         global $conn;
         if (!$this->cek_raport()) {
             echo "belum ada raport";
             $this->buat_raport();
-        } 
+        }
         $smt = CURRENT_SEMESTER;
-        $query = "INSERT  INTO nilai(nis, id_mapel, id_raport, semester, cp1, cp2, cp3, cp4, uts, uas, nilai_akhir) VALUES ('$this->nis_siswa', $id_mapel, $this->id_raport, $smt, $cp1, $cp2, $cp3, $cp4, $uts, $uas, hitung_nilai_akhir($cp1, $cp2, $cp3, $cp4, $uts, $uas))";
+        $query = "CALL tambah_nilai('$this->nis_siswa', $id_mapel, $this->id_raport, $smt, $cp1, $cp2, $cp3, $cp4, $uts, $uas)";
+        $conn->next_result();
         $result = $conn->query($query);
         if ($result) {
             return true;
@@ -69,7 +74,8 @@ class Nilai {
             echo "belum ada raport";
             return false;
         }
-        $query = "UPDATE nilai SET cp1 = $cp1, cp2 = $cp2, cp3 = $cp3, cp4 = $cp4, uts = $uts, uas = $uas, nilai_akhir = hitung_nilai_akhir($cp1, $cp2, $cp3, $cp4, $uts, $uas) WHERE nis = '$this->nis_siswa' AND id_mapel = $id_mapel AND semester = ".CURRENT_SEMESTER."";
+        $smt = CURRENT_SEMESTER;
+        $query = "CALL ubah_nilai('$this->nis_siswa', '$id_mapel', '$smt', '$cp1', '$cp2', '$cp3', '$cp4', '$uts', '$uas')";
         $result = $conn->query($query);
         if ($result) {
             return true;
@@ -113,8 +119,4 @@ class Nilai {
             return false;
         }
     }
-
 }
-
-
-?>

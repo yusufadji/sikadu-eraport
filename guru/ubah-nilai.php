@@ -187,6 +187,42 @@ $siswa = new Siswa();
                                     $aksi = "ubah";
                                 }
                         ?>
+
+                                <?php
+                                if (isset($_GET['ubah-nilai'])) {
+                                    if ($_GET['ubah-nilai'] == "berhasil") {
+                                ?>
+                                        <div class="alert alert-success" role="alert">
+                                            Nilai berhasil diubah!
+                                        </div>
+                                    <?php
+                                    } else if ($_GET['ubah-nilai'] == "gagal") {
+                                    ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            Nilai gagah diubah!
+                                        </div>
+                                <?php
+                                    }
+                                }
+                                ?>
+
+                                <?php
+                                if (isset($_GET['tambah-nilai'])) {
+                                    if ($_GET['tambah-nilai'] == "berhasil") {
+                                ?>
+                                        <div class="alert alert-success" role="alert">
+                                            Nilai berhasil ditambahkan!
+                                        </div>
+                                    <?php
+                                    } else if ($_GET['tambah-nilai'] == "gagal") {
+                                    ?>
+                                        <div class="alert alert-danger" role="alert">
+                                            Nilai gagah ditambahkan!
+                                        </div>
+                                <?php
+                                    }
+                                }
+                                ?>
                                 <div class="mb-3">
                                     <label for="nilaiSiswaCP1" class="form-label">CP1</label>
                                     <input type="number" name="nilaicp1" min="0" max="100" class="form-control" id="nilaiSiswaCP1" value="<?php echo $row['cp1']; ?>">
@@ -233,7 +269,7 @@ $siswa = new Siswa();
                                 <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $mapelid; ?>">
                                 <input type="hidden" name="nis" id="nis" value="<?php echo $siswaid; ?>">
                                 <div class="konten_ubah_nilai_opsi">
-                                    <a href="daftar-nilai"><button type="button" class="btn btn-danger">Batalkan</button></a>
+                                    <button onclick="window.location.replace('daftar-nilai'); return false;" type="button" class="btn btn-danger">Batalkan</button>
                                     <button type="submit" name="simpan-nilai" class="btn btn-primary d-inline-flex align-items-center">Simpan <i class='bx bx-save'></i></button>
                                 </div>
                     </form>

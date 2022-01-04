@@ -7,7 +7,8 @@ class Kelas
     public function tambah_kelas($nipwali, $namakelas)
     {
         global $conn;
-        $query = "INSERT INTO kelas(nip, nama_kelas) VALUES ('$nipwali', '$namakelas')";
+        $query = "CALL tambah_kelas('$nipwali','$namakelas')";
+        $conn->next_result();
         $result = $conn->query($query);
         if ($result) {
             return true;
@@ -19,7 +20,8 @@ class Kelas
     public function ubah_kelas($idkelas, $nipwali, $namakelas)
     {
         global $conn;
-        $query = "UPDATE kelas SET nip='$nipwali', nama_kelas='$namakelas' WHERE id_kelas=$idkelas";
+        $query = "CALL ubah_kelas('$idkelas','$nipwali','$namakelas')";
+        $conn->next_result();
         $result = $conn->query($query);
         if ($result) {
             return true;
@@ -27,7 +29,7 @@ class Kelas
             return false;
         }
     }
-    
+
     public function get_jumlah_siswa_kelas($idkelas)
     {
         global $conn;
@@ -66,5 +68,4 @@ class Kelas
             return false;
         }
     }
-
 }
