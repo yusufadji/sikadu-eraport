@@ -96,7 +96,16 @@ $kelas = new Kelas();
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
+                                <?php 
+                if ($login_as == "siswa") {
+                    $pp = "../assets/img/pp/std.png";
+                } elseif ($login_as == "guru") {
+                    $pp = "../assets/img/pp/guru.png";
+                } elseif ($login_as == "admin") {
+                    $pp = "../assets/img/pp/admin.png";
+                }
+                ?>
+                <img src="<?php echo $pp; ?>" alt="user">
             </div>
         </div>
 
