@@ -17,7 +17,7 @@ if ($login_as == "siswa") {
 }
 
 $nilai = new Nilai($userid);
-$result_ta = $nilai->get_tahun_ajaran();
+
 
 
 ?>
@@ -104,6 +104,7 @@ $result_ta = $nilai->get_tahun_ajaran();
                         </a>
                         <ul id="dropdown-tahunajaran" class="dropdown-menu" aria-labelledby="dropdownMenuTA">
                             <?php
+                            $result_ta = $nilai->get_tahun_ajaran();
                             while ($row = $result_ta->fetch_assoc()) {
                             ?>
                                 <li><a class="dropdown-item" data-tahunajaran="<?php echo $row['tahun_ajaran']; ?>" href="#"><?php echo substr_replace($row['tahun_ajaran'], '/', 4, 0); ?></a></li>
