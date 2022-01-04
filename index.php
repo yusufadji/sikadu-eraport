@@ -212,6 +212,14 @@ if (isset($_COOKIE['id'])) {
                     $nama_guru = $guru->get_nama_guru($userid);
                     echo "Selamat datang, $nama_guru";
                 }
+                if ($login_as == "siswa") {
+                    $nama_siswa = $siswa->get_nama_siswa($userid);
+                    echo "Selamat datang, $nama_siswa";
+                }
+                if ($login_as == "admin") {
+                    $nama_guru = $get_user["nama_admin"];
+                    echo "Selamat datang, $nama_guru";
+                }
                 ?>
             </h2>
             <div class="konten_isi">
