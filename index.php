@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'connection.php';
+require_once 'config_sekolah.php';
 require_once 'utils.php';
 require_once 'model/guru.php';
 require_once 'model/siswa.php';
@@ -276,44 +277,44 @@ if (isset($_COOKIE['id'])) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ tgl1 }}</td>
-                                    <td>{{ agd1 }}</td>
+                                    <td><?php echo JADWAL['tgl1'] ?></td>
+                                    <td><?php echo JADWAL['agd1'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl2 }}</td>
-                                    <td>{{ agd2 }}</td>
+                                    <td><?php echo JADWAL['tgl2'] ?></td>
+                                    <td><?php echo JADWAL['agd2'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl3 }}</td>
-                                    <td>{{ agd3 }}</td>
+                                    <td><?php echo JADWAL['tgl3'] ?></td>
+                                    <td><?php echo JADWAL['agd3'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl4 }}</td>
-                                    <td>{{ agd4 }}</td>
+                                    <td><?php echo JADWAL['tgl4'] ?></td>
+                                    <td><?php echo JADWAL['agd4'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl5 }}</td>
-                                    <td>{{ agd5 }}</td>
+                                    <td><?php echo JADWAL['tgl5'] ?></td>
+                                    <td><?php echo JADWAL['agd5'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl6 }}</td>
-                                    <td>{{ agd6 }}</td>
+                                    <td><?php echo JADWAL['tgl6'] ?></td>
+                                    <td><?php echo JADWAL['agd6'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl7 }}</td>
-                                    <td>{{ agd7 }}</td>
+                                    <td><?php echo JADWAL['tgl7'] ?></td>
+                                    <td><?php echo JADWAL['agd7'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl8 }}</td>
-                                    <td>{{ agd8 }}</td>
+                                    <td><?php echo JADWAL['tgl8'] ?></td>
+                                    <td><?php echo JADWAL['agd8'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl9 }}</td>
-                                    <td>{{ agd9 }}</td>
+                                    <td><?php echo JADWAL['tgl9'] ?></td>
+                                    <td><?php echo JADWAL['agd9'] ?></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ tgl10 }}</td>
-                                    <td>{{ agd10 }}</td>
+                                    <td><?php echo JADWAL['tgl10'] ?></td>
+                                    <td><?php echo JADWAL['agd10'] ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -321,44 +322,14 @@ if (isset($_COOKIE['id'])) {
                     </div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
             <script type="text/javascript">
                 function ready(f) {
                     /in/.test(document.readyState) ? setTimeout('ready(' + f + ')', 9) : f();
                 }
-                const u7936882821 = {
-                    tgl1: '26 Agustus - 03 September 2021',
-                    tgl2: '20 - 25 September 2021',
-                    tgl3: '27 September - 13 November 2021',
-                    tgl4: '23 Oktober 2021',
-                    tgl5: '23 Oktober 2021',
-                    tgl6: '15 - 24 November 2021 (9 hari)',
-                    tgl7: '18 Desember 2021',
-                    tgl8: '25 November 2021 - 12 Januari 2022',
-                    tgl9: '13 - 22 Januari 2022 (9 hari)',
-                    tgl10: '27 Januari 2022',
-                    agd1: 'Registrasi & Pengisian KRS Mahasiswa Lama Ganjil 2021/2022',
-                    agd2: 'Pengarahan Akademik dan Pengisian KRS Mahasiswa Baru',
-                    agd3: 'Perkuliahan Tahap 1 (7 Minggu)',
-                    agd4: 'Dies Natalies Universitas',
-                    agd5: 'Upacara Wisuda',
-                    agd6: 'Ujian Tengah Semester 1 (UTS)',
-                    agd7: 'Upacara Wisuda',
-                    agd8: 'Perkuliahan Tahap 2 (7 Minggu)',
-                    agd9: 'Ujian Akhir Semester 1 (UAS)',
-                    agd10: 'Yudisium Semester Ganjil'
-                }
-                ready(function() {
-                    var appinfo = new Vue({
-                        el: '#kalender',
-                        data: u7936882821
-                    })
-                });
+                
             </script>
             <script src="assets/js/main.js"></script>
-            <!-- <script>
-            alert("Anda login sebagai <?php echo $login_as ?>")
-        </script> -->
+
 </body>
 
 </html>
