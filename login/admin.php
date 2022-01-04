@@ -65,7 +65,7 @@ if (isset($_POST["login"])) {
     <div class="login">
         <div class="login_content">
             <div class="login_img">
-                <img src="assets/img/knowledge-book-education-learning-books-svgrepo-com.svg" alt="">
+                <img src="../assets/img/knowledge-book-education-learning-books-svgrepo-com.svg" alt="">
             </div>
             <div class="login_forms">
                 <form action="./admin" class="login_register" id="login-in" method="POST">
