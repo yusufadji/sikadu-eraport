@@ -101,14 +101,14 @@ $nama_siswa = $siswa->get_nama_siswa($nis);
 
 
     <!-- main -->
-    <div class="main" style="height: 100%;">
+    <div class="main">
         <div class="topbar">
             <div class="toggle">
                 <i class='bx bx-menu'></i>
             </div>
             <!-- user -->
             <div class="user">
-                                <?php 
+                <?php
                 if ($login_as == "siswa") {
                     $pp = "../assets/img/pp/std.png";
                 } elseif ($login_as == "guru") {
