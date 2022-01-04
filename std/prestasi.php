@@ -12,13 +12,15 @@ if (isset($_COOKIE['login_as'])) {
     $userid = $_SESSION['id'];
     $login_as = $_SESSION['login_as'];
 }
-
-if ($login_as == "siswa") {
+if (!isset($_SESSION['login_as'])) {
+    header('location: ../index');
+} else {
+    if ($_SESSION['login_as'] != "siswa") {
+        header('location: ../index');
+    }
 }
 
 $nilai = new Nilai($userid);
-
-
 
 ?>
 <!DOCTYPE html>

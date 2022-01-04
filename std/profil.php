@@ -18,6 +18,14 @@ if (isset($_COOKIE['login_as'])) {
     $login_as = $_SESSION['login_as'];
 }
 
+if (!isset($_SESSION['login_as'])) {
+    header('location: ../index');
+} else {
+    if ($_SESSION['login_as'] != "siswa") {
+        header('location: ../index');
+    }
+}
+
 $siswa = new Siswa();
 
 $result = $siswa->get_detail_siswa($userid);
