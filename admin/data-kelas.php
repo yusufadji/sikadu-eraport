@@ -108,16 +108,9 @@ $adjacents = "2";
             <div class="toggle">
                 <i class='bx bx-menu'></i>
             </div>
-            <!-- search -->
-            <div class="search">
-                <label>
-                    <input type="text" name="search" id="search" placeholder="Search here">
-                    <i class='bx bx-search'></i>
-                </label>
-            </div>
             <!-- user -->
             <div class="user">
-                                <?php 
+                <?php
                 if ($login_as == "siswa") {
                     $pp = "../assets/img/pp/std.png";
                 } elseif ($login_as == "guru") {

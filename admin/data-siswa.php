@@ -115,13 +115,6 @@ $siswa = new Siswa();
             <div class="toggle">
                 <i class='bx bx-menu'></i>
             </div>
-            <!-- search -->
-            <div class="search">
-                <label>
-                    <input type="text" name="search" id="search" placeholder="Search here">
-                    <i class='bx bx-search'></i>
-                </label>
-            </div>
             <!-- user -->
             <div class="user">
                 <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA" alt="user">
