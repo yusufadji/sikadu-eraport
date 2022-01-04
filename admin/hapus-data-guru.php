@@ -8,13 +8,11 @@ if (isset($_GET['nip'])) {
     $query = "DELETE FROM guru WHERE nip='$nip'";
     $result = $conn->query($query);
     if ($result) {
+        header("location: data-guru");
         return true;
     } else {
         return false;
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: data-guru");
 } else {
     header('location: data-guru');
 }

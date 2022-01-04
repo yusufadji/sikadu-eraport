@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once dirname(__FILE__) . '/../connection.php';
 require_once dirname(__FILE__) . '/../model/kelas.php';
 session_start();
@@ -29,7 +29,7 @@ if (!isset($_GET['p'])) {
 $kelas = new Kelas();
 
 $records_per_page = 10;
-$offset = ($page_no-1) * $records_per_page;
+$offset = ($page_no - 1) * $records_per_page;
 $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
 
@@ -120,8 +120,16 @@ $adjacents = "2";
             </div>
             <!-- user -->
             <div class="user">
-                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiXyPi_rGT6jD0HngbJm7ynV-rF3rbepixGAznBNXQteWfrkWk1VvidfrFLeLr3E1slcwmf0jQ3ktsRI1Ga6xMOftHsDC1fbi9Oid8jOz0YX22jl6_i38Y5xbRuLrmoQm2O371YilOhD77YN1xeyibg4_B0qHWhOv24q9DoKzQokmiuruFKmPYKvX1zeA"
-                    alt="user">
+                <?php
+                if ($login_as == "siswa") {
+                    $pp = "../assets/img/pp/std.png";
+                } elseif ($login_as == "guru") {
+                    $pp = "../assets/img/pp/guru.png";
+                } elseif ($login_as == "admin") {
+                    $pp = "../assets/img/pp/admin.png";
+                }
+                ?>
+                <img src="<?php echo $pp; ?>" alt="user">
             </div>
         </div>
 
@@ -139,11 +147,11 @@ $adjacents = "2";
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
+                        <?php
                         $result_kelas = $kelas->get_daftar_kelas($records_per_page, $offset);
                         if ($result_kelas && $result_kelas->num_rows > 0) {
                             $no = 1;
-                            while($row = $result_kelas->fetch_assoc()){
+                            while ($row = $result_kelas->fetch_assoc()) {
                                 $id_kls = $row['id_kelas'];
                                 $result_jml = $conn->query("SELECT COUNT(*) AS total_siswa FROM siswa WHERE id_kelas = $id_kls");
                                 $jml = $result_jml->fetch_assoc();
@@ -157,30 +165,30 @@ $adjacents = "2";
                                 $no++;
                             }
                         }
-                        
+
                         ?>
                     </tbody>
                 </table>
             </div>
             <div class="konten_nav">
-            <nav aria-label="Page Navigation">
+                <nav aria-label="Page Navigation">
                     <ul class="pagination">
-                        <?php 
-                        if ($total_no_of_pages > 1) {
-                         ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?p=$previous_page"; ?>">Previous</a></li>
-                        <?php 
-                        
-                            for ($i=1; $i <= $total_no_of_pages; $i++) { 
-                        ?>
-                        <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?p=$i"; ?>'><?php echo $i; ?></a></li>
                         <?php
-                            
-                            }
-                        
+                        if ($total_no_of_pages > 1) {
                         ?>
-                        <li class="page-item"><a class="page-link" href="<?php echo "?p=$next_page" ?>">Next</a></li>
-                        <?php 
+                            <li class="page-item"><a class="page-link" href="<?php echo "?p=$previous_page"; ?>">Previous</a></li>
+                            <?php
+
+                            for ($i = 1; $i <= $total_no_of_pages; $i++) {
+                            ?>
+                                <li class='page-item <?php echo $i == $page_no ? "active" : "" ?>'><a class='page-link' href='<?php echo "?p=$i"; ?>'><?php echo $i; ?></a></li>
+                            <?php
+
+                            }
+
+                            ?>
+                            <li class="page-item"><a class="page-link" href="<?php echo "?p=$next_page" ?>">Next</a></li>
+                        <?php
                         }
                         ?>
                     </ul>

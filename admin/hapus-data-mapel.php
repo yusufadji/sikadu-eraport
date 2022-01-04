@@ -8,8 +8,8 @@ if (isset($_GET['id_mapel'])) {
     $query = "DELETE FROM mata_pelajaran WHERE id_mapel='$id_mapel'";
     $result = $conn->query($query);
     if ($result) {
-        return true;
         header("location: data-mapel");
+        return true;
     } else {
         return false;
     }

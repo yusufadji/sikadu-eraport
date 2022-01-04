@@ -8,13 +8,11 @@ if (isset($_GET['nis'])) {
     $query = "DELETE FROM siswa WHERE nis='$nis'";
     $result = $conn->query($query);
     if ($result) {
+        header("location: data-siswa");
         return true;
     } else {
         return false;
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: data-siswa");
 } else {
     header('location: data-siswa');
 }

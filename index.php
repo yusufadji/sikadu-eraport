@@ -201,7 +201,7 @@ if (isset($_COOKIE['id'])) {
             </div>
             <!-- user -->
             <div class="user">
-                <?php 
+                <?php
                 if ($login_as == "siswa") {
                     $pp = "assets/img/pp/std.png";
                 } elseif ($login_as == "guru") {
@@ -343,7 +343,6 @@ if (isset($_COOKIE['id'])) {
                 function ready(f) {
                     /in/.test(document.readyState) ? setTimeout('ready(' + f + ')', 9) : f();
                 }
-                
             </script>
             <script src="assets/js/main.js"></script>
 

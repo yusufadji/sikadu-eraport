@@ -8,13 +8,11 @@ if (isset($_GET['id-kelas'])) {
     $query = "DELETE FROM kelas WHERE id_kelas='$id_kelas'";
     $result = $conn->query($query);
     if ($result) {
+        header("location: data-kelas");
         return true;
     } else {
         return false;
     }
-    // echo $conn->error;
-    // $result = $conn->query("...");
-    header("location: data-kelas");
 } else {
     header('location: data-kelas');
 }
