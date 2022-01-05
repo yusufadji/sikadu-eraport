@@ -20,6 +20,11 @@ if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "guru") {
     exit();
 }
 
+if (!isset($_SESSION['is_walikelas']) || $_SESSION['is_walikelas'] == false) {
+    header('location: ../index');
+    exit();
+}
+
 if (!isset($_GET['nis'])) {
     header('location: daftar-pesan');
     exit();

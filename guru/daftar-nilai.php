@@ -105,7 +105,7 @@ $siswa = new Siswa();
                 ?>
 
                     <li>
-                        <a href="<?php echo $login_as == "guru" ? "guru" : "std"; ?>/pesan">
+                        <a href="pesan">
                             <span class="icon"><i class='bx bx-chat'></i></span>
                             <span class="title">Pesan</span>
                         </a>
