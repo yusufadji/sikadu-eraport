@@ -28,7 +28,6 @@ if (isset($_POST["login"])) {
         $info_admin = $admin->get_detail_admin_by_email($email);
         $adminid = $info_admin['id_admin'];
         $email = $info_admin['email'];
-
         // set session
         $_SESSION['login'] = true;
         $_SESSION['id'] = $adminid;

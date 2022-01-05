@@ -25,11 +25,6 @@ if(isset($_POST["login"])){
     
     if ($verifikasi) {
         $info_guru = $guru->get_detail_guru($nip);
-        if (isset($_POST["remember"])) {
-            setcookie("id", $info_guru['nip'], time()+(30*60));
-            setcookie("kodenuklir", hash('sha256', $info_guru['email']), time()+(30*60));
-            setcookie("login_as", 'guru');
-        }
         // set session
         $_SESSION['login'] = true;
         $_SESSION['id'] = $info_guru['nip'];

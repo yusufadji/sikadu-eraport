@@ -25,11 +25,6 @@ if(isset($_POST["login"])){
     
     if ($verifikasi) {
         $info_siswa = $siswa->get_detail_siswa($nis);
-        if (isset($_POST["remember"])) {
-            setcookie("id", $info_siswa['nis'], time()+(30*60));
-            setcookie("kodenuklir", hash('sha256', $info_siswa['email']), time()+(30*60));
-            setcookie("login_as", 'siswa');
-        }
         // set session
         $_SESSION['login'] = true;
         $_SESSION['id'] = $info_siswa['nis'];
