@@ -112,7 +112,7 @@ function send_message_to_wali_kelas(id_siswa, id_wali) {
             data:{action:'send_msg_to_wali_kelas',id_siswa:id_siswa, id_wali:id_wali, message: input_pesan.val()},
             dataType:'json',
             success: function(response){
-                cekPesanDariSiswa();
+                cekPesanDariWaliKelas();
                 input_pesan.val("");
             },
             error: function(response) {

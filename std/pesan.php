@@ -35,8 +35,6 @@ if ($walikelas != null) {
     $tidak_tersedia = true;
 }
 
-
-
 ?>
 
 <!DOCTYPE html>

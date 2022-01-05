@@ -44,11 +44,6 @@ if (!$get_user) {
     header('location: logout');
 }
 
-if (isset($_COOKIE['id'])) {
-    if ($kodenuklir !== hash('sha256', $get_user['email'])) {
-        header("location: logout");
-    }
-}
 
 ?>
 <!DOCTYPE html>
@@ -336,11 +331,6 @@ if (isset($_COOKIE['id'])) {
                     </div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-            <script type="text/javascript">
-                function ready(f) {
-                    /in/.test(document.readyState) ? setTimeout('ready(' + f + ')', 9) : f();
-                }
-            </script>
             <script src="assets/js/main.js"></script>
 
 </body>

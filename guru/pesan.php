@@ -173,12 +173,6 @@ $nama_siswa = $siswa->get_nama_siswa($nis);
 
         ?>
         <script>
-            $('#dropdown-kelas a').on('click', function() {
-                var txt = ($(this).data('kelas'));
-                window.open("./daftar-siswa?kls=" + txt, "_self")
-            });
-
-
             // jalankan cekPesan setiap 1 detik
             setInterval(cekPesanDariSiswa, 3000, id_siswa, id_wali);
         </script>

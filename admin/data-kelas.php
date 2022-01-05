@@ -201,7 +201,7 @@ $adjacents = "2";
                                 </tr>
                                 ";
                                     $no++;
-                                } // TODO : Gak reti query nggo nampilke jumlah siswa per kelas e
+                                } 
                             }
                             ?>
                         </tbody>

@@ -44,12 +44,14 @@ class Nilai
         $this->set_wali_kelas();
         $query = "CALL buat_raport('$this->nis_siswa', '$this->nip_walikelas', " . CURRENT_TAHUN_AJARAN . ", " . CURRENT_SEMESTER . ")";
         $result = $conn->query($query);
+        $row = $result->fetch_assoc();
+        $insert_id = $row['InsertId'];
+        if ($result) {
+            $this->id_raport = $insert_id;
+            echo $this->id_raport;
+        }
         while ($conn->more_results()) {
             $conn->next_result();
-        }
-        if ($result) {
-            $this->id_raport = $conn->insert_id;
-            echo $this->id_raport;
         }
     }
     public function tambah_nilai($id_mapel, $cp1 = 0, $cp2 = 0, $cp3 = 0, $cp4 = 0, $uts = 0, $uas = 0)

@@ -3,17 +3,6 @@ require_once '../connection.php';
 
 class Chat
 {
-
-    public function cek()
-    {
-        global $conn;
-        if ($conn->connect_errno) {
-            echo "Failed";
-        } else {
-            echo "Connect berhsil";
-        }
-    }
-
     public function get_chat_murid($nis, $nip)
     {
         global $conn;

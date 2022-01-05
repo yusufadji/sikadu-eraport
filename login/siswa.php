@@ -7,10 +7,6 @@ session_start();
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// ke index jika sudah login
-if (isset($_COOKIE['id'])) {
-    $_SESSION['login'] = true;
-}
 
 if(isset($_SESSION['login'])){
     header("location: ../index");

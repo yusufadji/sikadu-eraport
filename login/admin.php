@@ -7,12 +7,8 @@ session_start();
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// ke index jika sudah login
-if (isset($_COOKIE['id'])) {
-    $_SESSION['login'] = true;
-}
 
-if (isset($_SESSION['login'])) {
+if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
     header("location: ../index");
 }
 
@@ -27,7 +23,6 @@ if (isset($_POST["login"])) {
     if ($verify) {
         $info_admin = $admin->get_detail_admin_by_email($email);
         $adminid = $info_admin['id_admin'];
-        $email = $info_admin['email'];
         // set session
         $_SESSION['login'] = true;
         $_SESSION['id'] = $adminid;

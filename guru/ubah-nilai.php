@@ -183,20 +183,20 @@ $siswa = new Siswa();
                                 </ul>
                             </div>
                         </div>
-                        <?php
-                        if ($mapelid > 0) {
-                            $nilai_siswa = $nilai->get_nilai($mapelid);
-                            if ($nilai_siswa) {
-                                $row = $nilai_siswa->fetch_assoc();
-                                if ($nilai_siswa->num_rows === 0) {
-                                    echo "Belum Ada Nilai";
-                                    $aksi = "tambah";
-                                } else {
-                                    $id_nilai = $row['id_nilai'];
-                                    $aksi = "ubah";
-                                }
-                        ?>
-
+                                <?php
+                                if ($mapelid > 0) {
+                                    $nilai_siswa = $nilai->get_nilai($mapelid);
+                                    if ($nilai_siswa) {
+                                        $row = $nilai_siswa->fetch_assoc();
+                                        if ($nilai_siswa->num_rows === 0) {
+                                            echo "Belum Ada Nilai";
+                                            $aksi = "tambah";
+                                        } else {
+                                            $id_nilai = $row['id_nilai'];
+                                            $aksi = "ubah";
+                                        }
+                                ?>
+                                <!-- Tampilkan pesan notifikasi -->
                                 <?php
                                 if (isset($_GET['ubah-nilai'])) {
                                     if ($_GET['ubah-nilai'] == "berhasil") {
@@ -204,9 +204,9 @@ $siswa = new Siswa();
                                         <div class="alert alert-success" role="alert">
                                             Nilai berhasil diubah!
                                         </div>
-                                    <?php
+                                <?php
                                     } else if ($_GET['ubah-nilai'] == "gagal") {
-                                    ?>
+                                ?>
                                         <div class="alert alert-danger" role="alert">
                                             Nilai gagal diubah!
                                         </div>
