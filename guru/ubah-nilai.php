@@ -5,23 +5,22 @@ require_once dirname(__FILE__) . '/../model/nilai.php';
 require_once dirname(__FILE__) . '/../model/guru.php';
 require_once dirname(__FILE__) . '/../model/siswa.php';
 
-session_start();
-
-if (isset($_COOKIE['login_as'])) {
-    $login_as = $_COOKIE['login_as'];
-    $userid = $_COOKIE['id'];
-    $_SESSION['login_as'] = $login_as;
-} else {
-    $userid = $_SESSION['id'];
-    $login_as = $_SESSION['login_as'];
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-if (!isset($_SESSION['login_as'])) {
+session_start();
+if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
+    header('location: logout');
+    exit();
+}
+
+$nip = $_SESSION['id'];
+$login_as = $_SESSION['login_as'];
+
+if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "guru") {
     header('location: ../index');
-} else {
-    if ($_SESSION['login_as'] != "guru") {
-        header('location: ../index');
-    }
+    exit();
 }
 
 if (isset($_GET['nis'])) {
@@ -208,7 +207,7 @@ $siswa = new Siswa();
                                     } else if ($_GET['ubah-nilai'] == "gagal") {
                                     ?>
                                         <div class="alert alert-danger" role="alert">
-                                            Nilai gagah diubah!
+                                            Nilai gagal diubah!
                                         </div>
                                 <?php
                                     }

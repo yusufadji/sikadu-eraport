@@ -2,22 +2,23 @@
 
 require_once '../connection.php';
 require_once '../model/nilai.php';
-session_start();
 
-if (isset($_COOKIE['login_as'])) {
-    $login_as = $_COOKIE['login_as'];
-    $userid = $_COOKIE['id'];
-    $kodenuklir = $_COOKIE['kodenuklir'];
-} else {
-    $userid = $_SESSION['id'];
-    $login_as = $_SESSION['login_as'];
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-if (!isset($_SESSION['login_as'])) {
+
+session_start();
+if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
+    header('location: logout');
+    exit();
+}
+
+$nip = $_SESSION['id'];
+$login_as = $_SESSION['login_as'];
+
+if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "siswa") {
     header('location: ../index');
-} else {
-    if ($_SESSION['login_as'] != "siswa") {
-        header('location: ../index');
-    }
+    exit();
 }
 
 $nilai = new Nilai($userid);

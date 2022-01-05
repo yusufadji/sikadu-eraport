@@ -29,12 +29,6 @@ if (isset($_POST["login"])) {
         $adminid = $info_admin['id_admin'];
         $email = $info_admin['email'];
 
-        // simpan cookie untuk 30 menit (30 mnt * 60 dtk)
-        if (isset($_POST["remember"])) {
-            setcookie("id", $adminid, time() + (30 * 60));
-            setcookie("kodenuklir", hash('sha256', $email), time() + (30 * 60));
-            setcookie("login_as", 'admin');
-        }
         // set session
         $_SESSION['login'] = true;
         $_SESSION['id'] = $adminid;

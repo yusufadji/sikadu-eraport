@@ -1,29 +1,22 @@
 <?php
 require_once dirname(__FILE__) . '/../connection.php';
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 session_start();
-
-if (isset($_COOKIE['login_as'])) {
-    $login_as = $_COOKIE['login_as'];
-    $id_admin = $_COOKIE['id'];
-    $_SESSION['login_as'] = $login_as;
-} else {
-    $id_admin = $_SESSION['id'];
-    $login_as = $_SESSION['login_as'];
+if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
+    header('location: logout');
+    exit();
 }
 
-if (!isset($_SESSION['login_as'])) {
+$nip = $_SESSION['id'];
+$login_as = $_SESSION['login_as'];
+
+if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "admin") {
     header('location: ../index');
-} else {
-    if ($_SESSION['login_as'] != "admin") {
-        header('location: ../index');
-    }
-}
-
-
-if (isset($_GET['nis'])) {
-    $siswaid = $_GET['nis'];
-} else {
-    header('location: data-siswa');
+    exit();
 }
 
 ?>

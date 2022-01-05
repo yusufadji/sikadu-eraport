@@ -1,6 +1,4 @@
 <?php
-
-session_start();
 require_once '../connection.php';
 require_once '../model/siswa.php';
 require_once '../controller/action_chat.php';
@@ -9,22 +7,18 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// ambil id siswa dari session atau cookie
-if (isset($_COOKIE['login_as'])) {
-    $login_as = $_COOKIE['login_as'];
-    $nis = $_COOKIE['id'];
-    $kodenuklir = $_COOKIE['kodenuklir'];
-} else {
-    $nis = $_SESSION['id'];
-    $login_as = $_SESSION['login_as'];
+session_start();
+if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
+    header('location: logout');
+    exit();
 }
 
-if (!isset($_SESSION['login_as'])) {
+$nip = $_SESSION['id'];
+$login_as = $_SESSION['login_as'];
+
+if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "siswa") {
     header('location: ../index');
-} else {
-    if ($_SESSION['login_as'] != "siswa") {
-        header('location: ../index');
-    }
+    exit();
 }
 
 $siswa = new Siswa();

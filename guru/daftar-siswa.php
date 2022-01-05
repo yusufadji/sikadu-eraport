@@ -2,23 +2,23 @@
 require_once dirname(__FILE__) . '/../connection.php';
 require_once dirname(__FILE__) . '/../model/kelas.php';
 require_once dirname(__FILE__) . '/../model/siswa.php';
-session_start();
 
-if (isset($_COOKIE['login_as'])) {
-    $login_as = $_COOKIE['login_as'];
-    $nip = $_COOKIE['id'];
-    $_SESSION['login_as'] = $login_as;
-} else {
-    $nip = $_SESSION['id'];
-    $login_as = $_SESSION['login_as'];
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-if (!isset($_SESSION['login_as'])) {
+session_start();
+if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
+    header('location: logout');
+    exit();
+}
+
+$nip = $_SESSION['id'];
+$login_as = $_SESSION['login_as'];
+
+if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "guru") {
     header('location: ../index');
-} else {
-    if ($_SESSION['login_as'] != "guru") {
-        header('location: ../index');
-    }
+    exit();
 }
 
 if (!isset($_GET['p'])) {

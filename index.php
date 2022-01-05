@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'connection.php';
 require_once 'config_sekolah.php';
 require_once 'utils.php';
@@ -8,22 +7,18 @@ require_once 'model/siswa.php';
 require_once 'model/admin.php';
 require_once 'model/kelas.php';
 
+session_start();
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
-    header('location: login/siswa');
+    header('location: logout');
 }
-// ambil userid dari session atau cookie
-if (isset($_COOKIE['login_as'])) {
-    $login_as = $_COOKIE['login_as'];
-    $userid = $_COOKIE['id'];
-    $kodenuklir = $_COOKIE['kodenuklir'];
-} else {
-    $userid = $_SESSION['id'];
-    $login_as = $_SESSION['login_as'];
-}
+
+$userid = $_SESSION['id'];
+$login_as = $_SESSION['login_as'];
+
 
 if ($login_as == "admin") {
     $admin = new Admin();
