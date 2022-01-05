@@ -9,7 +9,7 @@ if ($conn->connect_error) {
 
 session_start();
 if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
-    header('location: logout');
+    header('location: ../logout');
     exit();
 }
 
