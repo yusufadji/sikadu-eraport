@@ -33,6 +33,7 @@ $result = $siswa->get_detail_siswa($userid);
 
 <head>
     <meta charset="UTF-8">
+    <title>Profil | E-Raport</title>
     <link rel="stylesheet" href="style.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
