@@ -54,6 +54,7 @@ if (isset($_GET['id_mapel'])) {
 
 <head>
     <meta charset="UTF-8">
+    <title>Ubah Data Mata Pelajaran | E-Raport</title>
     <link rel="stylesheet" href="style.css">
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
