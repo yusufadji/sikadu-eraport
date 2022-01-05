@@ -170,7 +170,7 @@ $siswa = new Siswa();
                                 </a>
                                 <ul class="dropdown-menu" id="dropdown-mapel" aria-labelledby="dropdownMenuMapel">
                                     <?php
-                                    $result_mapel = $guru->get_mapel_by_guru($userid);
+                                    $result_mapel = $guru->get_mapel_by_guru($nip);
                                     if ($result_mapel && $result_mapel->num_rows > 0) {
                                         while ($row = $result_mapel->fetch_assoc()) {
                                     ?>

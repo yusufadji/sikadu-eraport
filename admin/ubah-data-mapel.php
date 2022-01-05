@@ -11,7 +11,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
     exit();
 }
 
-$nip = $_SESSION['id'];
+$userid = $_SESSION['id'];
 $login_as = $_SESSION['login_as'];
 
 if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "admin") {

@@ -13,7 +13,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false) {
     exit();
 }
 
-$nip = $_SESSION['id'];
+$nis = $_SESSION['id'];
 $login_as = $_SESSION['login_as'];
 
 if (!isset($_SESSION['login_as']) || $_SESSION['login_as'] != "siswa") {
