@@ -20,7 +20,6 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 
 
 
@@ -32,7 +31,6 @@
   <h3 align="center">Sistem Informasi E-Raport</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
     <br />
     <a href="https://github.com/yusufadji/tubes-rekayasa-web"><strong>Lihat Dokumentasi »</strong></a>
     ·
@@ -45,7 +43,7 @@
   <summary>Daftar Isi</summary>
   <ol>
     <li>
-      <a href="tentang-proyek">Tentang proyek</a>
+      <a href="#tentang-proyek">Tentang proyek</a>
       <ul>
         <li><a href="#dibuat-menggunakan">Dibuat menggunakan</a></li>
       </ul>
@@ -58,6 +56,7 @@
         <li><a href="#akses-sebagai-admin">Akses sebagai admin</a></li>
       </ul>
     </li>
+    <li><a href="#daftar-pustaka">Daftar Pustaka</a></li>
   </ol>
 </details>
 
@@ -122,6 +121,10 @@ Berikut ini adalah tata cara penggunaan sistem yang telah kami buat
 - [x] Data Mapel
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## Daftar Pustaka
+
+Fadillah, M. K., & Moenir, A. (2021). Rancang Bangun Sistem Informasi E-Raport Berbasis Web Dengan Metode Waterfall (Studi Kasus : SMKN 1 Kabupaten Tangerang). <i>Journal of Artificial Intelligence and Innovative Applications</i>, 42-50.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
